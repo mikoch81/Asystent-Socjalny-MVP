@@ -94,8 +94,10 @@ fun CaseListScreen(
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     items(cases, key = { it.caseId }) { record ->
+                        val displayLc = CaseLifecycleRules.displayLifecycle(record)
                         CaseCard(
                             record = record,
+                            displayLifecycle = displayLc,
                             onClick = {
                                 if (CaseLifecycleRules.canEdit(record)) {
                                     onOpenCase(record.caseId, record.scenarioId)
@@ -122,8 +124,8 @@ private fun LifecycleFilterRow(
     data class FilterOption(val lifecycle: CaseLifecycle?, val label: String)
 
     val options = listOf(
-        FilterOption(null, "Aktywne"),
-        FilterOption(CaseLifecycle.READY_TO_CLOSE, "Do zamknięcia"),
+        FilterOption(null, "Wszystkie"),
+        FilterOption(CaseLifecycle.ACTIVE, "Aktywne"),
         FilterOption(CaseLifecycle.CLOSED, "Zamknięte"),
         FilterOption(CaseLifecycle.ARCHIVED, "Archiwum")
     )
@@ -148,6 +150,7 @@ private fun LifecycleFilterRow(
 @Composable
 private fun CaseCard(
     record: CaseRecord,
+    displayLifecycle: CaseLifecycle,
     onClick: () -> Unit,
     onDelete: () -> Unit,
     onOpenDocuments: () -> Unit,
@@ -189,7 +192,7 @@ private fun CaseCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 StatusLabel(record.status)
-                LifecycleBadge(record.lifecycle)
+                LifecycleBadge(displayLifecycle)
                 androidx.compose.foundation.layout.Spacer(Modifier.weight(1f))
                 Text(
                     text = formatTimestamp(record.updatedAt),

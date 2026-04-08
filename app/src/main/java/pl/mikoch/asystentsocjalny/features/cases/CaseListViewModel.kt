@@ -31,7 +31,7 @@ class CaseListViewModel(application: Application) : AndroidViewModel(application
             cases.value = if (filter != null) {
                 all.filter { it.lifecycle == filter }
             } else {
-                all.filter { it.lifecycle != CaseLifecycle.ARCHIVED }
+                all
             }
         }
     }

@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import pl.mikoch.asystentsocjalny.core.data.PdfFileHelper
+import pl.mikoch.asystentsocjalny.core.data.CaseLifecycleRules
 import pl.mikoch.asystentsocjalny.features.common.BaseScrollableScreen
 import pl.mikoch.asystentsocjalny.features.urgent.model.GuidanceUi
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentProgress
@@ -184,20 +185,22 @@ fun CaseSummaryScreen(
                 }
             }
 
-            item(key = "btn_close_case") {
-                Button(
-                    onClick = {
-                        viewModel.closeCase()
-                        Toast.makeText(context, "Sprawa zamknięta", Toast.LENGTH_SHORT).show()
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.tertiary
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(48.dp)
-                ) {
-                    Text("Zamknij sprawę")
+            if (viewModel.caseCanClose.value) {
+                item(key = "btn_close_case") {
+                    Button(
+                        onClick = {
+                            viewModel.closeCase()
+                            Toast.makeText(context, "Sprawa zamknięta", Toast.LENGTH_SHORT).show()
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.tertiary
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(48.dp)
+                    ) {
+                        Text("Zamknij sprawę")
+                    }
                 }
             }
         }

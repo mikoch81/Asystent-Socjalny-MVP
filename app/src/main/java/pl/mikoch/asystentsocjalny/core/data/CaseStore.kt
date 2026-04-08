@@ -75,7 +75,9 @@ internal fun caseToJson(record: CaseRecord): String {
     obj.put("updatedAt", record.updatedAt)
     obj.put("isDraft", record.isDraft)
     obj.put("locationPreview", record.locationPreview)
-    obj.put("lifecycle", record.lifecycle.name)
+    val storedLifecycle = if (record.lifecycle == CaseLifecycle.READY_TO_CLOSE) CaseLifecycle.ACTIVE else record.lifecycle
+    obj.put("lifecycle", storedLifecycle.name)
+    obj.put("hasNote", record.hasNote)
     return obj.toString()
 }
 
@@ -92,10 +94,12 @@ internal fun jsonToCase(json: String): CaseRecord? {
             isDraft = obj.optBoolean("isDraft", true),
             locationPreview = obj.optString("locationPreview", ""),
             lifecycle = try {
-                CaseLifecycle.valueOf(obj.optString("lifecycle", "ACTIVE"))
+                val raw = CaseLifecycle.valueOf(obj.optString("lifecycle", "ACTIVE"))
+                if (raw == CaseLifecycle.READY_TO_CLOSE) CaseLifecycle.ACTIVE else raw
             } catch (_: Exception) {
                 CaseLifecycle.ACTIVE
-            }
+            },
+            hasNote = obj.optBoolean("hasNote", false)
         )
     } catch (_: Exception) {
         null

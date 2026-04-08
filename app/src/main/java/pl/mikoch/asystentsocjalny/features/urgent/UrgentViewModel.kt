@@ -55,6 +55,7 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
     private var currentCaseId: String? = null
 
     val activeCaseId: String? get() = currentCaseId
+    val caseCanClose = mutableStateOf(false)
 
     val currentScenario: UrgentScenarioUi?
         get() = currentScenarioId?.let { scenarioById(it) }
@@ -155,6 +156,13 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
             runBlocking { draftStore.loadDraft(scenario.id) }
         }
 
+        if (caseId != null) {
+            val record = runBlocking { caseStore.loadCase(caseId) }
+            caseCanClose.value = record != null && CaseLifecycleRules.canClose(record)
+        } else {
+            caseCanClose.value = false
+        }
+
         checkedStates.clear()
         if (draft != null && draft.checkedStates.size == scenario.steps.size) {
             checkedStates.addAll(draft.checkedStates)
@@ -236,15 +244,15 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
             prog.completedSteps == prog.totalSteps -> CaseStatus.READY_TO_CLOSE
             else -> CaseStatus.IN_PROGRESS
         }
-        val updated = existing.copy(
-            status = status,
-            riskLevel = risk.level,
-            updatedAt = System.currentTimeMillis(),
-            isDraft = status == CaseStatus.DRAFT,
-            locationPreview = location.value.take(50)
-        )
         caseStore.saveCase(
-            updated.copy(lifecycle = CaseLifecycleRules.autoLifecycle(updated))
+            existing.copy(
+                status = status,
+                riskLevel = risk.level,
+                updatedAt = System.currentTimeMillis(),
+                isDraft = status == CaseStatus.DRAFT,
+                locationPreview = location.value.take(50),
+                hasNote = generatedNoteText.value.isNotBlank()
+            )
         )
     }
 
@@ -263,6 +271,7 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
                         updatedAt = System.currentTimeMillis()
                     )
                 )
+                caseCanClose.value = false
             }
         }
     }

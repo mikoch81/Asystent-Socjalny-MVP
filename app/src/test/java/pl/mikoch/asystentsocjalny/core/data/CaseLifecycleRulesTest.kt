@@ -13,7 +13,8 @@ class CaseLifecycleRulesTest {
 
     private fun record(
         lifecycle: CaseLifecycle = CaseLifecycle.ACTIVE,
-        status: CaseStatus = CaseStatus.IN_PROGRESS
+        status: CaseStatus = CaseStatus.IN_PROGRESS,
+        hasNote: Boolean = false
     ) = CaseRecord(
         caseId = "c1",
         scenarioId = "s1",
@@ -21,19 +22,15 @@ class CaseLifecycleRulesTest {
         status = status,
         riskLevel = RiskLevel.MEDIUM,
         updatedAt = 100L,
-        lifecycle = lifecycle
+        lifecycle = lifecycle,
+        hasNote = hasNote
     )
 
-    // --- canClose ---
+    // --- canClose (stored lifecycle only: ACTIVE can close) ---
 
     @Test
     fun `canClose returns true for ACTIVE`() {
         assertTrue(CaseLifecycleRules.canClose(record(CaseLifecycle.ACTIVE)))
-    }
-
-    @Test
-    fun `canClose returns true for READY_TO_CLOSE`() {
-        assertTrue(CaseLifecycleRules.canClose(record(CaseLifecycle.READY_TO_CLOSE)))
     }
 
     @Test
@@ -52,7 +49,6 @@ class CaseLifecycleRulesTest {
     fun `canArchive returns true only for CLOSED`() {
         assertTrue(CaseLifecycleRules.canArchive(record(CaseLifecycle.CLOSED)))
         assertFalse(CaseLifecycleRules.canArchive(record(CaseLifecycle.ACTIVE)))
-        assertFalse(CaseLifecycleRules.canArchive(record(CaseLifecycle.READY_TO_CLOSE)))
         assertFalse(CaseLifecycleRules.canArchive(record(CaseLifecycle.ARCHIVED)))
     }
 
@@ -63,49 +59,53 @@ class CaseLifecycleRulesTest {
         assertTrue(CaseLifecycleRules.canRestore(record(CaseLifecycle.CLOSED)))
         assertTrue(CaseLifecycleRules.canRestore(record(CaseLifecycle.ARCHIVED)))
         assertFalse(CaseLifecycleRules.canRestore(record(CaseLifecycle.ACTIVE)))
-        assertFalse(CaseLifecycleRules.canRestore(record(CaseLifecycle.READY_TO_CLOSE)))
     }
 
-    // --- canEdit ---
+    // --- canEdit (stored lifecycle only: ACTIVE can edit) ---
 
     @Test
-    fun `canEdit returns true for ACTIVE and READY_TO_CLOSE`() {
+    fun `canEdit returns true for ACTIVE`() {
         assertTrue(CaseLifecycleRules.canEdit(record(CaseLifecycle.ACTIVE)))
-        assertTrue(CaseLifecycleRules.canEdit(record(CaseLifecycle.READY_TO_CLOSE)))
         assertFalse(CaseLifecycleRules.canEdit(record(CaseLifecycle.CLOSED)))
         assertFalse(CaseLifecycleRules.canEdit(record(CaseLifecycle.ARCHIVED)))
     }
 
-    // --- autoLifecycle ---
+    // --- displayLifecycle (dynamically computed) ---
 
     @Test
-    fun `autoLifecycle returns READY_TO_CLOSE when status is READY_TO_CLOSE`() {
-        val r = record(CaseLifecycle.ACTIVE, CaseStatus.READY_TO_CLOSE)
-        assertEquals(CaseLifecycle.READY_TO_CLOSE, CaseLifecycleRules.autoLifecycle(r))
+    fun `displayLifecycle returns READY_TO_CLOSE when status READY_TO_CLOSE and hasNote`() {
+        val r = record(CaseLifecycle.ACTIVE, CaseStatus.READY_TO_CLOSE, hasNote = true)
+        assertEquals(CaseLifecycle.READY_TO_CLOSE, CaseLifecycleRules.displayLifecycle(r))
     }
 
     @Test
-    fun `autoLifecycle returns ACTIVE when status is IN_PROGRESS`() {
-        val r = record(CaseLifecycle.ACTIVE, CaseStatus.IN_PROGRESS)
-        assertEquals(CaseLifecycle.ACTIVE, CaseLifecycleRules.autoLifecycle(r))
+    fun `displayLifecycle returns ACTIVE when status READY_TO_CLOSE but no note`() {
+        val r = record(CaseLifecycle.ACTIVE, CaseStatus.READY_TO_CLOSE, hasNote = false)
+        assertEquals(CaseLifecycle.ACTIVE, CaseLifecycleRules.displayLifecycle(r))
     }
 
     @Test
-    fun `autoLifecycle returns ACTIVE when status is DRAFT`() {
+    fun `displayLifecycle returns ACTIVE when status IN_PROGRESS even with note`() {
+        val r = record(CaseLifecycle.ACTIVE, CaseStatus.IN_PROGRESS, hasNote = true)
+        assertEquals(CaseLifecycle.ACTIVE, CaseLifecycleRules.displayLifecycle(r))
+    }
+
+    @Test
+    fun `displayLifecycle returns ACTIVE when status DRAFT`() {
         val r = record(CaseLifecycle.ACTIVE, CaseStatus.DRAFT)
-        assertEquals(CaseLifecycle.ACTIVE, CaseLifecycleRules.autoLifecycle(r))
+        assertEquals(CaseLifecycle.ACTIVE, CaseLifecycleRules.displayLifecycle(r))
     }
 
     @Test
-    fun `autoLifecycle preserves CLOSED even if status changes`() {
-        val r = record(CaseLifecycle.CLOSED, CaseStatus.IN_PROGRESS)
-        assertEquals(CaseLifecycle.CLOSED, CaseLifecycleRules.autoLifecycle(r))
+    fun `displayLifecycle preserves CLOSED`() {
+        val r = record(CaseLifecycle.CLOSED, CaseStatus.READY_TO_CLOSE, hasNote = true)
+        assertEquals(CaseLifecycle.CLOSED, CaseLifecycleRules.displayLifecycle(r))
     }
 
     @Test
-    fun `autoLifecycle preserves ARCHIVED even if status changes`() {
-        val r = record(CaseLifecycle.ARCHIVED, CaseStatus.READY_TO_CLOSE)
-        assertEquals(CaseLifecycle.ARCHIVED, CaseLifecycleRules.autoLifecycle(r))
+    fun `displayLifecycle preserves ARCHIVED`() {
+        val r = record(CaseLifecycle.ARCHIVED, CaseStatus.READY_TO_CLOSE, hasNote = true)
+        assertEquals(CaseLifecycle.ARCHIVED, CaseLifecycleRules.displayLifecycle(r))
     }
 
     // --- CaseLifecycle labels ---

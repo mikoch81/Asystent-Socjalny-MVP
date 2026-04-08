@@ -44,6 +44,7 @@ class CaseStoreSerializationTest {
         assertEquals(true, record.isDraft)
         assertEquals("", record.locationPreview)
         assertEquals(CaseLifecycle.ACTIVE, record.lifecycle)
+        assertEquals(false, record.hasNote)
     }
 
     @Test

@@ -24,5 +24,6 @@ data class CaseRecord(
     val updatedAt: Long,
     val isDraft: Boolean = true,
     val locationPreview: String = "",
-    val lifecycle: CaseLifecycle = CaseLifecycle.ACTIVE
+    val lifecycle: CaseLifecycle = CaseLifecycle.ACTIVE,
+    val hasNote: Boolean = false
 )
