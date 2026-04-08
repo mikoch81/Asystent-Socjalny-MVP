@@ -3,6 +3,7 @@ package pl.mikoch.asystentsocjalny.features.urgent
 import android.app.Application
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,6 +16,7 @@ import pl.mikoch.asystentsocjalny.core.data.CaseStore
 import pl.mikoch.asystentsocjalny.core.data.DraftStore
 import pl.mikoch.asystentsocjalny.core.data.KnowledgeRepository
 import pl.mikoch.asystentsocjalny.core.data.NoteDraftBuilder
+import pl.mikoch.asystentsocjalny.core.data.NoteSuggestionEngine
 import pl.mikoch.asystentsocjalny.core.data.PdfDraftContent
 import pl.mikoch.asystentsocjalny.core.data.PdfDraftGenerator
 import pl.mikoch.asystentsocjalny.core.data.RiskAssessmentEngine
@@ -66,6 +68,10 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
     val generatedNoteText = mutableStateOf("")
     val draftRestored = mutableStateOf(false)
     val lastGeneratedPdf = mutableStateOf<File?>(null)
+    val runningNotes = mutableStateOf("")
+    val stepNotes = mutableStateMapOf<Int, String>()
+    val personsPresent = mutableStateOf("")
+    val situationFlags = mutableStateListOf<String>()
 
     private var currentSteps: List<pl.mikoch.asystentsocjalny.features.urgent.model.ChecklistStepUi> = emptyList()
 
@@ -87,6 +93,24 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
             riskAssessment = riskAssessment.value,
             progress = progress.value,
             guidance = currentScenario?.guidance
+        )
+    }
+
+    val noteSuggestions = derivedStateOf {
+        val p = progress.value
+        val completedTexts = currentSteps
+            .filterIndexed { i, _ -> checkedStates.getOrElse(i) { false } }
+            .map { it.text }
+        val uncheckedCriticalTexts = p.uncheckedCriticalSteps.map { it.text }
+        NoteSuggestionEngine.suggest(
+            NoteSuggestionEngine.Input(
+                completedStepTexts = completedTexts,
+                uncheckedCriticalTexts = uncheckedCriticalTexts,
+                riskLevel = riskAssessment.value.level,
+                scenarioTitle = currentScenario?.title ?: "",
+                situationFlags = situationFlags.toList(),
+                additionalNotes = additionalNotes.value
+            )
         )
     }
 
@@ -170,6 +194,12 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
             situationDescription.value = draft.situationDescription
             additionalNotes.value = draft.additionalNotes
             generatedNoteText.value = draft.generatedNoteText
+            runningNotes.value = draft.runningNotes
+            stepNotes.clear()
+            stepNotes.putAll(draft.stepNotes)
+            personsPresent.value = draft.personsPresent
+            situationFlags.clear()
+            situationFlags.addAll(draft.situationFlags)
             draftRestored.value = true
         } else {
             checkedStates.addAll(List(scenario.steps.size) { false })
@@ -177,6 +207,10 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
             situationDescription.value = ""
             additionalNotes.value = ""
             generatedNoteText.value = ""
+            runningNotes.value = ""
+            stepNotes.clear()
+            personsPresent.value = ""
+            situationFlags.clear()
         }
     }
 
@@ -190,7 +224,11 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
             situationDescription = situationDescription.value,
             additionalNotes = additionalNotes.value,
             generatedNoteText = generatedNoteText.value,
-            caseId = caseId ?: ""
+            caseId = caseId ?: "",
+            runningNotes = runningNotes.value,
+            stepNotes = stepNotes.toMap(),
+            personsPresent = personsPresent.value,
+            situationFlags = situationFlags.toList()
         )
         viewModelScope.launch {
             if (caseId != null) {
@@ -226,6 +264,10 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
         generatedNoteText.value = ""
         draftRestored.value = false
         lastGeneratedPdf.value = null
+        runningNotes.value = ""
+        stepNotes.clear()
+        personsPresent.value = ""
+        situationFlags.clear()
         viewModelScope.launch {
             if (caseId != null) {
                 draftStore.clearDraftForCase(caseId)
@@ -292,7 +334,11 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
             criticalCompletedSteps = criticalCompleted,
             location = location.value,
             situationDescription = situationDescription.value,
-            additionalNotes = additionalNotes.value
+            additionalNotes = additionalNotes.value,
+            runningNotes = runningNotes.value,
+            stepNotes = stepNotes.toMap(),
+            personsPresent = personsPresent.value,
+            situationFlags = situationFlags.toList()
         )
         generatedNoteText.value = NoteDraftBuilder.formatToText(draft)
         saveDraft()

@@ -1,6 +1,8 @@
 package pl.mikoch.asystentsocjalny.features.urgent
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +27,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,6 +45,7 @@ import pl.mikoch.asystentsocjalny.core.model.ActionRecommendation
 import pl.mikoch.asystentsocjalny.core.model.RecommendationPriority
 import pl.mikoch.asystentsocjalny.core.model.RiskAssessment
 import pl.mikoch.asystentsocjalny.core.model.RiskLevel
+import pl.mikoch.asystentsocjalny.core.model.SituationFlag
 import pl.mikoch.asystentsocjalny.features.common.BaseScrollableScreen
 import pl.mikoch.asystentsocjalny.features.urgent.model.ChecklistStepUi
 import pl.mikoch.asystentsocjalny.features.urgent.model.GuidanceUi
@@ -66,6 +72,7 @@ fun UrgentDetailScreen(
     val progress by viewModel.progress
     val riskAssessment by viewModel.riskAssessment
     val recommendation by viewModel.recommendation
+    val noteSuggestions by viewModel.noteSuggestions
     val draftRestored by viewModel.draftRestored
 
     BaseScrollableScreen(
@@ -107,7 +114,17 @@ fun UrgentDetailScreen(
             )
         }
 
-        item(key = "progress") { UrgentProgressSection(progress) }
+        stickyHeader(key = "progress") {
+            Surface(
+                color = MaterialTheme.colorScheme.background,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                UrgentProgressSection(
+                    progress = progress,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
+        }
         item(key = "risk") { RiskAssessmentSection(riskAssessment) }
         item(key = "recommendation") { ActionRecommendationSection(recommendation) }
 
@@ -135,8 +152,70 @@ fun UrgentDetailScreen(
             UrgentChecklistRow(
                 checked = viewModel.checkedStates.getOrElse(index) { false },
                 onCheckedChange = { viewModel.checkedStates[index] = it },
-                step = step
+                step = step,
+                stepNote = viewModel.stepNotes[index] ?: "",
+                onStepNoteChange = { note ->
+                    if (note.isBlank()) viewModel.stepNotes.remove(index)
+                    else viewModel.stepNotes[index] = note
+                }
             )
+        }
+
+        item(key = "situation_flags") {
+            SituationFlagsSection(
+                selectedFlags = viewModel.situationFlags,
+                onToggle = { flag ->
+                    if (flag in viewModel.situationFlags) viewModel.situationFlags.remove(flag)
+                    else viewModel.situationFlags.add(flag)
+                }
+            )
+        }
+
+        item(key = "persons_present") {
+            OutlinedTextField(
+                value = viewModel.personsPresent.value,
+                onValueChange = { viewModel.personsPresent.value = it },
+                label = { Text("Osoby obecne") },
+                placeholder = { Text("np. matka, dziecko, sąsiad") },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
+        }
+
+        item(key = "running_notes") {
+            OutlinedTextField(
+                value = viewModel.runningNotes.value,
+                onValueChange = { viewModel.runningNotes.value = it },
+                label = { Text("Notatki bieżące") },
+                placeholder = { Text("Zapisuj obserwacje w trakcie interwencji") },
+                modifier = Modifier.fillMaxWidth(),
+                minLines = 3
+            )
+        }
+
+        if (noteSuggestions.isNotEmpty()) {
+            item(key = "suggestions") {
+                NoteSuggestionsSection(
+                    suggestions = noteSuggestions,
+                    onSuggestionClick = { suggestion ->
+                        val current = viewModel.additionalNotes.value
+                        if (!current.contains(suggestion)) {
+                            viewModel.additionalNotes.value =
+                                if (current.isBlank()) suggestion
+                                else "$current\n$suggestion"
+                        }
+                    },
+                    onAddAll = {
+                        val current = viewModel.additionalNotes.value
+                        val newLines = noteSuggestions.filter { it !in current }
+                        if (newLines.isNotEmpty()) {
+                            viewModel.additionalNotes.value =
+                                if (current.isBlank()) newLines.joinToString("\n")
+                                else current + "\n" + newLines.joinToString("\n")
+                        }
+                    }
+                )
+            }
         }
 
         item(key = "input_fields") {
@@ -235,14 +314,14 @@ private fun DraftRestoredHint(onDismiss: () -> Unit, onClear: () -> Unit) {
 }
 
 @Composable
-private fun UrgentProgressSection(progress: UrgentProgress) {
+private fun UrgentProgressSection(progress: UrgentProgress, modifier: Modifier = Modifier) {
     val statusColor = when (progress.status) {
         UrgentStatus.READY_TO_CLOSE -> MaterialTheme.colorScheme.primary
         UrgentStatus.NEEDS_ATTENTION -> MaterialTheme.colorScheme.error
         UrgentStatus.IN_PROGRESS -> MaterialTheme.colorScheme.secondary
     }
 
-    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -301,8 +380,12 @@ private fun UrgentUncheckedCriticalSection(steps: List<ChecklistStepUi>) {
 private fun UrgentChecklistRow(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
-    step: ChecklistStepUi
+    step: ChecklistStepUi,
+    stepNote: String = "",
+    onStepNoteChange: (String) -> Unit = {}
 ) {
+    var noteExpanded by remember { mutableStateOf(stepNote.isNotBlank()) }
+
     val bgColor = if (step.isCritical && !checked) {
         MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.35f)
     } else {
@@ -315,30 +398,51 @@ private fun UrgentChecklistRow(
     }
     val fontWeight = if (step.isCritical) FontWeight.Bold else FontWeight.Normal
 
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
             .background(bgColor)
-            .padding(vertical = 6.dp, horizontal = 4.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalAlignment = Alignment.CenterVertically
     ) {
-        Checkbox(checked = checked, onCheckedChange = onCheckedChange)
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = step.text,
-                color = textColor,
-                fontWeight = fontWeight,
-                style = MaterialTheme.typography.bodyLarge
-            )
-            if (step.isCritical) {
+        Row(
+            modifier = Modifier.padding(vertical = 6.dp, horizontal = 4.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Checkbox(checked = checked, onCheckedChange = onCheckedChange)
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = "⚠ Krok krytyczny",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.error
+                    text = step.text,
+                    color = textColor,
+                    fontWeight = fontWeight,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                if (step.isCritical) {
+                    Text(
+                        text = "⚠ Krok krytyczny",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            }
+            TextButton(onClick = { noteExpanded = !noteExpanded }) {
+                Text(
+                    if (noteExpanded) "−" else "+",
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
+        }
+        AnimatedVisibility(visible = noteExpanded) {
+            OutlinedTextField(
+                value = stepNote,
+                onValueChange = onStepNoteChange,
+                placeholder = { Text("Notatka do kroku") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 48.dp, end = 8.dp, bottom = 8.dp),
+                singleLine = true,
+                textStyle = MaterialTheme.typography.bodySmall
+            )
         }
     }
 }
@@ -566,3 +670,65 @@ private data class RecommendationColors(
     val badgeColor: Color,
     val icon: String
 )
+
+@Composable
+private fun SituationFlagsSection(
+    selectedFlags: List<String>,
+    onToggle: (String) -> Unit
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text("Stan sytuacji", style = MaterialTheme.typography.titleMedium)
+        SituationFlag.ALL.forEach { flag ->
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Checkbox(
+                    checked = flag in selectedFlags,
+                    onCheckedChange = { onToggle(flag) }
+                )
+                Text(flag, style = MaterialTheme.typography.bodyMedium)
+            }
+        }
+    }
+}
+
+@Composable
+private fun NoteSuggestionsSection(
+    suggestions: List<String>,
+    onSuggestionClick: (String) -> Unit,
+    onAddAll: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f))
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Text(
+            text = "Sugestie do notatki",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.SemiBold
+        )
+        suggestions.forEach { suggestion ->
+            Text(
+                text = "•  $suggestion",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(6.dp))
+                    .clickable { onSuggestionClick(suggestion) }
+                    .padding(vertical = 4.dp, horizontal = 4.dp)
+            )
+        }
+        OutlinedButton(
+            onClick = onAddAll,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Dodaj wszystkie sugestie")
+        }
+    }
+}
