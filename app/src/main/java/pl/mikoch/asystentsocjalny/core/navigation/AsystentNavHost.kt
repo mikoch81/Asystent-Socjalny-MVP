@@ -139,10 +139,7 @@ fun AsystentNavHost() {
         }
         composable(Screen.NotePreview.route) {
             NotePreviewScreen(
-                noteText = urgentViewModel.generatedNoteText.value,
-                pdfReadiness = urgentViewModel.pdfReadiness.value,
-                onSaveDraft = { urgentViewModel.saveDraft() },
-                onGeneratePdf = { urgentViewModel.generatePdf() },
+                viewModel = urgentViewModel,
                 onBack = { navController.popBackStack() }
             )
         }

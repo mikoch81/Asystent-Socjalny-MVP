@@ -1,12 +1,23 @@
 package pl.mikoch.asystentsocjalny.core.data
 
 import android.content.Context
-import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
+import android.os.Environment
 import java.io.File
 import java.io.FileOutputStream
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+data class PdfDraftContent(
+    val scenarioTitle: String,
+    val date: String,
+    val caseStatus: String,
+    val riskLevel: String,
+    val recommendation: String,
+    val noteText: String
+)
 
 object PdfDraftGenerator {
 
@@ -17,7 +28,7 @@ object PdfDraftGenerator {
     private const val MARGIN_RIGHT = 48f
     private const val LINE_HEIGHT = 16f
 
-    fun generate(context: Context, noteText: String, scenarioTitle: String): File {
+    fun generate(context: Context, content: PdfDraftContent): File {
         val document = PdfDocument()
         var pageNumber = 1
         var pageInfo = PdfDocument.PageInfo.Builder(PAGE_WIDTH, PAGE_HEIGHT, pageNumber).create()
@@ -89,6 +100,18 @@ object PdfDraftGenerator {
             yPos += 8f
         }
 
+        // --- Render metadata header ---
+        drawText(content.scenarioTitle, headerPaint)
+        yPos += 4f
+        drawText("Data: ${content.date}", bodyPaint)
+        drawText("Status: ${content.caseStatus}", bodyPaint)
+        drawText("Poziom ryzyka: ${content.riskLevel}", bodyPaint)
+        if (content.recommendation.isNotBlank()) {
+            drawText("Rekomendacja: ${content.recommendation}", bodyPaint)
+        }
+        drawSeparator()
+        yPos += 4f
+
         // --- Render note content ---
         val sectionHeaders = setOf(
             "NOTATKA SŁUŻBOWA – SZKIC",
@@ -100,7 +123,7 @@ object PdfDraftGenerator {
             "Dalsze kroki:"
         )
 
-        for (rawLine in noteText.lines()) {
+        for (rawLine in content.noteText.lines()) {
             val trimmed = rawLine.trim()
             when {
                 trimmed.isEmpty() -> {
@@ -141,11 +164,16 @@ object PdfDraftGenerator {
 
         document.finishPage(page)
 
-        val dir = File(context.filesDir, "drafts")
+        val baseDir = context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+            ?: context.filesDir
+        val dir = File(baseDir, "AsystentSocjalny")
         dir.mkdirs()
-        val safeName = scenarioTitle.take(30).replace(Regex("[^\\w\\s-]"), "").replace(" ", "_")
-        val timestamp = System.currentTimeMillis()
-        val file = File(dir, "notatka_${safeName}_$timestamp.pdf")
+        val safeName = content.scenarioTitle.take(30)
+            .replace(Regex("[^\\w\\s-]"), "")
+            .replace(" ", "_")
+        val dateStamp = LocalDateTime.now()
+            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm"))
+        val file = File(dir, "notatka_${safeName}_$dateStamp.pdf")
         FileOutputStream(file).use { document.writeTo(it) }
         document.close()
 

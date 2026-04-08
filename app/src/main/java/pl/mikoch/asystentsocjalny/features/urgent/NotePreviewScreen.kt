@@ -18,22 +18,24 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import pl.mikoch.asystentsocjalny.core.data.PdfFileHelper
 import pl.mikoch.asystentsocjalny.features.common.BaseScrollableScreen
 
 @Composable
 fun NotePreviewScreen(
-    noteText: String,
-    pdfReadiness: PdfReadiness,
-    onSaveDraft: () -> Unit,
-    onGeneratePdf: () -> Unit,
+    viewModel: UrgentViewModel,
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
+    val noteText = viewModel.generatedNoteText.value
+    val pdfReadiness by viewModel.pdfReadiness
+    val lastPdf = viewModel.lastGeneratedPdf.value
 
     BaseScrollableScreen(title = "Podgląd notatki") {
         item(key = "note_content") {
@@ -54,7 +56,7 @@ fun NotePreviewScreen(
         item(key = "btn_save") {
             Button(
                 onClick = {
-                    onSaveDraft()
+                    viewModel.saveDraft()
                     Toast.makeText(context, "Zapisano wersję roboczą", Toast.LENGTH_SHORT).show()
                 },
                 modifier = Modifier
@@ -65,22 +67,32 @@ fun NotePreviewScreen(
             }
         }
 
-        item(key = "btn_share") {
+        item(key = "btn_share_text") {
             Button(
                 onClick = { shareNote(context, noteText) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp)
             ) {
-                Text("Udostępnij")
+                Text("Udostępnij tekst")
             }
         }
 
         item(key = "btn_pdf") {
             Button(
                 onClick = {
-                    onGeneratePdf()
-                    Toast.makeText(context, "Wygenerowano PDF", Toast.LENGTH_SHORT).show()
+                    val file = viewModel.generatePdf()
+                    val path = PdfFileHelper.displayPath(file)
+                    val opened = PdfFileHelper.openPdf(context, file)
+                    if (opened) {
+                        Toast.makeText(context, "PDF zapisany: $path", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "PDF zapisany: $path\nBrak aplikacji do otwarcia PDF",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 },
                 enabled = pdfReadiness.enabled,
                 modifier = Modifier
@@ -98,6 +110,19 @@ fun NotePreviewScreen(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+            }
+        }
+
+        if (lastPdf != null) {
+            item(key = "btn_share_pdf") {
+                OutlinedButton(
+                    onClick = { PdfFileHelper.sharePdf(context, lastPdf) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp)
+                ) {
+                    Text("Udostępnij PDF")
+                }
             }
         }
 

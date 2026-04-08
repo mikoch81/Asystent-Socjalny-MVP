@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import pl.mikoch.asystentsocjalny.core.data.PdfFileHelper
 import pl.mikoch.asystentsocjalny.features.common.BaseScrollableScreen
 import pl.mikoch.asystentsocjalny.features.urgent.model.GuidanceUi
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentProgress
@@ -39,6 +40,7 @@ fun CaseSummaryScreen(
     val progress by viewModel.progress
     val noteText = viewModel.generatedNoteText.value
     val pdfReadiness by viewModel.pdfReadiness
+    val lastPdf = viewModel.lastGeneratedPdf.value
 
     BaseScrollableScreen(title = "Podsumowanie sprawy") {
         item(key = "title") {
@@ -123,8 +125,18 @@ fun CaseSummaryScreen(
             item(key = "btn_pdf") {
                 Button(
                     onClick = {
-                        viewModel.generatePdf()
-                        Toast.makeText(context, "Wygenerowano PDF", Toast.LENGTH_SHORT).show()
+                        val file = viewModel.generatePdf()
+                        val path = PdfFileHelper.displayPath(file)
+                        val opened = PdfFileHelper.openPdf(context, file)
+                        if (opened) {
+                            Toast.makeText(context, "PDF zapisany: $path", Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "PDF zapisany: $path\nBrak aplikacji do otwarcia PDF",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                     },
                     enabled = pdfReadiness.enabled,
                     modifier = Modifier
@@ -142,6 +154,18 @@ fun CaseSummaryScreen(
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+                }
+            }
+            if (lastPdf != null) {
+                item(key = "btn_share_pdf") {
+                    OutlinedButton(
+                        onClick = { PdfFileHelper.sharePdf(context, lastPdf) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(48.dp)
+                    ) {
+                        Text("Udostępnij PDF")
+                    }
                 }
             }
         }

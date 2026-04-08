@@ -13,6 +13,7 @@ import pl.mikoch.asystentsocjalny.core.data.CaseStore
 import pl.mikoch.asystentsocjalny.core.data.DraftStore
 import pl.mikoch.asystentsocjalny.core.data.KnowledgeRepository
 import pl.mikoch.asystentsocjalny.core.data.NoteDraftBuilder
+import pl.mikoch.asystentsocjalny.core.data.PdfDraftContent
 import pl.mikoch.asystentsocjalny.core.data.PdfDraftGenerator
 import pl.mikoch.asystentsocjalny.core.data.RiskAssessmentEngine
 import pl.mikoch.asystentsocjalny.core.data.UrgentDraft
@@ -54,6 +55,7 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
     val additionalNotes = mutableStateOf("")
     val generatedNoteText = mutableStateOf("")
     val draftRestored = mutableStateOf(false)
+    val lastGeneratedPdf = mutableStateOf<File?>(null)
 
     private var currentSteps: List<pl.mikoch.asystentsocjalny.features.urgent.model.ChecklistStepUi> = emptyList()
 
@@ -97,7 +99,18 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
     fun generatePdf(): File {
         val context = getApplication<Application>()
         val title = currentScenario?.title ?: "notatka"
-        return PdfDraftGenerator.generate(context, generatedNoteText.value, title)
+        val content = PdfDraftContent(
+            scenarioTitle = title,
+            date = java.time.LocalDate.now()
+                .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+            caseStatus = progress.value.status.label,
+            riskLevel = riskAssessment.value.level.label,
+            recommendation = recommendation.value.summary,
+            noteText = generatedNoteText.value
+        )
+        val file = PdfDraftGenerator.generate(context, content)
+        lastGeneratedPdf.value = file
+        return file
     }
 
     fun initDetailState(scenario: UrgentScenarioUi, caseId: String? = null) {
@@ -164,6 +177,7 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
         additionalNotes.value = ""
         generatedNoteText.value = ""
         draftRestored.value = false
+        lastGeneratedPdf.value = null
         viewModelScope.launch {
             if (caseId != null) {
                 draftStore.clearDraftForCase(caseId)
