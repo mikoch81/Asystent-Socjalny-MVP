@@ -62,7 +62,8 @@ fun UrgentDetailScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(16.dp)
+                .padding(horizontal = 16.dp)
+                .padding(top = 16.dp, bottom = 32.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -93,7 +94,7 @@ fun UrgentDetailScreen(
             }
 
             Text(
-                text = "Checklist",
+                text = "Lista kontrolna",
                 style = MaterialTheme.typography.titleMedium
             )
             scenario.steps.forEachIndexed { index, step ->
@@ -111,6 +112,7 @@ fun UrgentDetailScreen(
                 value = viewModel.location.value,
                 onValueChange = { viewModel.location.value = it },
                 label = { Text("Miejsce interwencji") },
+                placeholder = { Text("np. ul. Przykładowa 5, Warszawa") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
@@ -118,6 +120,7 @@ fun UrgentDetailScreen(
                 value = viewModel.situationDescription.value,
                 onValueChange = { viewModel.situationDescription.value = it },
                 label = { Text("Opis sytuacji") },
+                placeholder = { Text("Krótki opis zastanej sytuacji") },
                 modifier = Modifier.fillMaxWidth(),
                 minLines = 3
             )
@@ -125,6 +128,7 @@ fun UrgentDetailScreen(
                 value = viewModel.additionalNotes.value,
                 onValueChange = { viewModel.additionalNotes.value = it },
                 label = { Text("Uwagi dodatkowe") },
+                placeholder = { Text("Opcjonalne uwagi") },
                 modifier = Modifier.fillMaxWidth(),
                 minLines = 2
             )

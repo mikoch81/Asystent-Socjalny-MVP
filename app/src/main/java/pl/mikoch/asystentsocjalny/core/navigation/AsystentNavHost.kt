@@ -11,6 +11,7 @@ import androidx.navigation.navArgument
 import pl.mikoch.asystentsocjalny.core.data.KnowledgeRepository
 import pl.mikoch.asystentsocjalny.features.benefits.BenefitDetailScreen
 import pl.mikoch.asystentsocjalny.features.benefits.BenefitsScreen
+import pl.mikoch.asystentsocjalny.features.common.EmptyStateMessage
 import pl.mikoch.asystentsocjalny.features.home.HomeScreen
 import pl.mikoch.asystentsocjalny.features.notes.NotesScreen
 import pl.mikoch.asystentsocjalny.features.procedures.ProcedureDetailScreen
@@ -66,6 +67,11 @@ fun AsystentNavHost() {
             val benefit = benefits.firstOrNull { it.id == id }
             if (benefit != null) {
                 BenefitDetailScreen(benefit = benefit)
+            } else {
+                EmptyStateMessage(
+                    title = "Nie znaleziono świadczenia",
+                    subtitle = "Dane lokalne mogą być niekompletne."
+                )
             }
         }
         composable(Screen.Notes.route) {
@@ -79,6 +85,11 @@ fun AsystentNavHost() {
             val procedure = procedures.firstOrNull { it.id == id }
             if (procedure != null) {
                 ProcedureDetailScreen(procedure = procedure)
+            } else {
+                EmptyStateMessage(
+                    title = "Nie znaleziono procedury",
+                    subtitle = "Dane lokalne mogą być niekompletne."
+                )
             }
         }
         composable(Screen.UrgentList.route) {
@@ -106,6 +117,11 @@ fun AsystentNavHost() {
                         navController.navigate(Screen.CaseSummary.route)
                     }
                 )
+            } else {
+                EmptyStateMessage(
+                    title = "Nie znaleziono scenariusza",
+                    subtitle = "Dane lokalne mogą być niekompletne."
+                )
             }
         }
         composable(Screen.NotePreview.route) {
@@ -121,6 +137,11 @@ fun AsystentNavHost() {
                     scenario = scenario,
                     viewModel = urgentViewModel,
                     onBack = { navController.popBackStack() }
+                )
+            } else {
+                EmptyStateMessage(
+                    title = "Brak aktywnej sprawy",
+                    subtitle = "Wróć i wybierz scenariusz."
                 )
             }
         }

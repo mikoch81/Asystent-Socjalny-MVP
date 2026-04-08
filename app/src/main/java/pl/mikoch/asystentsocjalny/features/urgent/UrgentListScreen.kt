@@ -3,6 +3,7 @@ package pl.mikoch.asystentsocjalny.features.urgent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import pl.mikoch.asystentsocjalny.features.common.EmptyStateMessage
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentScenarioUi
 
 @Composable
@@ -27,11 +29,18 @@ fun UrgentListScreen(
     Scaffold(
         topBar = { TopAppBar(title = { Text("Sytuacje pilne") }) }
     ) { innerPadding ->
+        if (scenarios.isEmpty()) {
+            EmptyStateMessage(
+                title = "Brak scenariuszy pilnych",
+                subtitle = "Nie udało się wczytać danych.",
+                modifier = Modifier.padding(innerPadding)
+            )
+        } else {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
-                .padding(16.dp),
+                .padding(innerPadding),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(scenarios) { scenario ->
@@ -60,5 +69,6 @@ fun UrgentListScreen(
                 }
             }
         }
+        } // end else
     }
 }

@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import pl.mikoch.asystentsocjalny.core.model.Procedure
+import pl.mikoch.asystentsocjalny.features.common.EmptyStateMessage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,11 +36,20 @@ fun NotesScreen(procedures: List<Procedure>) {
     Scaffold(
         topBar = { TopAppBar(title = { Text("Generator notatki") }) }
     ) { innerPadding ->
+        if (procedures.isEmpty()) {
+            EmptyStateMessage(
+                title = "Brak dostępnych procedur",
+                subtitle = "Nie udało się wczytać danych do generatora.",
+                modifier = Modifier.padding(innerPadding)
+            )
+            return@Scaffold
+        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(16.dp),
+                .padding(horizontal = 16.dp)
+                .padding(top = 16.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(

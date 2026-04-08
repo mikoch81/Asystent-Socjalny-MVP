@@ -3,6 +3,7 @@ package pl.mikoch.asystentsocjalny.features.benefits
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import pl.mikoch.asystentsocjalny.core.model.Benefit
+import pl.mikoch.asystentsocjalny.features.common.EmptyStateMessage
 
 @Composable
 fun BenefitsScreen(
@@ -26,11 +28,18 @@ fun BenefitsScreen(
     Scaffold(
         topBar = { TopAppBar(title = { Text("Świadczenia i formy pomocy") }) }
     ) { innerPadding ->
+        if (benefits.isEmpty()) {
+            EmptyStateMessage(
+                title = "Brak danych o świadczeniach",
+                subtitle = "Nie udało się wczytać katalogu.",
+                modifier = Modifier.padding(innerPadding)
+            )
+        } else {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
-                .padding(16.dp),
+                .padding(innerPadding),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(benefits) { benefit ->
@@ -56,5 +65,6 @@ fun BenefitsScreen(
                 }
             }
         }
+        } // end else
     }
 }

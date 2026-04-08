@@ -3,6 +3,7 @@ package pl.mikoch.asystentsocjalny.features.procedures
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import pl.mikoch.asystentsocjalny.core.model.Procedure
+import pl.mikoch.asystentsocjalny.features.common.EmptyStateMessage
 
 @Composable
 fun ProceduresScreen(
@@ -29,11 +31,18 @@ fun ProceduresScreen(
     Scaffold(
         topBar = { TopAppBar(title = { Text("Procedury") }) }
     ) { innerPadding ->
+        if (procedures.isEmpty()) {
+            EmptyStateMessage(
+                title = "Brak danych o procedurach",
+                subtitle = "Nie udało się wczytać katalogu.",
+                modifier = Modifier.padding(innerPadding)
+            )
+        } else {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
-                .padding(16.dp),
+                .padding(innerPadding),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(procedures) { procedure ->
@@ -76,5 +85,6 @@ fun ProceduresScreen(
                 }
             }
         }
+        } // end else
     }
 }

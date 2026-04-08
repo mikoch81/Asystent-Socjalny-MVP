@@ -11,26 +11,26 @@ import pl.mikoch.asystentsocjalny.core.model.UrgentScenario
 
 class KnowledgeRepository(private val context: Context) {
 
-    fun loadProcedures(): List<Procedure> {
+    fun loadProcedures(): List<Procedure> = tryLoad(emptyList()) {
         val content = readAsset("knowledge/procedures.json")
         val root = JSONObject(content)
-        val array = root.getJSONArray("procedures")
-        return parseProcedures(array)
+        parseProcedures(root.getJSONArray("procedures"))
     }
 
-    fun loadBenefits(): List<Benefit> {
+    fun loadBenefits(): List<Benefit> = tryLoad(emptyList()) {
         val content = readAsset("knowledge/benefits.json")
         val root = JSONObject(content)
-        val array = root.getJSONArray("benefits")
-        return parseBenefits(array)
+        parseBenefits(root.getJSONArray("benefits"))
     }
 
-    fun loadUrgentScenarios(): List<UrgentScenario> {
+    fun loadUrgentScenarios(): List<UrgentScenario> = tryLoad(emptyList()) {
         val content = readAsset("knowledge/procedures/urgent_scenarios.json")
         val root = JSONObject(content)
-        val array = root.getJSONArray("scenarios")
-        return parseUrgentScenarios(array)
+        parseUrgentScenarios(root.getJSONArray("scenarios"))
     }
+
+    private fun <T> tryLoad(fallback: T, block: () -> T): T =
+        try { block() } catch (_: Exception) { fallback }
 
     private fun readAsset(path: String): String {
         return context.assets.open(path).bufferedReader().use { it.readText() }
