@@ -1,14 +1,19 @@
 package pl.mikoch.asystentsocjalny.core.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
+import kotlinx.coroutines.launch
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import pl.mikoch.asystentsocjalny.core.data.CaseDocumentStore
 import pl.mikoch.asystentsocjalny.core.data.KnowledgeRepository
+import pl.mikoch.asystentsocjalny.core.model.CaseDocument
+import pl.mikoch.asystentsocjalny.core.model.DocumentType
 import pl.mikoch.asystentsocjalny.features.benefits.BenefitDetailScreen
 import pl.mikoch.asystentsocjalny.features.benefits.BenefitsScreen
 import pl.mikoch.asystentsocjalny.features.cases.CaseDocumentsScreen
@@ -25,6 +30,7 @@ import pl.mikoch.asystentsocjalny.features.urgent.UrgentDetailScreen
 import pl.mikoch.asystentsocjalny.features.urgent.UrgentListScreen
 import pl.mikoch.asystentsocjalny.features.urgent.UrgentViewModel
 import pl.mikoch.asystentsocjalny.features.urgent.model.toUi
+import java.util.UUID
 
 @Composable
 fun AsystentNavHost() {
@@ -34,6 +40,8 @@ fun AsystentNavHost() {
     val benefits = repository.loadBenefits()
     val urgentViewModel: UrgentViewModel = viewModel()
     val caseListViewModel: CaseListViewModel = viewModel()
+    val coroutineScope = rememberCoroutineScope()
+    val appContext = LocalContext.current.applicationContext
 
     NavHost(
         navController = navController,
@@ -80,7 +88,25 @@ fun AsystentNavHost() {
             }
         }
         composable(Screen.Notes.route) {
-            NotesScreen(procedures = procedures)
+            NotesScreen(
+                procedures = procedures,
+                onCreateCase = { procedureId, procedureTitle, noteText ->
+                    val caseId = caseListViewModel.createCase(procedureId, procedureTitle)
+                    val documentStore = CaseDocumentStore(appContext)
+                    val doc = CaseDocument(
+                        documentId = UUID.randomUUID().toString(),
+                        caseId = caseId,
+                        type = DocumentType.NOTE_DRAFT,
+                        title = "Notatka – $procedureTitle",
+                        fileName = "notatka_${procedureId}.txt",
+                        textContent = noteText,
+                        filePath = "",
+                        createdAt = System.currentTimeMillis()
+                    )
+                    coroutineScope.launch { documentStore.save(doc) }
+                    navController.navigate(Screen.CaseList.route)
+                }
+            )
         }
         composable(
             route = Screen.ProcedureDetail.route,
