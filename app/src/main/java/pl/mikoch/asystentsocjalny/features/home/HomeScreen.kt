@@ -41,30 +41,30 @@ fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
-                text = "Offline-first pomoc proceduralna dla pracy terenowej.",
+                text = "Pomoc proceduralna w terenie — offline.",
                 style = MaterialTheme.typography.bodyLarge
             )
             HomeCard(
                 title = "Sytuacje pilne",
-                description = "Scenariusze interwencyjne z checklistą krok po kroku.",
+                description = "Interwencja krok po kroku z checklistą.",
                 buttonText = "Otwórz",
                 onClick = onOpenUrgent
             )
             HomeCard(
-                title = "Sytuacje pilne / Procedury",
-                description = "Szybkie wejście do checklist i działań krok po kroku.",
+                title = "Procedury",
+                description = "Katalog procedur i działań.",
                 buttonText = "Otwórz",
                 onClick = onOpenProcedures
             )
             HomeCard(
-                title = "Świadczenia / Formy pomocy",
-                description = "Katalog informacyjny z dokumentami i uwagami.",
+                title = "Świadczenia",
+                description = "Formy pomocy, dokumenty, podstawy prawne.",
                 buttonText = "Otwórz",
                 onClick = onOpenBenefits
             )
             HomeCard(
-                title = "Generator notatki",
-                description = "Szkic tekstu do dalszego uzupełnienia po interwencji.",
+                title = "Notatki",
+                description = "Szkic notatki po interwencji.",
                 buttonText = "Otwórz",
                 onClick = onOpenNotes
             )
