@@ -41,7 +41,8 @@ import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentStatus
 fun UrgentDetailScreen(
     scenario: UrgentScenarioUi,
     viewModel: UrgentViewModel,
-    onNavigateToPreview: () -> Unit
+    onNavigateToPreview: () -> Unit,
+    onNavigateToSummary: () -> Unit
 ) {
     LaunchedEffect(scenario.id) {
         viewModel.initDetailState(scenario)
@@ -138,6 +139,16 @@ fun UrgentDetailScreen(
                     .height(56.dp)
             ) {
                 Text("Generuj notatkę")
+            }
+
+            OutlinedButton(
+                onClick = {
+                    viewModel.saveDraft()
+                    onNavigateToSummary()
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Podsumowanie sprawy")
             }
 
             OutlinedButton(

@@ -31,6 +31,9 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
     // --- detail screen state ---
 
     private var currentScenarioId: String? = null
+
+    val currentScenario: UrgentScenarioUi?
+        get() = currentScenarioId?.let { scenarioById(it) }
     val checkedStates = mutableStateListOf<Boolean>()
     val location = mutableStateOf("")
     val situationDescription = mutableStateOf("")

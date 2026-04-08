@@ -14,6 +14,7 @@ import pl.mikoch.asystentsocjalny.features.home.HomeScreen
 import pl.mikoch.asystentsocjalny.features.notes.NotesScreen
 import pl.mikoch.asystentsocjalny.features.procedures.ProcedureDetailScreen
 import pl.mikoch.asystentsocjalny.features.procedures.ProceduresScreen
+import pl.mikoch.asystentsocjalny.features.urgent.CaseSummaryScreen
 import pl.mikoch.asystentsocjalny.features.urgent.NotePreviewScreen
 import pl.mikoch.asystentsocjalny.features.urgent.UrgentDetailScreen
 import pl.mikoch.asystentsocjalny.features.urgent.UrgentListScreen
@@ -84,6 +85,9 @@ fun AsystentNavHost() {
                     viewModel = urgentViewModel,
                     onNavigateToPreview = {
                         navController.navigate(Screen.NotePreview.route)
+                    },
+                    onNavigateToSummary = {
+                        navController.navigate(Screen.CaseSummary.route)
                     }
                 )
             }
@@ -93,6 +97,16 @@ fun AsystentNavHost() {
                 noteText = urgentViewModel.generatedNoteText.value,
                 onBack = { navController.popBackStack() }
             )
+        }
+        composable(Screen.CaseSummary.route) {
+            val scenario = urgentViewModel.currentScenario
+            if (scenario != null) {
+                CaseSummaryScreen(
+                    scenario = scenario,
+                    viewModel = urgentViewModel,
+                    onBack = { navController.popBackStack() }
+                )
+            }
         }
     }
 }
