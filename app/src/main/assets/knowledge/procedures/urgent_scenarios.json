@@ -1,0 +1,42 @@
+{
+  "scenarios": [
+    {
+      "id": "urgent_child_abuse",
+      "title": "Podejrzenie przemocy wobec dziecka",
+      "description": "Scenariusz postępowania w przypadku podejrzenia stosowania przemocy fizycznej lub psychicznej wobec dziecka w rodzinie.",
+      "steps": [
+        { "id": "s1", "text": "Zapewnij bezpieczeństwo dziecku – w razie zagrożenia życia zadzwoń na 112", "isCritical": true },
+        { "id": "s2", "text": "Przeprowadź wstępną rozmowę z dzieckiem w bezpiecznym otoczeniu", "isCritical": false },
+        { "id": "s3", "text": "Udokumentuj widoczne obrażenia (opis, nie zdjęcia bez zgody)", "isCritical": true },
+        { "id": "s4", "text": "Wypełnij formularz Niebieskiej Karty – A", "isCritical": true },
+        { "id": "s5", "text": "Powiadom przełożonego i zespół interdyscyplinarny", "isCritical": false },
+        { "id": "s6", "text": "Przekaż informację do sądu rodzinnego jeśli wymagane", "isCritical": false }
+      ]
+    },
+    {
+      "id": "urgent_domestic_violence",
+      "title": "Przemoc domowa – interwencja",
+      "description": "Procedura interwencyjna w sytuacji zgłoszenia lub stwierdzenia przemocy domowej wobec osoby dorosłej.",
+      "steps": [
+        { "id": "s1", "text": "Oceń bezpośrednie zagrożenie życia lub zdrowia – jeśli tak, wezwij Policję (997/112)", "isCritical": true },
+        { "id": "s2", "text": "Zapewnij ofierze bezpieczne miejsce do rozmowy", "isCritical": false },
+        { "id": "s3", "text": "Rozpocznij procedurę Niebieskiej Karty – wypełnij formularz A", "isCritical": true },
+        { "id": "s4", "text": "Poinformuj osobę o przysługujących jej prawach i dostępnych formach pomocy", "isCritical": false },
+        { "id": "s5", "text": "Przekaż sprawę do zespołu interdyscyplinarnego ds. przeciwdziałania przemocy", "isCritical": true },
+        { "id": "s6", "text": "Zaplanuj kontakt monitorujący w ciągu 7 dni", "isCritical": false }
+      ]
+    },
+    {
+      "id": "urgent_homeless_winter",
+      "title": "Osoba bezdomna w okresie zimowym",
+      "description": "Postępowanie w przypadku napotkania osoby bezdomnej narażonej na wychłodzenie w okresie zimowym.",
+      "steps": [
+        { "id": "s1", "text": "Oceń stan zdrowia – jeśli osoba jest nieprzytomna lub wychłodzona, zadzwoń na 112", "isCritical": true },
+        { "id": "s2", "text": "Zaproponuj transport do noclegowni lub ogrzewalni", "isCritical": false },
+        { "id": "s3", "text": "Wydaj ciepły posiłek i napój jeśli dostępne", "isCritical": false },
+        { "id": "s4", "text": "Sporządź notatkę służbową z interwencji", "isCritical": true },
+        { "id": "s5", "text": "Zgłoś lokalizację do Straży Miejskiej / streetworkerów", "isCritical": false }
+      ]
+    }
+  ]
+}

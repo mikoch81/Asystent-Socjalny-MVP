@@ -1,0 +1,25 @@
+{
+  "benefits": [
+    {
+      "id": "temporary-support",
+      "name": "Pomoc okresowa – informacja wstępna",
+      "description": "Przykładowa pozycja katalogu wsparcia. Służy do szybkiego poinformowania rodziny o możliwej ścieżce pomocy.",
+      "documents": [
+        "Dokument tożsamości",
+        "Dokumenty potwierdzające sytuację dochodową",
+        "Inne dokumenty zgodnie z wymaganiami jednostki"
+      ],
+      "note": "Informacja poglądowa. Ostateczna ocena uprawnień wymaga weryfikacji zgodnie z obowiązującymi przepisami i procedurą jednostki."
+    },
+    {
+      "id": "material-support",
+      "name": "Pomoc rzeczowa / żywnościowa – informacja wstępna",
+      "description": "Szybki opis formy pomocy rzeczowej w celu wsparcia rozmowy z rodziną.",
+      "documents": [
+        "Dokumenty wymagane lokalnie",
+        "Ewentualne potwierdzenie sytuacji bytowej"
+      ],
+      "note": "Treść demo. Zakres, forma i wartość pomocy wymagają lokalnej walidacji."
+    }
+  ]
+}

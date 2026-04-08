@@ -1,0 +1,3 @@
+<resources>
+    <style name="Theme.AsystentSocjalny" parent="Theme.MaterialComponents.DayNight.NoActionBar" />
+</resources>

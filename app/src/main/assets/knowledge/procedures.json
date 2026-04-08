@@ -1,0 +1,65 @@
+{
+  "procedures": [
+    {
+      "id": "domestic-violence-child-risk",
+      "title": "Przemoc domowa – ryzyko dla dziecka",
+      "situation": "Podczas wizyty terenowej występuje przemoc lub realne zagrożenie dobra dziecka.",
+      "severity": "Wysoki",
+      "nowSteps": [
+        "Zadbaj o własne bezpieczeństwo i oceń pilność sytuacji.",
+        "Jeżeli występuje bezpośrednie zagrożenie zdrowia lub życia – niezwłocznie wezwij odpowiednie służby.",
+        "Udokumentuj najważniejsze obserwacje w sposób rzeczowy i konkretny.",
+        "Postępuj zgodnie z lokalną procedurą interwencyjną jednostki."
+      ],
+      "notify": [
+        "Przełożony / kierownik",
+        "Policja – jeśli wymaga tego sytuacja",
+        "Ochrona zdrowia – jeśli potrzebna pomoc medyczna"
+      ],
+      "doNotMiss": [
+        "Nie podejmuj działań wykraczających poza kompetencje.",
+        "Nie opieraj notatki na domysłach – zapisuj fakty i obserwacje.",
+        "Sprawdź, czy konieczna jest formalna eskalacja i dalsza dokumentacja."
+      ],
+      "legalBasis": [
+        "Źródło demonstracyjne – do zastąpienia zweryfikowaną podstawą prawną.",
+        "Wymaga walidacji przez eksperta merytorycznego jednostki."
+      ],
+      "escalation": "Tak – w razie wątpliwości lub ryzyka dla dziecka wymagana jest niezwłoczna konsultacja z przełożonym i postępowanie zgodnie z procedurami.",
+      "documents": [
+        "Notatka służbowa",
+        "Wewnętrzna checklista interwencji",
+        "Dalsze pisma zgodnie z lokalną procedurą"
+      ]
+    },
+    {
+      "id": "refusal-of-cooperation",
+      "title": "Odmowa współpracy podczas wizyty",
+      "situation": "Osoba lub rodzina odmawia rozmowy albo uniemożliwia przeprowadzenie czynności.",
+      "severity": "Średni",
+      "nowSteps": [
+        "Zachowaj spokój i nie eskaluj konfliktu.",
+        "Poinformuj o celu wizyty w sposób jasny i zwięzły.",
+        "Odnotuj fakt odmowy współpracy oraz kontekst zdarzenia.",
+        "Sprawdź, czy potrzebne jest ponowienie kontaktu lub dalsza ścieżka formalna."
+      ],
+      "notify": [
+        "Przełożony / kierownik",
+        "W razie potrzeby właściwa komórka organizacyjna jednostki"
+      ],
+      "doNotMiss": [
+        "Zapisz dokładnie, czego odmowa dotyczyła.",
+        "Nie wchodź w spór przekraczający cel czynności.",
+        "Zweryfikuj dalsze kroki zgodnie z procedurą jednostki."
+      ],
+      "legalBasis": [
+        "Źródło demonstracyjne – do uzupełnienia po walidacji prawnej."
+      ],
+      "escalation": "Może być wymagana konsultacja, jeśli odmowa blokuje istotne czynności lub wpływa na bezpieczeństwo.",
+      "documents": [
+        "Notatka służbowa",
+        "Informacja dla przełożonego"
+      ]
+    }
+  ]
+}
