@@ -13,7 +13,11 @@ object NoteDraftBuilder {
         criticalCompletedSteps: List<String>,
         location: String,
         situationDescription: String,
-        additionalNotes: String
+        additionalNotes: String,
+        runningNotes: String = "",
+        stepNotes: Map<Int, String> = emptyMap(),
+        personsPresent: String = "",
+        situationFlags: List<String> = emptyList()
     ): NoteDraft {
         val date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         return NoteDraft(
@@ -24,7 +28,11 @@ object NoteDraftBuilder {
             completedSteps = completedSteps,
             criticalCompletedSteps = criticalCompletedSteps,
             recommendations = "",
-            additionalNotes = additionalNotes
+            additionalNotes = additionalNotes,
+            runningNotes = runningNotes,
+            stepNotes = stepNotes,
+            personsPresent = personsPresent,
+            situationFlags = situationFlags
         )
     }
 
@@ -35,9 +43,17 @@ object NoteDraftBuilder {
         appendLine("Data: ${draft.date}")
         appendLine("Miejsce: ${draft.location}")
         appendLine("Pracownik: [imię i nazwisko]")
+        if (draft.personsPresent.isNotBlank()) {
+            appendLine("Osoby obecne: ${draft.personsPresent}")
+        }
         appendLine()
         appendLine("Rodzaj sytuacji:")
         appendLine(draft.scenarioTitle)
+        if (draft.situationFlags.isNotEmpty()) {
+            appendLine()
+            appendLine("Stan sytuacji:")
+            draft.situationFlags.forEach { appendLine("- $it") }
+        }
         appendLine()
         appendLine("Opis zastanej sytuacji:")
         appendLine(draft.situationDescription)
@@ -48,12 +64,20 @@ object NoteDraftBuilder {
         } else {
             draft.completedSteps.forEachIndexed { i, step ->
                 appendLine("${i + 1}. $step")
+                draft.stepNotes[i]?.takeIf { it.isNotBlank() }?.let { note ->
+                    appendLine("   Notatka: $note")
+                }
             }
         }
         if (draft.criticalCompletedSteps.isNotEmpty()) {
             appendLine()
             appendLine("Zrealizowane kroki krytyczne:")
             draft.criticalCompletedSteps.forEach { appendLine("- ✔ $it") }
+        }
+        if (draft.runningNotes.isNotBlank()) {
+            appendLine()
+            appendLine("Notatki bieżące:")
+            appendLine(draft.runningNotes)
         }
         if (draft.additionalNotes.isNotBlank()) {
             appendLine()

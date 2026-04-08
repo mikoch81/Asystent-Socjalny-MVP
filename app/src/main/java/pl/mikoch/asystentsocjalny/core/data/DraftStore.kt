@@ -18,7 +18,11 @@ data class UrgentDraft(
     val situationDescription: String,
     val additionalNotes: String,
     val generatedNoteText: String,
-    val caseId: String = ""
+    val caseId: String = "",
+    val runningNotes: String = "",
+    val stepNotes: Map<Int, String> = emptyMap(),
+    val personsPresent: String = "",
+    val situationFlags: List<String> = emptyList()
 )
 
 class DraftStore(private val context: Context) {
@@ -79,6 +83,12 @@ internal fun draftToJson(draft: UrgentDraft): String {
     obj.put("situationDescription", draft.situationDescription)
     obj.put("additionalNotes", draft.additionalNotes)
     obj.put("generatedNoteText", draft.generatedNoteText)
+    obj.put("runningNotes", draft.runningNotes)
+    obj.put("personsPresent", draft.personsPresent)
+    obj.put("situationFlags", JSONArray(draft.situationFlags))
+    val stepNotesObj = JSONObject()
+    draft.stepNotes.forEach { (k, v) -> stepNotesObj.put(k.toString(), v) }
+    obj.put("stepNotes", stepNotesObj)
     if (draft.caseId.isNotBlank()) {
         obj.put("caseId", draft.caseId)
         obj.put("scenarioId", draft.scenarioId)
@@ -98,7 +108,11 @@ internal fun jsonToDraft(scenarioId: String, json: String): UrgentDraft? {
             situationDescription = obj.optString("situationDescription", ""),
             additionalNotes = obj.optString("additionalNotes", ""),
             generatedNoteText = obj.optString("generatedNoteText", ""),
-            caseId = obj.optString("caseId", "")
+            caseId = obj.optString("caseId", ""),
+            runningNotes = obj.optString("runningNotes", ""),
+            personsPresent = obj.optString("personsPresent", ""),
+            situationFlags = parseStringArray(obj.optJSONArray("situationFlags")),
+            stepNotes = parseStepNotes(obj.optJSONObject("stepNotes"))
         )
     } catch (_: Exception) {
         null
@@ -118,9 +132,30 @@ internal fun jsonToCaseDraft(caseId: String, json: String): UrgentDraft? {
             situationDescription = obj.optString("situationDescription", ""),
             additionalNotes = obj.optString("additionalNotes", ""),
             generatedNoteText = obj.optString("generatedNoteText", ""),
-            caseId = caseId
+            caseId = caseId,
+            runningNotes = obj.optString("runningNotes", ""),
+            personsPresent = obj.optString("personsPresent", ""),
+            situationFlags = parseStringArray(obj.optJSONArray("situationFlags")),
+            stepNotes = parseStepNotes(obj.optJSONObject("stepNotes"))
         )
     } catch (_: Exception) {
         null
     }
+}
+
+private fun parseStringArray(arr: JSONArray?): List<String> {
+    if (arr == null) return emptyList()
+    return (0 until arr.length()).map { arr.getString(it) }
+}
+
+private fun parseStepNotes(obj: JSONObject?): Map<Int, String> {
+    if (obj == null) return emptyMap()
+    val map = mutableMapOf<Int, String>()
+    obj.keys().forEach { key ->
+        val value = obj.optString(key, "")
+        if (value.isNotBlank()) {
+            key.toIntOrNull()?.let { map[it] = value }
+        }
+    }
+    return map
 }

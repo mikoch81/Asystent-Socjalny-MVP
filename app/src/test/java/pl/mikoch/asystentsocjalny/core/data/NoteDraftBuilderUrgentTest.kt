@@ -138,4 +138,92 @@ class NoteDraftBuilderUrgentTest {
 
         assertTrue(text.contains("Domyślny opis scenariusza"))
     }
+
+    @Test
+    fun formatToText_containsPersonsPresent_whenProvided() {
+        val draft = NoteDraftBuilder.build(
+            scenarioTitle = "Test",
+            scenarioDescription = "Opis",
+            completedSteps = emptyList(),
+            criticalCompletedSteps = emptyList(),
+            location = "",
+            situationDescription = "",
+            additionalNotes = "",
+            personsPresent = "matka, dziecko"
+        )
+        val text = NoteDraftBuilder.formatToText(draft)
+
+        assertTrue(text.contains("Osoby obecne: matka, dziecko"))
+    }
+
+    @Test
+    fun formatToText_omitsPersonsPresent_whenEmpty() {
+        val draft = NoteDraftBuilder.build(
+            scenarioTitle = "Test",
+            scenarioDescription = "Opis",
+            completedSteps = emptyList(),
+            criticalCompletedSteps = emptyList(),
+            location = "",
+            situationDescription = "",
+            additionalNotes = "",
+            personsPresent = ""
+        )
+        val text = NoteDraftBuilder.formatToText(draft)
+
+        assertFalse(text.contains("Osoby obecne"))
+    }
+
+    @Test
+    fun formatToText_containsSituationFlags() {
+        val draft = NoteDraftBuilder.build(
+            scenarioTitle = "Test",
+            scenarioDescription = "Opis",
+            completedSteps = emptyList(),
+            criticalCompletedSteps = emptyList(),
+            location = "",
+            situationDescription = "",
+            additionalNotes = "",
+            situationFlags = listOf("Alkohol", "Agresja")
+        )
+        val text = NoteDraftBuilder.formatToText(draft)
+
+        assertTrue(text.contains("Stan sytuacji:"))
+        assertTrue(text.contains("- Alkohol"))
+        assertTrue(text.contains("- Agresja"))
+    }
+
+    @Test
+    fun formatToText_containsRunningNotes() {
+        val draft = NoteDraftBuilder.build(
+            scenarioTitle = "Test",
+            scenarioDescription = "Opis",
+            completedSteps = emptyList(),
+            criticalCompletedSteps = emptyList(),
+            location = "",
+            situationDescription = "",
+            additionalNotes = "",
+            runningNotes = "Obserwacja bieżąca"
+        )
+        val text = NoteDraftBuilder.formatToText(draft)
+
+        assertTrue(text.contains("Notatki bieżące:"))
+        assertTrue(text.contains("Obserwacja bieżąca"))
+    }
+
+    @Test
+    fun formatToText_containsStepNotes() {
+        val draft = NoteDraftBuilder.build(
+            scenarioTitle = "Test",
+            scenarioDescription = "Opis",
+            completedSteps = listOf("Krok A", "Krok B"),
+            criticalCompletedSteps = emptyList(),
+            location = "",
+            situationDescription = "",
+            additionalNotes = "",
+            stepNotes = mapOf(0 to "Uwaga do kroku A")
+        )
+        val text = NoteDraftBuilder.formatToText(draft)
+
+        assertTrue(text.contains("Notatka: Uwaga do kroku A"))
+    }
 }
