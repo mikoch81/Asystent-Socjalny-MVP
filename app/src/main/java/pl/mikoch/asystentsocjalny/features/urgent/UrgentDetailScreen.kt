@@ -8,9 +8,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
@@ -29,7 +33,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -67,12 +75,17 @@ fun UrgentDetailScreen(
     Scaffold(
         topBar = { TopAppBar(title = { Text(scenario.title) }) }
     ) { innerPadding ->
+        val focusManager = LocalFocusManager.current
+        val keyboardController = LocalSoftwareKeyboardController.current
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
+                .navigationBarsPadding()
+                .imePadding()
                 .padding(horizontal = 16.dp)
-                .padding(top = 16.dp, bottom = 32.dp)
+                .padding(top = 16.dp)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
@@ -132,7 +145,11 @@ fun UrgentDetailScreen(
                 label = { Text("Miejsce interwencji") },
                 placeholder = { Text("np. ul. Przykładowa 5, Warszawa") },
                 modifier = Modifier.fillMaxWidth(),
-                singleLine = true
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                keyboardActions = KeyboardActions(
+                    onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                )
             )
             OutlinedTextField(
                 value = viewModel.situationDescription.value,
@@ -140,7 +157,11 @@ fun UrgentDetailScreen(
                 label = { Text("Opis sytuacji") },
                 placeholder = { Text("Krótki opis zastanej sytuacji") },
                 modifier = Modifier.fillMaxWidth(),
-                minLines = 3
+                minLines = 3,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                keyboardActions = KeyboardActions(
+                    onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                )
             )
             OutlinedTextField(
                 value = viewModel.additionalNotes.value,
@@ -148,7 +169,11 @@ fun UrgentDetailScreen(
                 label = { Text("Uwagi dodatkowe") },
                 placeholder = { Text("Opcjonalne uwagi") },
                 modifier = Modifier.fillMaxWidth(),
-                minLines = 2
+                minLines = 2,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                keyboardActions = KeyboardActions(
+                    onDone = { keyboardController?.hide() }
+                )
             )
 
             Button(
@@ -179,6 +204,8 @@ fun UrgentDetailScreen(
             ) {
                 Text("Wyczyść zapis roboczy")
             }
+
+            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }
