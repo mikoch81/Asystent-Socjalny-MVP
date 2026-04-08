@@ -1,27 +1,20 @@
 package pl.mikoch.asystentsocjalny.features.urgent
 
-import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -30,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import pl.mikoch.asystentsocjalny.features.common.BaseScrollableScreen
 import pl.mikoch.asystentsocjalny.features.urgent.model.GuidanceUi
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentProgress
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentScenarioUi
@@ -46,32 +40,20 @@ fun CaseSummaryScreen(
     val noteText = viewModel.generatedNoteText.value
     val pdfReadiness by viewModel.pdfReadiness
 
-    Scaffold(
-        topBar = { TopAppBar(title = { Text("Podsumowanie sprawy") }) }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .navigationBarsPadding()
-                .padding(horizontal = 16.dp)
-                .padding(top = 16.dp, bottom = 32.dp)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            // --- Title + Status ---
+    BaseScrollableScreen(title = "Podsumowanie sprawy") {
+        item(key = "title") {
             Text(
                 text = scenario.title,
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            SummaryStatusRow(progress)
+        }
 
-            // --- Completed steps ---
-            SummaryCompletedSteps(scenario, viewModel)
+        item(key = "status") { SummaryStatusRow(progress) }
+        item(key = "completed") { SummaryCompletedSteps(scenario, viewModel) }
 
-            // --- Unchecked critical steps ---
-            if (progress.uncheckedCriticalSteps.isNotEmpty()) {
+        if (progress.uncheckedCriticalSteps.isNotEmpty()) {
+            item(key = "unchecked") {
                 SummarySection(
                     title = "Niewykonane kroki krytyczne",
                     containerColor = MaterialTheme.colorScheme.errorContainer,
@@ -85,14 +67,14 @@ fun CaseSummaryScreen(
                     }
                 }
             }
+        }
 
-            // --- Guidance ---
-            scenario.guidance?.let { guidance ->
-                SummaryGuidanceSection(guidance)
-            }
+        scenario.guidance?.let { guidance ->
+            item(key = "guidance") { SummaryGuidanceSection(guidance) }
+        }
 
-            // --- Generated note ---
-            if (noteText.isNotBlank()) {
+        if (noteText.isNotBlank()) {
+            item(key = "note") {
                 SummarySection(
                     title = "Notatka",
                     containerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -107,8 +89,7 @@ fun CaseSummaryScreen(
                 }
             }
 
-            // --- Actions ---
-            if (noteText.isNotBlank()) {
+            item(key = "btn_save") {
                 Button(
                     onClick = {
                         viewModel.saveDraft()
@@ -120,7 +101,9 @@ fun CaseSummaryScreen(
                 ) {
                     Text("Zapisz jako robocze")
                 }
+            }
 
+            item(key = "btn_share") {
                 Button(
                     onClick = {
                         val sendIntent = Intent(Intent.ACTION_SEND).apply {
@@ -135,7 +118,9 @@ fun CaseSummaryScreen(
                 ) {
                     Text("Udostępnij")
                 }
+            }
 
+            item(key = "btn_pdf") {
                 Button(
                     onClick = {
                         viewModel.generatePdf()
@@ -148,8 +133,10 @@ fun CaseSummaryScreen(
                 ) {
                     Text("Generuj PDF do uzupełnienia i podpisu")
                 }
+            }
 
-                if (!pdfReadiness.enabled && pdfReadiness.reason.isNotBlank()) {
+            if (!pdfReadiness.enabled && pdfReadiness.reason.isNotBlank()) {
+                item(key = "pdf_reason") {
                     Text(
                         text = pdfReadiness.reason,
                         style = MaterialTheme.typography.bodySmall,
@@ -157,7 +144,9 @@ fun CaseSummaryScreen(
                     )
                 }
             }
+        }
 
+        item(key = "btn_back") {
             OutlinedButton(
                 onClick = onBack,
                 modifier = Modifier

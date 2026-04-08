@@ -7,28 +7,23 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import pl.mikoch.asystentsocjalny.features.common.BaseScrollableScreen
 
 @Composable
 fun NotePreviewScreen(
@@ -40,19 +35,8 @@ fun NotePreviewScreen(
 ) {
     val context = LocalContext.current
 
-    Scaffold(
-        topBar = { TopAppBar(title = { Text("Podgląd notatki") }) }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .navigationBarsPadding()
-                .padding(horizontal = 16.dp)
-                .padding(top = 16.dp, bottom = 32.dp)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
+    BaseScrollableScreen(title = "Podgląd notatki") {
+        item(key = "note_content") {
             SelectionContainer {
                 Column(
                     modifier = Modifier
@@ -65,7 +49,9 @@ fun NotePreviewScreen(
                     NoteFormattedContent(noteText)
                 }
             }
+        }
 
+        item(key = "btn_save") {
             Button(
                 onClick = {
                     onSaveDraft()
@@ -77,7 +63,9 @@ fun NotePreviewScreen(
             ) {
                 Text("Zapisz jako robocze")
             }
+        }
 
+        item(key = "btn_share") {
             Button(
                 onClick = { shareNote(context, noteText) },
                 modifier = Modifier
@@ -86,7 +74,9 @@ fun NotePreviewScreen(
             ) {
                 Text("Udostępnij")
             }
+        }
 
+        item(key = "btn_pdf") {
             Button(
                 onClick = {
                     onGeneratePdf()
@@ -99,15 +89,19 @@ fun NotePreviewScreen(
             ) {
                 Text("Generuj PDF do uzupełnienia i podpisu")
             }
+        }
 
-            if (!pdfReadiness.enabled && pdfReadiness.reason.isNotBlank()) {
+        if (!pdfReadiness.enabled && pdfReadiness.reason.isNotBlank()) {
+            item(key = "pdf_reason") {
                 Text(
                     text = pdfReadiness.reason,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
+        }
 
+        item(key = "btn_back") {
             OutlinedButton(
                 onClick = onBack,
                 modifier = Modifier

@@ -4,28 +4,23 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -45,6 +40,7 @@ import pl.mikoch.asystentsocjalny.core.model.ActionRecommendation
 import pl.mikoch.asystentsocjalny.core.model.RecommendationPriority
 import pl.mikoch.asystentsocjalny.core.model.RiskAssessment
 import pl.mikoch.asystentsocjalny.core.model.RiskLevel
+import pl.mikoch.asystentsocjalny.features.common.BaseScrollableScreen
 import pl.mikoch.asystentsocjalny.features.urgent.model.ChecklistStepUi
 import pl.mikoch.asystentsocjalny.features.urgent.model.GuidanceUi
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentProgress
@@ -72,31 +68,36 @@ fun UrgentDetailScreen(
     val recommendation by viewModel.recommendation
     val draftRestored by viewModel.draftRestored
 
-    Scaffold(
-        topBar = { TopAppBar(title = { Text(scenario.title) }) }
-    ) { innerPadding ->
-        val focusManager = LocalFocusManager.current
-        val keyboardController = LocalSoftwareKeyboardController.current
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .navigationBarsPadding()
-                .imePadding()
-                .padding(horizontal = 16.dp)
-                .padding(top = 16.dp)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            // --- Draft restored hint ---
-            if (draftRestored) {
+    BaseScrollableScreen(
+        title = scenario.title,
+        bottomBar = {
+            Surface(tonalElevation = 3.dp) {
+                Button(
+                    onClick = {
+                        viewModel.generateNote(scenario)
+                        onNavigateToPreview()
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding()
+                        .padding(horizontal = 16.dp, vertical = 12.dp)
+                        .height(56.dp)
+                ) {
+                    Text("Generuj notatkę służbową")
+                }
+            }
+        }
+    ) {
+        if (draftRestored) {
+            item(key = "draft_hint") {
                 DraftRestoredHint(
                     onDismiss = { viewModel.dismissDraftHint() },
                     onClear = { viewModel.clearDraft() }
                 )
             }
+        }
 
+        item(key = "description") {
             Text(
                 text = scenario.description,
                 style = MaterialTheme.typography.bodyMedium,
@@ -104,90 +105,87 @@ fun UrgentDetailScreen(
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
+        }
 
-            // --- Progress & Status ---
-            UrgentProgressSection(progress)
+        item(key = "progress") { UrgentProgressSection(progress) }
+        item(key = "risk") { RiskAssessmentSection(riskAssessment) }
+        item(key = "recommendation") { ActionRecommendationSection(recommendation) }
 
-            // --- Risk Assessment ---
-            RiskAssessmentSection(riskAssessment)
-
-            // --- Action Recommendation ---
-            ActionRecommendationSection(recommendation)
-
-            // --- Unchecked critical steps ---
-            if (progress.uncheckedCriticalSteps.isNotEmpty()) {
+        if (progress.uncheckedCriticalSteps.isNotEmpty()) {
+            item(key = "unchecked") {
                 UrgentUncheckedCriticalSection(progress.uncheckedCriticalSteps)
             }
+        }
 
-            // --- What next guidance ---
-            scenario.guidance?.let { guidance ->
-                UrgentGuidanceSection(guidance)
-            }
+        scenario.guidance?.let { guidance ->
+            item(key = "guidance") { UrgentGuidanceSection(guidance) }
+        }
 
+        item(key = "checklist_header") {
             Text(
                 text = "Lista kontrolna",
                 style = MaterialTheme.typography.titleMedium
             )
-            scenario.steps.forEachIndexed { index, step ->
-                UrgentChecklistRow(
-                    checked = viewModel.checkedStates.getOrElse(index) { false },
-                    onCheckedChange = { viewModel.checkedStates[index] = it },
-                    step = step
+        }
+
+        itemsIndexed(
+            items = scenario.steps,
+            key = { index, _ -> "step_$index" }
+        ) { index, step ->
+            UrgentChecklistRow(
+                checked = viewModel.checkedStates.getOrElse(index) { false },
+                onCheckedChange = { viewModel.checkedStates[index] = it },
+                step = step
+            )
+        }
+
+        item(key = "input_fields") {
+            val focusManager = LocalFocusManager.current
+            val keyboardController = LocalSoftwareKeyboardController.current
+
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Text("Dane do notatki", style = MaterialTheme.typography.titleMedium)
+
+                OutlinedTextField(
+                    value = viewModel.location.value,
+                    onValueChange = { viewModel.location.value = it },
+                    label = { Text("Miejsce interwencji") },
+                    placeholder = { Text("np. ul. Przykładowa 5, Warszawa") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    keyboardActions = KeyboardActions(
+                        onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                    )
+                )
+                OutlinedTextField(
+                    value = viewModel.situationDescription.value,
+                    onValueChange = { viewModel.situationDescription.value = it },
+                    label = { Text("Opis sytuacji") },
+                    placeholder = { Text("Krótki opis zastanej sytuacji") },
+                    modifier = Modifier.fillMaxWidth(),
+                    minLines = 3,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                    keyboardActions = KeyboardActions(
+                        onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                    )
+                )
+                OutlinedTextField(
+                    value = viewModel.additionalNotes.value,
+                    onValueChange = { viewModel.additionalNotes.value = it },
+                    label = { Text("Uwagi dodatkowe") },
+                    placeholder = { Text("Opcjonalne uwagi") },
+                    modifier = Modifier.fillMaxWidth(),
+                    minLines = 2,
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                    keyboardActions = KeyboardActions(
+                        onDone = { keyboardController?.hide() }
+                    )
                 )
             }
+        }
 
-            Spacer(modifier = Modifier.height(8.dp))
-            Text("Dane do notatki", style = MaterialTheme.typography.titleMedium)
-
-            OutlinedTextField(
-                value = viewModel.location.value,
-                onValueChange = { viewModel.location.value = it },
-                label = { Text("Miejsce interwencji") },
-                placeholder = { Text("np. ul. Przykładowa 5, Warszawa") },
-                modifier = Modifier.fillMaxWidth(),
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                keyboardActions = KeyboardActions(
-                    onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                )
-            )
-            OutlinedTextField(
-                value = viewModel.situationDescription.value,
-                onValueChange = { viewModel.situationDescription.value = it },
-                label = { Text("Opis sytuacji") },
-                placeholder = { Text("Krótki opis zastanej sytuacji") },
-                modifier = Modifier.fillMaxWidth(),
-                minLines = 3,
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                keyboardActions = KeyboardActions(
-                    onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                )
-            )
-            OutlinedTextField(
-                value = viewModel.additionalNotes.value,
-                onValueChange = { viewModel.additionalNotes.value = it },
-                label = { Text("Uwagi dodatkowe") },
-                placeholder = { Text("Opcjonalne uwagi") },
-                modifier = Modifier.fillMaxWidth(),
-                minLines = 2,
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                keyboardActions = KeyboardActions(
-                    onDone = { keyboardController?.hide() }
-                )
-            )
-
-            Button(
-                onClick = {
-                    viewModel.generateNote(scenario)
-                    onNavigateToPreview()
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-            ) {
-                Text("Generuj notatkę służbową")
-            }
-
+        item(key = "btn_summary") {
             OutlinedButton(
                 onClick = {
                     viewModel.saveDraft()
@@ -197,15 +195,15 @@ fun UrgentDetailScreen(
             ) {
                 Text("Zobacz podsumowanie")
             }
+        }
 
+        item(key = "btn_clear") {
             OutlinedButton(
                 onClick = { viewModel.clearDraft() },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Wyczyść zapis roboczy")
             }
-
-            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }
