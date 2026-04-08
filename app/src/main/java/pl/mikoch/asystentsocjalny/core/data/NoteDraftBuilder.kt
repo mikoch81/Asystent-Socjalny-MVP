@@ -30,21 +30,25 @@ object NoteDraftBuilder {
 
     fun formatToText(draft: NoteDraft): String = buildString {
         appendLine("NOTATKA SŁUŻBOWA – SZKIC")
+        appendLine("(wymaga weryfikacji i uzupełnienia przed złożeniem)")
         appendLine()
         appendLine("Data: ${draft.date}")
         appendLine("Miejsce: ${draft.location}")
+        appendLine("Pracownik: [imię i nazwisko]")
         appendLine()
         appendLine("Rodzaj sytuacji:")
         appendLine(draft.scenarioTitle)
         appendLine()
-        appendLine("Opis sytuacji:")
+        appendLine("Opis zastanej sytuacji:")
         appendLine(draft.situationDescription)
         appendLine()
-        appendLine("Wykonane działania:")
+        appendLine("Podjęte działania:")
         if (draft.completedSteps.isEmpty()) {
             appendLine("- [brak zaznaczonych kroków]")
         } else {
-            draft.completedSteps.forEach { appendLine("- $it") }
+            draft.completedSteps.forEachIndexed { i, step ->
+                appendLine("${i + 1}. $step")
+            }
         }
         if (draft.criticalCompletedSteps.isNotEmpty()) {
             appendLine()
@@ -56,5 +60,10 @@ object NoteDraftBuilder {
             appendLine("Uwagi dodatkowe:")
             appendLine(draft.additionalNotes)
         }
+        appendLine()
+        appendLine("Dalsze kroki:")
+        appendLine("- [do uzupełnienia przez pracownika]")
+        appendLine()
+        appendLine("Podpis: _________________________")
     }
 }

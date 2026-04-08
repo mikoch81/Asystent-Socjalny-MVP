@@ -3,33 +3,36 @@
     {
       "id": "urgent_child_abuse",
       "title": "Podejrzenie przemocy wobec dziecka",
-      "description": "Scenariusz postępowania w przypadku podejrzenia stosowania przemocy fizycznej lub psychicznej wobec dziecka w rodzinie.",
+      "description": "Pracownik socjalny stwierdza ślady przemocy fizycznej u dziecka podczas wizyty w rodzinie. Wymagane natychmiastowe działanie i uruchomienie procedury Niebieskiej Karty.",
       "steps": [
-        { "id": "s1", "text": "Zapewnij bezpieczeństwo dziecku – w razie zagrożenia życia zadzwoń na 112", "isCritical": true },
-        { "id": "s2", "text": "Przeprowadź wstępną rozmowę z dzieckiem w bezpiecznym otoczeniu", "isCritical": false },
-        { "id": "s3", "text": "Udokumentuj widoczne obrażenia (opis, nie zdjęcia bez zgody)", "isCritical": true },
-        { "id": "s4", "text": "Wypełnij formularz Niebieskiej Karty – A", "isCritical": true },
-        { "id": "s5", "text": "Powiadom przełożonego i zespół interdyscyplinarny", "isCritical": false },
-        { "id": "s6", "text": "Przekaż informację do sądu rodzinnego jeśli wymagane", "isCritical": false }
+        { "id": "s1", "text": "Oceń bezpieczeństwo dziecka — jeśli zagrożone życie lub zdrowie, zadzwoń 112", "isCritical": true },
+        { "id": "s2", "text": "Odizoluj dziecko od osoby podejrzewanej — zapewnij bezpieczne miejsce do rozmowy", "isCritical": true },
+        { "id": "s3", "text": "Przeprowadź krótką rozmowę z dzieckiem (spokojnie, bez sugerowania odpowiedzi)", "isCritical": false },
+        { "id": "s4", "text": "Opisz widoczne obrażenia — lokalizacja, rodzaj, rozmiar (bez zdjęć bez zgody)", "isCritical": true },
+        { "id": "s5", "text": "Wypełnij formularz Niebieskiej Karty – A (tego samego dnia!)", "isCritical": true },
+        { "id": "s6", "text": "Powiadom przełożonego i przekaż sprawę do zespołu interdyscyplinarnego", "isCritical": false },
+        { "id": "s7", "text": "Ustal termin wizyty monitorującej w ciągu 7 dni", "isCritical": false }
       ],
       "guidance": {
         "notify": [
-          "Przełożony / kierownik MOPS",
-          "Zespół interdyscyplinarny ds. przeciwdziałania przemocy",
-          "Sąd rodzinny (jeśli zagrożenie życia lub zdrowia)"
+          "Kierownik MOPS/GOPS — niezwłocznie po interwencji",
+          "Zespół interdyscyplinarny ds. przeciwdziałania przemocy domowej",
+          "Policja — jeśli istnieje bezpośrednie zagrożenie życia",
+          "Sąd rodzinny — jeśli konieczne ograniczenie władzy rodzicielskiej"
         ],
         "documents": [
-          "Formularz Niebieskiej Karty – A",
-          "Notatka służbowa z interwencji",
-          "Wniosek do sądu rodzinnego (jeśli dotyczy)"
+          "Formularz Niebieskiej Karty – A (obowiązkowy, w dniu interwencji)",
+          "Notatka służbowa z opisem sytuacji i podjętych działań",
+          "Wniosek do sądu rodzinnego (gdy zagrożenie życia lub zdrowia)"
         ],
         "doNotMiss": [
           "Nie zostawiaj dziecka sam na sam z podejrzewanym sprawcą",
-          "Nie wykonuj zdjęć dziecka bez zgody opiekuna prawnego",
-          "Formularz NK-A musi być wypełniony tego samego dnia"
+          "Nie rób zdjęć dziecka bez pisemnej zgody opiekuna prawnego",
+          "Formularz NK-A musi być wypełniony tego samego dnia roboczego",
+          "Zachowaj spokój — dziecko obserwuje Twoją reakcję"
         ],
         "escalationRequired": true,
-        "escalationNote": "Wymagana konsultacja z zespołem interdyscyplinarnym w ciągu 24h. W przypadku bezpośredniego zagrożenia życia – natychmiastowy kontakt z Policją i sądem rodzinnym."
+        "escalationNote": "Obowiązkowa konsultacja z zespołem interdyscyplinarnym w ciągu 24h. Przy bezpośrednim zagrożeniu życia — natychmiastowe zawiadomienie Policji i sądu rodzinnego. Podstawa: art. 9d ustawy o przeciwdziałaniu przemocy domowej."
       }
     },
     {
