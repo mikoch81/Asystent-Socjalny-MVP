@@ -34,7 +34,7 @@ fun ProceduresScreen(
         if (procedures.isEmpty()) {
             EmptyStateMessage(
                 title = "Brak danych o procedurach",
-                subtitle = "Nie udało się wczytać katalogu.",
+                subtitle = "Nie udało się wczytać danych.",
                 modifier = Modifier.padding(innerPadding)
             )
         } else {

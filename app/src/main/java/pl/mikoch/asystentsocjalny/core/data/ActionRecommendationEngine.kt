@@ -34,7 +34,7 @@ object ActionRecommendationEngine {
             actions += "→ ${step.text}"
         }
         if (guidance?.escalationRequired == true) {
-            actions += "Wymagane jest przekazanie sprawy — należy Eskaluj zgodnie z obowiązującą procedurą"
+            actions += "Wymagane jest przekazanie sprawy — należy eskalować zgodnie z obowiązującą procedurą"
         }
         actions += "Nie zamykaj sprawy do czasu zrealizowania wszystkich kroków krytycznych"
 

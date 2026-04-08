@@ -133,7 +133,7 @@ fun NotePreviewScreen(
                     .fillMaxWidth()
                     .height(56.dp)
             ) {
-                Text("Wróć")
+                Text("Wróć do sprawy")
             }
         }
     }

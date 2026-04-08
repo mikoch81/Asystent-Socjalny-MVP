@@ -1,9 +1,9 @@
 package pl.mikoch.asystentsocjalny.core.model
 
 enum class RiskLevel(val label: String) {
-    LOW("Niski"),
-    MEDIUM("Średni"),
-    HIGH("Wysoki")
+    LOW("Niskie"),
+    MEDIUM("Średnie"),
+    HIGH("Wysokie")
 }
 
 data class RiskAssessment(

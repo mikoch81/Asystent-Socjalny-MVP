@@ -101,7 +101,7 @@ class ActionRecommendationEngineTest {
             progress = progress(5, 2, uncheckedCritical = listOf(criticalStep)),
             guidance = guidance(escalationRequired = true, escalationNote = "Powiadom przełożonego")
         )
-        assertTrue(result.actions.any { it.contains("Eskaluj") })
+        assertTrue(result.actions.any { it.contains("eskalować") })
         assertTrue(result.warnings.any { it.contains("Powiadom przełożonego") })
     }
 

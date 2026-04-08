@@ -281,11 +281,11 @@ private fun SummaryGuidanceSection(guidance: GuidanceUi) {
             guidance.notify.forEach { Text("• $it", style = MaterialTheme.typography.bodyMedium) }
         }
         if (guidance.documents.isNotEmpty()) {
-            Text("Dokumenty:", fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodySmall)
+            Text("Dokumenty do przygotowania:", fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodySmall)
             guidance.documents.forEach { Text("• $it", style = MaterialTheme.typography.bodyMedium) }
         }
         if (guidance.doNotMiss.isNotEmpty()) {
-            Text("Nie pomiń:", fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodySmall)
+            Text("Czego nie pominąć:", fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodySmall)
             guidance.doNotMiss.forEach { Text("• $it", style = MaterialTheme.typography.bodyMedium) }
         }
         if (guidance.escalationRequired) {

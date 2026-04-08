@@ -354,7 +354,7 @@ private fun UrgentGuidanceSection(guidance: GuidanceUi) {
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
-            text = "📋  Co dalej",
+            text = "Co dalej",
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSecondaryContainer,
             fontWeight = FontWeight.Bold

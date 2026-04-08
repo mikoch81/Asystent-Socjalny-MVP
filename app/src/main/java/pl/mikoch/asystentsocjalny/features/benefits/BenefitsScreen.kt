@@ -31,7 +31,7 @@ fun BenefitsScreen(
         if (benefits.isEmpty()) {
             EmptyStateMessage(
                 title = "Brak danych o świadczeniach",
-                subtitle = "Nie udało się wczytać katalogu.",
+                subtitle = "Nie udało się wczytać danych.",
                 modifier = Modifier.padding(innerPadding)
             )
         } else {
