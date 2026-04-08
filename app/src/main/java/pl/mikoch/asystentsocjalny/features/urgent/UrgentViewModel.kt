@@ -11,6 +11,7 @@ import kotlinx.coroutines.runBlocking
 import pl.mikoch.asystentsocjalny.core.data.DraftStore
 import pl.mikoch.asystentsocjalny.core.data.KnowledgeRepository
 import pl.mikoch.asystentsocjalny.core.data.NoteDraftBuilder
+import pl.mikoch.asystentsocjalny.core.data.RiskAssessmentEngine
 import pl.mikoch.asystentsocjalny.core.data.UrgentDraft
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentProgressCalculator
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentScenarioUi
@@ -45,6 +46,15 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
 
     val progress = derivedStateOf {
         UrgentProgressCalculator.calculate(currentSteps, checkedStates.toList())
+    }
+
+    val riskAssessment = derivedStateOf {
+        val p = progress.value
+        RiskAssessmentEngine.assess(
+            totalSteps = p.totalSteps,
+            completedSteps = p.completedSteps,
+            uncheckedCriticalCount = p.uncheckedCriticalSteps.size
+        )
     }
 
     fun initDetailState(scenario: UrgentScenarioUi) {

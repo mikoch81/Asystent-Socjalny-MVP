@@ -31,7 +31,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import pl.mikoch.asystentsocjalny.core.model.RiskAssessment
+import pl.mikoch.asystentsocjalny.core.model.RiskLevel
 import pl.mikoch.asystentsocjalny.features.urgent.model.ChecklistStepUi
 import pl.mikoch.asystentsocjalny.features.urgent.model.GuidanceUi
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentProgress
@@ -54,6 +57,7 @@ fun UrgentDetailScreen(
     }
 
     val progress by viewModel.progress
+    val riskAssessment by viewModel.riskAssessment
     val draftRestored by viewModel.draftRestored
 
     Scaffold(
@@ -86,6 +90,9 @@ fun UrgentDetailScreen(
 
             // --- Progress & Status ---
             UrgentProgressSection(progress)
+
+            // --- Risk Assessment ---
+            RiskAssessmentSection(riskAssessment)
 
             // --- Unchecked critical steps ---
             if (progress.uncheckedCriticalSteps.isNotEmpty()) {
@@ -377,6 +384,50 @@ private fun GuidanceBulletList(header: String, items: List<String>) {
                 text = "  •  $item",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+        }
+    }
+}
+
+@Composable
+private fun RiskAssessmentSection(assessment: RiskAssessment) {
+    val (bgColor, contentColor, icon) = when (assessment.level) {
+        RiskLevel.HIGH -> Triple(
+            Color(0xFFFFCDD2),
+            Color(0xFFC62828),
+            "🔴"
+        )
+        RiskLevel.MEDIUM -> Triple(
+            Color(0xFFFFE0B2),
+            Color(0xFFE65100),
+            "🟠"
+        )
+        RiskLevel.LOW -> Triple(
+            Color(0xFFC8E6C9),
+            Color(0xFF2E7D32),
+            "🟢"
+        )
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .background(bgColor)
+            .padding(12.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        Text(
+            text = "$icon  Ryzyko: ${assessment.level.label}",
+            style = MaterialTheme.typography.titleSmall,
+            color = contentColor,
+            fontWeight = FontWeight.Bold
+        )
+        assessment.reasons.forEach { reason ->
+            Text(
+                text = "•  $reason",
+                style = MaterialTheme.typography.bodyMedium,
+                color = contentColor
             )
         }
     }
