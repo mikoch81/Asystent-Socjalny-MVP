@@ -3,6 +3,7 @@
     {
       "id": "domestic-violence-child-risk",
       "title": "Przemoc domowa – ryzyko dla dziecka",
+      "category": "Interwencyjne",
       "situation": "Podczas wizyty terenowej występuje przemoc lub realne zagrożenie dobra dziecka.",
       "severity": "Wysoki",
       "nowSteps": [
@@ -33,8 +34,70 @@
       ]
     },
     {
+      "id": "domestic-violence-adult",
+      "title": "Przemoc domowa – osoba dorosła",
+      "category": "Interwencyjne",
+      "situation": "Zgłoszenie lub stwierdzenie przemocy domowej wobec osoby dorosłej podczas wizyty lub kontaktu z klientem.",
+      "severity": "Wysoki",
+      "nowSteps": [
+        "Oceń bezpośrednie zagrożenie życia lub zdrowia – jeśli tak, wezwij odpowiednie służby.",
+        "Zapewnij osobie poszkodowanej bezpieczne miejsce do rozmowy.",
+        "Poinformuj o przysługujących prawach i dostępnych formach pomocy.",
+        "Rozpocznij dokumentowanie zgodnie z procedurą jednostki."
+      ],
+      "notify": [
+        "Przełożony / kierownik",
+        "Policja – jeśli bezpośrednie zagrożenie",
+        "Zespół interdyscyplinarny ds. przeciwdziałania przemocy"
+      ],
+      "doNotMiss": [
+        "Poinformuj osobę o prawie do bezpłatnej pomocy prawnej.",
+        "Przekaż kontakt do specjalistycznego ośrodka wsparcia.",
+        "Kontakt monitorujący powinien nastąpić w ciągu 7 dni."
+      ],
+      "legalBasis": [
+        "Źródło demonstracyjne – do walidacji prawnej."
+      ],
+      "escalation": "Obowiązkowe przekazanie sprawy do zespołu interdyscyplinarnego. W sytuacji zagrożenia życia – natychmiastowe powiadomienie Policji.",
+      "documents": [
+        "Notatka służbowa z interwencji",
+        "Informacja pisemna dla osoby doświadczającej przemocy"
+      ]
+    },
+    {
+      "id": "person-under-influence",
+      "title": "Osoba pod wpływem alkoholu lub substancji",
+      "category": "Interwencyjne",
+      "situation": "Podczas wizyty terenowej osoba kluczowa jest w stanie upojenia alkoholowego lub pod wpływem innych substancji.",
+      "severity": "Średni",
+      "nowSteps": [
+        "Oceń, czy osoba stanowi zagrożenie dla siebie lub innych.",
+        "Jeśli zagrożenie – wezwij odpowiednie służby.",
+        "Nie prowadź wywiadu merytorycznego – odnotuj stan faktyczny.",
+        "Uzgodnij termin ponownej wizyty."
+      ],
+      "notify": [
+        "Przełożony / kierownik",
+        "Policja lub pogotowie – w razie zagrożenia"
+      ],
+      "doNotMiss": [
+        "Zapisz obserwacje dotyczące stanu osoby (bez ocen moralnych).",
+        "Nie podejmuj wiążących ustaleń z osobą w stanie upojenia.",
+        "Sprawdź, czy w miejscu przebywają dzieci lub osoby zależne."
+      ],
+      "legalBasis": [
+        "Źródło demonstracyjne – do walidacji."
+      ],
+      "escalation": "Konsultacja z przełożonym wymagana, jeśli sytuacja powtarza się lub obecne są dzieci.",
+      "documents": [
+        "Notatka służbowa",
+        "Informacja o przyczynach nieprzeprowadzenia wywiadu"
+      ]
+    },
+    {
       "id": "refusal-of-cooperation",
       "title": "Odmowa współpracy podczas wizyty",
+      "category": "Interwencyjne",
       "situation": "Osoba lub rodzina odmawia rozmowy albo uniemożliwia przeprowadzenie czynności.",
       "severity": "Średni",
       "nowSteps": [
@@ -59,6 +122,308 @@
       "documents": [
         "Notatka służbowa",
         "Informacja dla przełożonego"
+      ]
+    },
+    {
+      "id": "child-neglect",
+      "title": "Zaniedbanie małoletniego",
+      "category": "Rodzinne i opiekuńcze",
+      "situation": "Pracownik stwierdza oznaki zaniedbania dziecka: brak higieny, niedożywienie, brak opieki medycznej lub edukacyjnej.",
+      "severity": "Wysoki",
+      "nowSteps": [
+        "Oceń bezpieczeństwo dziecka i jego stan zdrowia.",
+        "Przeprowadź rozmowę z opiekunem – ustal przyczyny sytuacji.",
+        "Udokumentuj obserwacje rzeczowo i konkretnie.",
+        "Rozważ uruchomienie procedury ochrony dziecka."
+      ],
+      "notify": [
+        "Przełożony / kierownik OPS",
+        "Asystent rodziny (jeśli przydzielony)",
+        "Sąd rodzinny – przy poważnym zagrożeniu dobra dziecka"
+      ],
+      "doNotMiss": [
+        "Nie oceniaj – dokumentuj fakty.",
+        "Sprawdź, czy dziecko uczęszcza do szkoły/przedszkola.",
+        "Zweryfikuj, czy rodzina korzysta z dostępnych form pomocy."
+      ],
+      "legalBasis": [
+        "Źródło demonstracyjne – wymaga walidacji prawnej."
+      ],
+      "escalation": "Wymagana konsultacja z przełożonym. Przy bezpośrednim zagrożeniu – zawiadomienie sądu rodzinnego.",
+      "documents": [
+        "Notatka służbowa",
+        "Wniosek do sądu rodzinnego (jeśli wymagany)",
+        "Informacja do szkoły/przedszkola (jeśli zasadne)"
+      ]
+    },
+    {
+      "id": "foster-care-support",
+      "title": "Wsparcie rodziny zastępczej",
+      "category": "Rodzinne i opiekuńcze",
+      "situation": "Rodzina zastępcza zgłasza trudności wychowawcze, problemy adaptacyjne dziecka lub potrzebę dodatkowego wsparcia.",
+      "severity": "Niski",
+      "nowSteps": [
+        "Wysłuchaj zgłoszenia i zidentyfikuj kluczowe potrzeby.",
+        "Sprawdź dostępne formy wsparcia (psycholog, pedagog, grupy wsparcia).",
+        "Ustal plan działania z rodziną zastępczą.",
+        "Zaplanuj wizytę monitorującą."
+      ],
+      "notify": [
+        "Koordynator rodzinnej pieczy zastępczej",
+        "Psycholog / pedagog (jeśli potrzebna konsultacja)"
+      ],
+      "doNotMiss": [
+        "Zapytaj o potrzeby samego dziecka – nie tylko opiekuna.",
+        "Sprawdź terminowość świadczeń przysługujących rodzinie zastępczej.",
+        "Upewnij się, że dziecko ma dostęp do opieki zdrowotnej."
+      ],
+      "legalBasis": [
+        "Źródło demonstracyjne – do walidacji."
+      ],
+      "escalation": "Konsultacja z koordynatorem pieczy. Eskalacja do sądu tylko przy zagrożeniu dobra dziecka.",
+      "documents": [
+        "Notatka z wizyty",
+        "Plan pomocy rodzinie zastępczej"
+      ]
+    },
+    {
+      "id": "parental-authority-concern",
+      "title": "Wątpliwości co do władzy rodzicielskiej",
+      "category": "Rodzinne i opiekuńcze",
+      "situation": "Pracownik ma uzasadnione podejrzenia, że sprawowanie władzy rodzicielskiej zagraża dobru dziecka.",
+      "severity": "Wysoki",
+      "nowSteps": [
+        "Zebrać informacje i obserwacje potwierdzające podejrzenia.",
+        "Skonsultować sytuację z przełożonym.",
+        "Rozważyć konieczność zawiadomienia sądu rodzinnego.",
+        "Udokumentować podjęte działania."
+      ],
+      "notify": [
+        "Przełożony / kierownik OPS",
+        "Sąd rodzinny (jeśli wymagane zawiadomienie)"
+      ],
+      "doNotMiss": [
+        "Działaj na podstawie faktów, nie przypuszczeń.",
+        "Sprawdź historię kontaktów rodziny z OPS.",
+        "Nie informuj podejrzewanego sprawcy o planowanym zawiadomieniu."
+      ],
+      "legalBasis": [
+        "Źródło demonstracyjne – wymaga walidacji prawnej."
+      ],
+      "escalation": "Wymagana konsultacja z przełożonym. Zawiadomienie sądu rodzinnego w uzasadnionych przypadkach.",
+      "documents": [
+        "Notatka służbowa z uzasadnieniem",
+        "Zawiadomienie do sądu rodzinnego (wzór jednostki)"
+      ]
+    },
+    {
+      "id": "elderly-self-neglect",
+      "title": "Samoistne zaniedbanie osoby starszej",
+      "category": "Seniorzy i osoby zależne",
+      "situation": "Osoba starsza mieszka samotnie i wykazuje oznaki zaniedbania: bałagan, brak jedzenia, problemy higieniczne, zagubienie.",
+      "severity": "Średni",
+      "nowSteps": [
+        "Oceń stan zdrowia i warunki bytowe osoby.",
+        "Sprawdź, czy osoba ma kontakt z rodziną lub opiekunem.",
+        "Zaproponuj dostępne formy wsparcia (usługi opiekuńcze, posiłki).",
+        "Zaplanuj wizytę monitorującą."
+      ],
+      "notify": [
+        "Przełożony / kierownik OPS",
+        "Lekarz rodzinny (jeśli stan zdrowia budzi obawy)"
+      ],
+      "doNotMiss": [
+        "Sprawdź, czy osoba rozumie swoją sytuację i wyraża zgodę na pomoc.",
+        "Oceń, czy wymagana jest opieka całodobowa.",
+        "Upewnij się, że osoba ma dostęp do leków i opieki zdrowotnej."
+      ],
+      "legalBasis": [
+        "Źródło demonstracyjne – do walidacji."
+      ],
+      "escalation": "Konsultacja z przełożonym. Przy odmowie pomocy i zagrożeniu życia – rozważ wniosek do sądu.",
+      "documents": [
+        "Notatka służbowa",
+        "Wniosek o usługi opiekuńcze"
+      ]
+    },
+    {
+      "id": "disability-support-review",
+      "title": "Weryfikacja potrzeb osoby z niepełnosprawnością",
+      "category": "Seniorzy i osoby zależne",
+      "situation": "Okresowa ocena sytuacji osoby z niepełnosprawnością korzystającej z pomocy społecznej – weryfikacja adekwatności wsparcia.",
+      "severity": "Niski",
+      "nowSteps": [
+        "Przeprowadź wywiad z osobą i/lub opiekunem.",
+        "Zweryfikuj aktualność orzeczenia o niepełnosprawności.",
+        "Oceń, czy dotychczasowe formy pomocy odpowiadają potrzebom.",
+        "Zaproponuj modyfikację planu pomocy, jeśli wymagana."
+      ],
+      "notify": [
+        "Przełożony – jeśli potrzebna zmiana decyzji administracyjnej"
+      ],
+      "doNotMiss": [
+        "Sprawdź datę ważności orzeczenia o niepełnosprawności.",
+        "Zapytaj o bariery architektoniczne i potrzeby transportowe.",
+        "Upewnij się, że osoba zna przysługujące jej prawa."
+      ],
+      "legalBasis": [
+        "Źródło demonstracyjne – do walidacji."
+      ],
+      "escalation": "Zwykle niewymagana. Eskalacja przy odmowie świadczeń lub istotnym pogorszeniu sytuacji.",
+      "documents": [
+        "Kwestionariusz wywiadu środowiskowego",
+        "Zaktualizowany plan pomocy"
+      ]
+    },
+    {
+      "id": "homelessness-first-contact",
+      "title": "Pierwszy kontakt z osobą bezdomną",
+      "category": "Kryzys bytowy",
+      "situation": "Napotkanie lub zgłoszenie dotyczące osoby bezdomnej wymagającej wsparcia socjalnego.",
+      "severity": "Średni",
+      "nowSteps": [
+        "Oceń stan zdrowia osoby – wezwij pomoc medyczną, jeśli potrzebna.",
+        "Zaproponuj schronienie (noclegownia, ogrzewalnia, schronisko).",
+        "Zbierz podstawowe informacje o sytuacji osoby.",
+        "Poinformuj o dostępnych formach pomocy."
+      ],
+      "notify": [
+        "Straż Miejska / streetworkerzy",
+        "Noclegownia (informacja o wolnych miejscach)",
+        "Służby medyczne – jeśli stan zdrowia tego wymaga"
+      ],
+      "doNotMiss": [
+        "Nie ignoruj odmowy pomocy – odnotuj ją w notatce.",
+        "Sprawdź, czy osoba posiada dokumenty tożsamości.",
+        "Oceń potrzebę objęcia osoby indywidualnym programem wychodzenia z bezdomności."
+      ],
+      "legalBasis": [
+        "Źródło demonstracyjne – do walidacji."
+      ],
+      "escalation": "Eskalacja wymagana, gdy osoba jest nieprzytomna lub odmawia pomocy w warunkach zagrożenia życia.",
+      "documents": [
+        "Notatka służbowa z interwencji",
+        "Skierowanie do schroniska (jeśli zasadne)"
+      ]
+    },
+    {
+      "id": "eviction-threat",
+      "title": "Zagrożenie eksmisją",
+      "category": "Kryzys bytowy",
+      "situation": "Klient zgłasza otrzymanie nakazu eksmisji lub zagrożenie utratą mieszkania z powodu zaległości czynszowych.",
+      "severity": "Wysoki",
+      "nowSteps": [
+        "Ustal stan faktyczny – terminy, kwoty zaległości, etap postępowania.",
+        "Poinformuj o prawie do lokalu socjalnego i pomocy prawnej.",
+        "Sprawdź możliwość przyznania zasiłku celowego na zaległości.",
+        "Skieruj do punktu bezpłatnej pomocy prawnej."
+      ],
+      "notify": [
+        "Przełożony / kierownik OPS",
+        "Punkt pomocy prawnej (informacja dla klienta)"
+      ],
+      "doNotMiss": [
+        "Sprawdź, czy w mieszkaniu zamieszkują dzieci lub osoby zależne.",
+        "Nie obiecuj wyniku – informuj o procedurze.",
+        "Zweryfikuj, czy klient złożył już wniosek o lokal socjalny."
+      ],
+      "legalBasis": [
+        "Źródło demonstracyjne – do walidacji prawnej."
+      ],
+      "escalation": "Konsultacja z przełożonym wymagana. Przy obecności dzieci – rozważ zawiadomienie sądu rodzinnego.",
+      "documents": [
+        "Notatka służbowa",
+        "Wniosek o zasiłek celowy (jeśli zasadne)",
+        "Informacja o punkcie pomocy prawnej"
+      ]
+    },
+    {
+      "id": "crisis-food-insecurity",
+      "title": "Nagły brak środków do życia",
+      "category": "Kryzys bytowy",
+      "situation": "Klient lub rodzina zgłaszają brak środków na żywność, leki lub inne potrzeby podstawowe.",
+      "severity": "Średni",
+      "nowSteps": [
+        "Ustal zakres potrzeb – żywność, leki, opał, higiena.",
+        "Sprawdź możliwość doraźnej pomocy rzeczowej lub zasiłku celowego.",
+        "Poinformuj o programach pomocowych (np. Bank Żywności, FEAD).",
+        "Zaplanuj kompleksową ocenę sytuacji rodziny."
+      ],
+      "notify": [
+        "Przełożony – jeśli potrzebna szybka decyzja",
+        "Organizacje pozarządowe współpracujące z OPS"
+      ],
+      "doNotMiss": [
+        "Sprawdź, czy w rodzinie są dzieci lub osoby chore.",
+        "Oceń, czy sytuacja jest jednorazowa czy chroniczna.",
+        "Nie oceniaj – pomóż ustalić fakty."
+      ],
+      "legalBasis": [
+        "Źródło demonstracyjne – do walidacji."
+      ],
+      "escalation": "Zwykle niewymagana. Eskalacja przy odmowie pomocy lub podejrzeniu głębszego kryzysu.",
+      "documents": [
+        "Notatka służbowa",
+        "Wniosek o pomoc rzeczową lub zasiłek celowy"
+      ]
+    },
+    {
+      "id": "community-interview",
+      "title": "Wywiad środowiskowy – standardowy",
+      "category": "Proceduralno-formalne",
+      "situation": "Przeprowadzenie wywiadu środowiskowego w ramach postępowania o przyznanie świadczenia z pomocy społecznej.",
+      "severity": "Niski",
+      "nowSteps": [
+        "Przygotuj dokumentację i formularz wywiadu.",
+        "Przeprowadź rozmowę z osobą/rodziną w miejscu zamieszkania.",
+        "Zbierz informacje o sytuacji dochodowej, zdrowotnej i bytowej.",
+        "Wypełnij formularz wywiadu i przekaż do rozpatrzenia."
+      ],
+      "notify": [
+        "Przełożony – jeśli wymagana konsultacja merytoryczna"
+      ],
+      "doNotMiss": [
+        "Przed wizytą zweryfikuj dane z poprzednich kontaktów.",
+        "Upewnij się, że osoba rozumie cel i zakres wywiadu.",
+        "Zachowaj poufność uzyskanych informacji."
+      ],
+      "legalBasis": [
+        "Źródło demonstracyjne – do walidacji."
+      ],
+      "escalation": "Zwykle niewymagana. Eskalacja przy odmowie wywiadu lub wykryciu nowych okoliczności.",
+      "documents": [
+        "Formularz wywiadu środowiskowego",
+        "Zaświadczenia o dochodach",
+        "Inne dokumenty wymagane w procedurze"
+      ]
+    },
+    {
+      "id": "social-contract",
+      "title": "Kontrakt socjalny – zawarcie i monitorowanie",
+      "category": "Proceduralno-formalne",
+      "situation": "Osoba korzystająca z pomocy społecznej kwalifikuje się do zawarcia kontraktu socjalnego lub trwa jego realizacja.",
+      "severity": "Niski",
+      "nowSteps": [
+        "Omów cele i zobowiązania wynikające z kontraktu.",
+        "Ustal realistyczny harmonogram działań.",
+        "Podpisz kontrakt z klientem – wręcz kopię.",
+        "Zaplanuj terminy wizyt monitorujących."
+      ],
+      "notify": [
+        "Przełożony – do akceptacji kontraktu"
+      ],
+      "doNotMiss": [
+        "Kontrakt musi być dobrowolny – nie przymuszaj do podpisu.",
+        "Cele muszą być mierzalne i realistyczne.",
+        "Monitoruj realizację zgodnie z harmonogramem."
+      ],
+      "legalBasis": [
+        "Źródło demonstracyjne – do walidacji."
+      ],
+      "escalation": "Przy rażącym niewykonaniu kontraktu – konsultacja z przełożonym ws. dalszych kroków.",
+      "documents": [
+        "Kontrakt socjalny (formularz)",
+        "Notatka z wizyty monitorującej"
       ]
     }
   ]

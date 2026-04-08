@@ -12,6 +12,7 @@ class NoteDraftBuilderTest {
         val procedure = Procedure(
             id = "p1",
             title = "Testowa procedura",
+            category = "Interwencyjne",
             situation = "Sytuacja testowa",
             severity = "Wysoki",
             nowSteps = listOf("Krok 1", "Krok 2"),

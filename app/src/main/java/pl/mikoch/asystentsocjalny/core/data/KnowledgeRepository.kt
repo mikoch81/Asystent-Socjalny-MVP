@@ -42,6 +42,7 @@ class KnowledgeRepository(private val context: Context) {
             Procedure(
                 id = item.getString("id"),
                 title = item.getString("title"),
+                category = item.optString("category", ""),
                 situation = item.getString("situation"),
                 severity = item.getString("severity"),
                 nowSteps = item.getJSONArray("nowSteps").toStringList(),
