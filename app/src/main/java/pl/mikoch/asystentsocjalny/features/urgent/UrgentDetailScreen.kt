@@ -16,11 +16,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -44,7 +47,12 @@ fun UrgentDetailScreen(
         viewModel.initDetailState(scenario)
     }
 
+    DisposableEffect(scenario.id) {
+        onDispose { viewModel.saveDraft() }
+    }
+
     val progress by viewModel.progress
+    val draftRestored by viewModel.draftRestored
 
     Scaffold(
         topBar = { TopAppBar(title = { Text(scenario.title) }) }
@@ -57,6 +65,14 @@ fun UrgentDetailScreen(
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            // --- Draft restored hint ---
+            if (draftRestored) {
+                DraftRestoredHint(
+                    onDismiss = { viewModel.dismissDraftHint() },
+                    onClear = { viewModel.clearDraft() }
+                )
+            }
+
             Text(
                 text = scenario.description,
                 style = MaterialTheme.typography.bodyLarge
@@ -123,6 +139,39 @@ fun UrgentDetailScreen(
             ) {
                 Text("Generuj notatkę")
             }
+
+            OutlinedButton(
+                onClick = { viewModel.clearDraft() },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Wyczyść zapis roboczy")
+            }
+        }
+    }
+}
+
+@Composable
+private fun DraftRestoredHint(onDismiss: () -> Unit, onClear: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colorScheme.tertiaryContainer)
+            .padding(horizontal = 12.dp, vertical = 8.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "Przywrócono zapis roboczy",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onTertiaryContainer,
+            modifier = Modifier.weight(1f)
+        )
+        TextButton(onClick = onClear) {
+            Text("Wyczyść", color = MaterialTheme.colorScheme.error)
+        }
+        TextButton(onClick = onDismiss) {
+            Text("OK")
         }
     }
 }
