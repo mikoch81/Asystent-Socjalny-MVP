@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import pl.mikoch.asystentsocjalny.features.urgent.model.ChecklistStepUi
+import pl.mikoch.asystentsocjalny.features.urgent.model.GuidanceUi
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentProgress
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentScenarioUi
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentStatus
@@ -67,6 +68,11 @@ fun UrgentDetailScreen(
             // --- Unchecked critical steps ---
             if (progress.uncheckedCriticalSteps.isNotEmpty()) {
                 UrgentUncheckedCriticalSection(progress.uncheckedCriticalSteps)
+            }
+
+            // --- What next guidance ---
+            scenario.guidance?.let { guidance ->
+                UrgentGuidanceSection(guidance)
             }
 
             Text(
@@ -219,6 +225,84 @@ private fun UrgentChecklistRow(
                     color = MaterialTheme.colorScheme.error
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun UrgentGuidanceSection(guidance: GuidanceUi) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colorScheme.secondaryContainer)
+            .padding(12.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Text(
+            text = "Co dalej",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            fontWeight = FontWeight.Bold
+        )
+
+        if (guidance.notify.isNotEmpty()) {
+            GuidanceBulletList(
+                header = "Kogo powiadomić",
+                items = guidance.notify
+            )
+        }
+
+        if (guidance.doNotMiss.isNotEmpty()) {
+            GuidanceBulletList(
+                header = "Czego nie pominąć",
+                items = guidance.doNotMiss
+            )
+        }
+
+        if (guidance.documents.isNotEmpty()) {
+            GuidanceBulletList(
+                header = "Jakie dokumenty przygotować",
+                items = guidance.documents
+            )
+        }
+
+        val escalationColor = if (guidance.escalationRequired) {
+            MaterialTheme.colorScheme.error
+        } else {
+            MaterialTheme.colorScheme.onSecondaryContainer
+        }
+        Text(
+            text = if (guidance.escalationRequired) "⚠ Wymagana eskalacja" else "Eskalacja niewymagana",
+            style = MaterialTheme.typography.labelLarge,
+            color = escalationColor,
+            fontWeight = FontWeight.Bold
+        )
+        if (guidance.escalationNote.isNotEmpty()) {
+            Text(
+                text = guidance.escalationNote,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+        }
+    }
+}
+
+@Composable
+private fun GuidanceBulletList(header: String, items: List<String>) {
+    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Text(
+            text = header,
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            fontWeight = FontWeight.SemiBold
+        )
+        items.forEach { item ->
+            Text(
+                text = "• $item",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
         }
     }
 }

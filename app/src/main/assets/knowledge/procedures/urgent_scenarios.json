@@ -11,7 +11,26 @@
         { "id": "s4", "text": "Wypełnij formularz Niebieskiej Karty – A", "isCritical": true },
         { "id": "s5", "text": "Powiadom przełożonego i zespół interdyscyplinarny", "isCritical": false },
         { "id": "s6", "text": "Przekaż informację do sądu rodzinnego jeśli wymagane", "isCritical": false }
-      ]
+      ],
+      "guidance": {
+        "notify": [
+          "Przełożony / kierownik MOPS",
+          "Zespół interdyscyplinarny ds. przeciwdziałania przemocy",
+          "Sąd rodzinny (jeśli zagrożenie życia lub zdrowia)"
+        ],
+        "documents": [
+          "Formularz Niebieskiej Karty – A",
+          "Notatka służbowa z interwencji",
+          "Wniosek do sądu rodzinnego (jeśli dotyczy)"
+        ],
+        "doNotMiss": [
+          "Nie zostawiaj dziecka sam na sam z podejrzewanym sprawcą",
+          "Nie wykonuj zdjęć dziecka bez zgody opiekuna prawnego",
+          "Formularz NK-A musi być wypełniony tego samego dnia"
+        ],
+        "escalationRequired": true,
+        "escalationNote": "Wymagana konsultacja z zespołem interdyscyplinarnym w ciągu 24h. W przypadku bezpośredniego zagrożenia życia – natychmiastowy kontakt z Policją i sądem rodzinnym."
+      }
     },
     {
       "id": "urgent_domestic_violence",
@@ -24,7 +43,26 @@
         { "id": "s4", "text": "Poinformuj osobę o przysługujących jej prawach i dostępnych formach pomocy", "isCritical": false },
         { "id": "s5", "text": "Przekaż sprawę do zespołu interdyscyplinarnego ds. przeciwdziałania przemocy", "isCritical": true },
         { "id": "s6", "text": "Zaplanuj kontakt monitorujący w ciągu 7 dni", "isCritical": false }
-      ]
+      ],
+      "guidance": {
+        "notify": [
+          "Policja (jeśli bezpośrednie zagrożenie)",
+          "Zespół interdyscyplinarny ds. przeciwdziałania przemocy",
+          "Przełożony / kierownik OPS"
+        ],
+        "documents": [
+          "Formularz Niebieskiej Karty – A",
+          "Notatka służbowa z interwencji",
+          "Informacja pisemna dla osoby doświadczającej przemocy"
+        ],
+        "doNotMiss": [
+          "Poinformuj osobę o prawie do bezpłatnej pomocy prawnej",
+          "Przekaż kontakt do specjalistycznego ośrodka wsparcia",
+          "Kontakt monitorujący musi nastąpić w ciągu 7 dni"
+        ],
+        "escalationRequired": true,
+        "escalationNote": "Obowiązkowe przekazanie sprawy do zespołu interdyscyplinarnego. W sytuacji zagrożenia życia – natychmiastowe powiadomienie Policji."
+      }
     },
     {
       "id": "urgent_homeless_winter",
@@ -36,7 +74,25 @@
         { "id": "s3", "text": "Wydaj ciepły posiłek i napój jeśli dostępne", "isCritical": false },
         { "id": "s4", "text": "Sporządź notatkę służbową z interwencji", "isCritical": true },
         { "id": "s5", "text": "Zgłoś lokalizację do Straży Miejskiej / streetworkerów", "isCritical": false }
-      ]
+      ],
+      "guidance": {
+        "notify": [
+          "Straż Miejska / streetworkerzy",
+          "Noclegownia lub ogrzewalnia (informacja o wolnych miejscach)",
+          "Pogotowie ratunkowe (jeśli stan zagrożenia zdrowia)"
+        ],
+        "documents": [
+          "Notatka służbowa z interwencji",
+          "Wykaz noclegowni i ogrzewalni z aktualnymi danymi kontaktowymi"
+        ],
+        "doNotMiss": [
+          "Nie ignoruj odmowy pomocy – odnotuj ją w notatce",
+          "Sprawdź dostępność miejsc w noclegowni przed transportem",
+          "Przy temperaturze poniżej -10°C obowiązuje tryb alarmowy"
+        ],
+        "escalationRequired": false,
+        "escalationNote": "Eskalacja wymagana tylko gdy osoba jest nieprzytomna lub odmawia pomocy w warunkach zagrożenia życia."
+      }
     }
   ]
 }

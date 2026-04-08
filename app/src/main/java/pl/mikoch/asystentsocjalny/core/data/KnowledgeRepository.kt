@@ -6,6 +6,7 @@ import org.json.JSONObject
 import pl.mikoch.asystentsocjalny.core.model.Benefit
 import pl.mikoch.asystentsocjalny.core.model.ChecklistStep
 import pl.mikoch.asystentsocjalny.core.model.Procedure
+import pl.mikoch.asystentsocjalny.core.model.UrgentGuidance
 import pl.mikoch.asystentsocjalny.core.model.UrgentScenario
 
 class KnowledgeRepository(private val context: Context) {
@@ -70,6 +71,7 @@ class KnowledgeRepository(private val context: Context) {
         return (0 until array.length()).map { index ->
             val obj = array.getJSONObject(index)
             val stepsArray = obj.getJSONArray("steps")
+            val guidanceObj = if (obj.has("guidance")) obj.getJSONObject("guidance") else null
             UrgentScenario(
                 id = obj.getString("id"),
                 title = obj.getString("title"),
@@ -80,6 +82,15 @@ class KnowledgeRepository(private val context: Context) {
                         id = step.getString("id"),
                         text = step.getString("text"),
                         isCritical = step.getBoolean("isCritical")
+                    )
+                },
+                guidance = guidanceObj?.let {
+                    UrgentGuidance(
+                        notify = it.getJSONArray("notify").toStringList(),
+                        documents = it.getJSONArray("documents").toStringList(),
+                        doNotMiss = it.getJSONArray("doNotMiss").toStringList(),
+                        escalationRequired = it.getBoolean("escalationRequired"),
+                        escalationNote = it.getString("escalationNote")
                     )
                 }
             )
