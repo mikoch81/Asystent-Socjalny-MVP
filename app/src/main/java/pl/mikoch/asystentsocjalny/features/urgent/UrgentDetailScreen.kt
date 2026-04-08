@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import pl.mikoch.asystentsocjalny.features.urgent.model.ChecklistStepUi
 import pl.mikoch.asystentsocjalny.features.urgent.model.GuidanceUi
@@ -77,7 +78,10 @@ fun UrgentDetailScreen(
 
             Text(
                 text = scenario.description,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis
             )
 
             // --- Progress & Status ---
@@ -142,7 +146,7 @@ fun UrgentDetailScreen(
                     .fillMaxWidth()
                     .height(56.dp)
             ) {
-                Text("Generuj notatkę")
+                Text("Generuj notatkę służbową")
             }
 
             OutlinedButton(
@@ -152,7 +156,7 @@ fun UrgentDetailScreen(
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Podsumowanie sprawy")
+                Text("Zobacz podsumowanie")
             }
 
             OutlinedButton(
@@ -236,17 +240,17 @@ private fun UrgentUncheckedCriticalSection(steps: List<ChecklistStepUi>) {
             .clip(RoundedCornerShape(8.dp))
             .background(MaterialTheme.colorScheme.errorContainer)
             .padding(12.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         Text(
-            text = "Niewykonane kroki krytyczne",
+            text = "⚠  Niewykonane kroki krytyczne",
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onErrorContainer,
             fontWeight = FontWeight.Bold
         )
         steps.forEach { step ->
             Text(
-                text = "• ${step.text}",
+                text = "  ✗  ${step.text}",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onErrorContainer
             )
@@ -260,6 +264,11 @@ private fun UrgentChecklistRow(
     onCheckedChange: (Boolean) -> Unit,
     step: ChecklistStepUi
 ) {
+    val bgColor = if (step.isCritical && !checked) {
+        MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.35f)
+    } else {
+        androidx.compose.ui.graphics.Color.Transparent
+    }
     val textColor = if (step.isCritical) {
         MaterialTheme.colorScheme.error
     } else {
@@ -270,12 +279,14 @@ private fun UrgentChecklistRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            .clip(RoundedCornerShape(8.dp))
+            .background(bgColor)
+            .padding(vertical = 6.dp, horizontal = 4.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(checked = checked, onCheckedChange = onCheckedChange)
-        Column {
+        Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = step.text,
                 color = textColor,
@@ -298,14 +309,14 @@ private fun UrgentGuidanceSection(guidance: GuidanceUi) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
+            .clip(RoundedCornerShape(12.dp))
             .background(MaterialTheme.colorScheme.secondaryContainer)
-            .padding(12.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
-            text = "Co dalej",
-            style = MaterialTheme.typography.titleMedium,
+            text = "📋  Co dalej",
+            style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSecondaryContainer,
             fontWeight = FontWeight.Bold
         )
@@ -326,7 +337,7 @@ private fun UrgentGuidanceSection(guidance: GuidanceUi) {
 
         if (guidance.documents.isNotEmpty()) {
             GuidanceBulletList(
-                header = "Jakie dokumenty przygotować",
+                header = "Dokumenty do przygotowania",
                 items = guidance.documents
             )
         }
@@ -337,15 +348,15 @@ private fun UrgentGuidanceSection(guidance: GuidanceUi) {
             MaterialTheme.colorScheme.onSecondaryContainer
         }
         Text(
-            text = if (guidance.escalationRequired) "⚠ Wymagana eskalacja" else "Eskalacja niewymagana",
-            style = MaterialTheme.typography.labelLarge,
+            text = if (guidance.escalationRequired) "⚠  Wymagana eskalacja" else "Eskalacja niewymagana",
+            style = MaterialTheme.typography.titleSmall,
             color = escalationColor,
             fontWeight = FontWeight.Bold
         )
         if (guidance.escalationNote.isNotEmpty()) {
             Text(
                 text = guidance.escalationNote,
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
         }
@@ -354,17 +365,17 @@ private fun UrgentGuidanceSection(guidance: GuidanceUi) {
 
 @Composable
 private fun GuidanceBulletList(header: String, items: List<String>) {
-    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
         Text(
             text = header,
-            style = MaterialTheme.typography.labelLarge,
+            style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onSecondaryContainer,
             fontWeight = FontWeight.SemiBold
         )
         items.forEach { item ->
             Text(
-                text = "• $item",
-                style = MaterialTheme.typography.bodySmall,
+                text = "  •  $item",
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
         }
