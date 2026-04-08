@@ -2,6 +2,7 @@ package pl.mikoch.asystentsocjalny.core.data
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import pl.mikoch.asystentsocjalny.core.model.CaseLifecycle
 import pl.mikoch.asystentsocjalny.core.model.CaseRecord
 import pl.mikoch.asystentsocjalny.core.model.CaseStatus
 import pl.mikoch.asystentsocjalny.core.model.RiskLevel
@@ -42,6 +43,7 @@ class CaseStoreSerializationTest {
         )
         assertEquals(true, record.isDraft)
         assertEquals("", record.locationPreview)
+        assertEquals(CaseLifecycle.ACTIVE, record.lifecycle)
     }
 
     @Test
@@ -79,5 +81,27 @@ class CaseStoreSerializationTest {
         for (level in RiskLevel.entries) {
             assertEquals(level, RiskLevel.valueOf(level.name))
         }
+    }
+
+    @Test
+    fun `CaseLifecycle valueOf round-trips`() {
+        for (lc in CaseLifecycle.entries) {
+            assertEquals(lc, CaseLifecycle.valueOf(lc.name))
+        }
+    }
+
+    @Test
+    fun `CaseRecord copy changes lifecycle`() {
+        val record = CaseRecord(
+            caseId = "c1",
+            scenarioId = "s1",
+            scenarioTitle = "Test",
+            status = CaseStatus.DRAFT,
+            riskLevel = RiskLevel.LOW,
+            updatedAt = 100L
+        )
+        val closed = record.copy(lifecycle = CaseLifecycle.CLOSED)
+        assertEquals(CaseLifecycle.CLOSED, closed.lifecycle)
+        assertEquals(CaseLifecycle.ACTIVE, record.lifecycle)
     }
 }

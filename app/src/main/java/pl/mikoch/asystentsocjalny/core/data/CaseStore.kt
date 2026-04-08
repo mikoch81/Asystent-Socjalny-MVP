@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.map
 import org.json.JSONArray
 import org.json.JSONObject
 import pl.mikoch.asystentsocjalny.core.model.CaseRecord
+import pl.mikoch.asystentsocjalny.core.model.CaseLifecycle
 import pl.mikoch.asystentsocjalny.core.model.CaseStatus
 import pl.mikoch.asystentsocjalny.core.model.RiskLevel
 
@@ -74,6 +75,7 @@ internal fun caseToJson(record: CaseRecord): String {
     obj.put("updatedAt", record.updatedAt)
     obj.put("isDraft", record.isDraft)
     obj.put("locationPreview", record.locationPreview)
+    obj.put("lifecycle", record.lifecycle.name)
     return obj.toString()
 }
 
@@ -88,7 +90,12 @@ internal fun jsonToCase(json: String): CaseRecord? {
             riskLevel = RiskLevel.valueOf(obj.getString("riskLevel")),
             updatedAt = obj.getLong("updatedAt"),
             isDraft = obj.optBoolean("isDraft", true),
-            locationPreview = obj.optString("locationPreview", "")
+            locationPreview = obj.optString("locationPreview", ""),
+            lifecycle = try {
+                CaseLifecycle.valueOf(obj.optString("lifecycle", "ACTIVE"))
+            } catch (_: Exception) {
+                CaseLifecycle.ACTIVE
+            }
         )
     } catch (_: Exception) {
         null

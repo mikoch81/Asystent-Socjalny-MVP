@@ -8,6 +8,13 @@ enum class CaseStatus(val label: String) {
     READY_TO_CLOSE("Gotowe do zamknięcia")
 }
 
+enum class CaseLifecycle(val label: String) {
+    ACTIVE("Aktywna"),
+    READY_TO_CLOSE("Do zamknięcia"),
+    CLOSED("Zamknięta"),
+    ARCHIVED("Zarchiwizowana")
+}
+
 data class CaseRecord(
     val caseId: String,
     val scenarioId: String,
@@ -16,5 +23,6 @@ data class CaseRecord(
     val riskLevel: RiskLevel,
     val updatedAt: Long,
     val isDraft: Boolean = true,
-    val locationPreview: String = ""
+    val locationPreview: String = "",
+    val lifecycle: CaseLifecycle = CaseLifecycle.ACTIVE
 )

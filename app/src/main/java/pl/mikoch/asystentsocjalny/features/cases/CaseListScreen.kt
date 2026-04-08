@@ -2,6 +2,7 @@ package pl.mikoch.asystentsocjalny.features.cases
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,10 +13,12 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -31,6 +34,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import pl.mikoch.asystentsocjalny.core.data.CaseLifecycleRules
+import pl.mikoch.asystentsocjalny.core.model.CaseLifecycle
 import pl.mikoch.asystentsocjalny.core.model.CaseRecord
 import pl.mikoch.asystentsocjalny.core.model.CaseStatus
 import pl.mikoch.asystentsocjalny.core.model.RiskLevel
@@ -43,11 +48,13 @@ import java.util.Locale
 fun CaseListScreen(
     viewModel: CaseListViewModel,
     onOpenCase: (caseId: String, scenarioId: String) -> Unit,
-    onNewCase: () -> Unit
+    onNewCase: () -> Unit,
+    onOpenDocuments: (caseId: String) -> Unit = {}
 ) {
     LaunchedEffect(Unit) { viewModel.loadCases() }
 
     val cases by viewModel.cases
+    val currentFilter by viewModel.lifecycleFilter
 
     Scaffold(
         topBar = { TopAppBar(title = { Text("Sprawy") }) }
@@ -67,6 +74,11 @@ fun CaseListScreen(
                 Text("Nowa sprawa")
             }
 
+            LifecycleFilterRow(
+                selected = currentFilter,
+                onSelected = { viewModel.setFilter(it) }
+            )
+
             if (cases.isEmpty()) {
                 EmptyStateMessage(
                     title = "Brak zapisanych spraw",
@@ -84,8 +96,16 @@ fun CaseListScreen(
                     items(cases, key = { it.caseId }) { record ->
                         CaseCard(
                             record = record,
-                            onClick = { onOpenCase(record.caseId, record.scenarioId) },
-                            onDelete = { viewModel.deleteCase(record.caseId) }
+                            onClick = {
+                                if (CaseLifecycleRules.canEdit(record)) {
+                                    onOpenCase(record.caseId, record.scenarioId)
+                                }
+                            },
+                            onDelete = { viewModel.deleteCase(record.caseId) },
+                            onOpenDocuments = { onOpenDocuments(record.caseId) },
+                            onClose = { viewModel.closeCase(record.caseId) },
+                            onArchive = { viewModel.archiveCase(record.caseId) },
+                            onRestore = { viewModel.restoreCase(record.caseId) }
                         )
                     }
                 }
@@ -95,10 +115,45 @@ fun CaseListScreen(
 }
 
 @Composable
+private fun LifecycleFilterRow(
+    selected: CaseLifecycle?,
+    onSelected: (CaseLifecycle?) -> Unit
+) {
+    data class FilterOption(val lifecycle: CaseLifecycle?, val label: String)
+
+    val options = listOf(
+        FilterOption(null, "Aktywne"),
+        FilterOption(CaseLifecycle.READY_TO_CLOSE, "Do zamknięcia"),
+        FilterOption(CaseLifecycle.CLOSED, "Zamknięte"),
+        FilterOption(CaseLifecycle.ARCHIVED, "Archiwum")
+    )
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .horizontalScroll(rememberScrollState())
+            .padding(horizontal = 16.dp, vertical = 4.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        options.forEach { opt ->
+            FilterChip(
+                selected = selected == opt.lifecycle,
+                onClick = { onSelected(opt.lifecycle) },
+                label = { Text(opt.label) }
+            )
+        }
+    }
+}
+
+@Composable
 private fun CaseCard(
     record: CaseRecord,
     onClick: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    onOpenDocuments: () -> Unit,
+    onClose: () -> Unit,
+    onArchive: () -> Unit,
+    onRestore: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -130,10 +185,12 @@ private fun CaseCard(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 StatusLabel(record.status)
+                LifecycleBadge(record.lifecycle)
+                androidx.compose.foundation.layout.Spacer(Modifier.weight(1f))
                 Text(
                     text = formatTimestamp(record.updatedAt),
                     style = MaterialTheme.typography.labelSmall,
@@ -155,6 +212,24 @@ private fun CaseCard(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
+                TextButton(onClick = onOpenDocuments) {
+                    Text("Dokumenty")
+                }
+                if (CaseLifecycleRules.canClose(record)) {
+                    TextButton(onClick = onClose) {
+                        Text("Zamknij")
+                    }
+                }
+                if (CaseLifecycleRules.canArchive(record)) {
+                    TextButton(onClick = onArchive) {
+                        Text("Archiwizuj")
+                    }
+                }
+                if (CaseLifecycleRules.canRestore(record)) {
+                    TextButton(onClick = onRestore) {
+                        Text("Przywróć")
+                    }
+                }
                 TextButton(onClick = onDelete) {
                     Text("Usuń", color = MaterialTheme.colorScheme.error)
                 }
@@ -179,6 +254,26 @@ private fun StatusLabel(status: CaseStatus) {
             .clip(RoundedCornerShape(4.dp))
             .background(bg)
             .padding(horizontal = 8.dp, vertical = 2.dp)
+    )
+}
+
+@Composable
+private fun LifecycleBadge(lifecycle: CaseLifecycle) {
+    val (bg, fg) = when (lifecycle) {
+        CaseLifecycle.ACTIVE -> Pair(Color(0xFFE3F2FD), Color(0xFF1565C0))
+        CaseLifecycle.READY_TO_CLOSE -> Pair(Color(0xFFFFF9C4), Color(0xFFF57F17))
+        CaseLifecycle.CLOSED -> Pair(Color(0xFFE0E0E0), Color(0xFF424242))
+        CaseLifecycle.ARCHIVED -> Pair(Color(0xFFEFEBE9), Color(0xFF6D4C41))
+    }
+    Text(
+        text = lifecycle.label,
+        style = MaterialTheme.typography.labelSmall,
+        color = fg,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier
+            .clip(RoundedCornerShape(4.dp))
+            .background(bg)
+            .padding(horizontal = 6.dp, vertical = 2.dp)
     )
 }
 

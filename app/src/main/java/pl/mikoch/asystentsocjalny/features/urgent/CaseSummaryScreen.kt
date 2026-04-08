@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -34,7 +35,8 @@ import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentStatus
 fun CaseSummaryScreen(
     scenario: UrgentScenarioUi,
     viewModel: UrgentViewModel,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onOpenDocuments: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val progress by viewModel.progress
@@ -166,6 +168,36 @@ fun CaseSummaryScreen(
                     ) {
                         Text("Udostępnij PDF")
                     }
+                }
+            }
+        }
+
+        if (viewModel.activeCaseId != null) {
+            item(key = "btn_documents") {
+                OutlinedButton(
+                    onClick = onOpenDocuments,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                ) {
+                    Text("Dokumenty sprawy")
+                }
+            }
+
+            item(key = "btn_close_case") {
+                Button(
+                    onClick = {
+                        viewModel.closeCase()
+                        Toast.makeText(context, "Sprawa zamknięta", Toast.LENGTH_SHORT).show()
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.tertiary
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                ) {
+                    Text("Zamknij sprawę")
                 }
             }
         }

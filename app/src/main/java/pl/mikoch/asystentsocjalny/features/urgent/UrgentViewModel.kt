@@ -9,6 +9,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import pl.mikoch.asystentsocjalny.core.data.ActionRecommendationEngine
+import pl.mikoch.asystentsocjalny.core.data.CaseDocumentStore
+import pl.mikoch.asystentsocjalny.core.data.CaseLifecycleRules
 import pl.mikoch.asystentsocjalny.core.data.CaseStore
 import pl.mikoch.asystentsocjalny.core.data.DraftStore
 import pl.mikoch.asystentsocjalny.core.data.KnowledgeRepository
@@ -17,7 +19,11 @@ import pl.mikoch.asystentsocjalny.core.data.PdfDraftContent
 import pl.mikoch.asystentsocjalny.core.data.PdfDraftGenerator
 import pl.mikoch.asystentsocjalny.core.data.RiskAssessmentEngine
 import pl.mikoch.asystentsocjalny.core.data.UrgentDraft
+import pl.mikoch.asystentsocjalny.core.model.CaseDocument
+import pl.mikoch.asystentsocjalny.core.model.CaseLifecycle
 import pl.mikoch.asystentsocjalny.core.model.CaseStatus
+import pl.mikoch.asystentsocjalny.core.model.DocumentType
+import java.util.UUID
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentProgressCalculator
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentScenarioUi
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentStatus
@@ -34,6 +40,7 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
     private val repository = KnowledgeRepository(application)
     private val draftStore = DraftStore(application)
     private val caseStore = CaseStore(application)
+    private val documentStore = CaseDocumentStore(application)
 
     val scenarios: List<UrgentScenarioUi> by lazy {
         repository.loadUrgentScenarios().map { it.toUi() }
@@ -46,6 +53,8 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
 
     private var currentScenarioId: String? = null
     private var currentCaseId: String? = null
+
+    val activeCaseId: String? get() = currentCaseId
 
     val currentScenario: UrgentScenarioUi?
         get() = currentScenarioId?.let { scenarioById(it) }
@@ -110,6 +119,23 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
         )
         val file = PdfDraftGenerator.generate(context, content)
         lastGeneratedPdf.value = file
+        val caseId = currentCaseId
+        if (caseId != null) {
+            viewModelScope.launch {
+                documentStore.save(
+                    CaseDocument(
+                        documentId = UUID.randomUUID().toString(),
+                        caseId = caseId,
+                        type = DocumentType.PDF_DRAFT,
+                        title = "${title} \u2014 PDF ${content.date}",
+                        fileName = file.name,
+                        textContent = "",
+                        filePath = file.absolutePath,
+                        createdAt = System.currentTimeMillis()
+                    )
+                )
+            }
+        }
         return file
     }
 
@@ -162,6 +188,20 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
             if (caseId != null) {
                 draftStore.saveDraftForCase(draft)
                 updateCaseRecord(caseId, scenarioId)
+                if (generatedNoteText.value.isNotBlank()) {
+                    documentStore.save(
+                        CaseDocument(
+                            documentId = "note_$caseId",
+                            caseId = caseId,
+                            type = DocumentType.NOTE_DRAFT,
+                            title = "${currentScenario?.title ?: "Sprawa"} \u2014 Notatka robocza",
+                            fileName = "",
+                            textContent = generatedNoteText.value,
+                            filePath = "",
+                            createdAt = System.currentTimeMillis()
+                        )
+                    )
+                }
             } else {
                 draftStore.saveDraft(draft)
             }
@@ -196,19 +236,35 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
             prog.completedSteps == prog.totalSteps -> CaseStatus.READY_TO_CLOSE
             else -> CaseStatus.IN_PROGRESS
         }
+        val updated = existing.copy(
+            status = status,
+            riskLevel = risk.level,
+            updatedAt = System.currentTimeMillis(),
+            isDraft = status == CaseStatus.DRAFT,
+            locationPreview = location.value.take(50)
+        )
         caseStore.saveCase(
-            existing.copy(
-                status = status,
-                riskLevel = risk.level,
-                updatedAt = System.currentTimeMillis(),
-                isDraft = status == CaseStatus.DRAFT,
-                locationPreview = location.value.take(50)
-            )
+            updated.copy(lifecycle = CaseLifecycleRules.autoLifecycle(updated))
         )
     }
 
     fun dismissDraftHint() {
         draftRestored.value = false
+    }
+
+    fun closeCase() {
+        val caseId = currentCaseId ?: return
+        viewModelScope.launch {
+            val existing = caseStore.loadCase(caseId) ?: return@launch
+            if (CaseLifecycleRules.canClose(existing)) {
+                caseStore.saveCase(
+                    existing.copy(
+                        lifecycle = CaseLifecycle.CLOSED,
+                        updatedAt = System.currentTimeMillis()
+                    )
+                )
+            }
+        }
     }
 
     fun generateNote(scenario: UrgentScenarioUi) {

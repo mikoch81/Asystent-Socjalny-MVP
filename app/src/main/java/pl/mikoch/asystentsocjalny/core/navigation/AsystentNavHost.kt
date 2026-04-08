@@ -11,6 +11,7 @@ import androidx.navigation.navArgument
 import pl.mikoch.asystentsocjalny.core.data.KnowledgeRepository
 import pl.mikoch.asystentsocjalny.features.benefits.BenefitDetailScreen
 import pl.mikoch.asystentsocjalny.features.benefits.BenefitsScreen
+import pl.mikoch.asystentsocjalny.features.cases.CaseDocumentsScreen
 import pl.mikoch.asystentsocjalny.features.cases.CaseListScreen
 import pl.mikoch.asystentsocjalny.features.cases.CaseListViewModel
 import pl.mikoch.asystentsocjalny.features.common.EmptyStateMessage
@@ -149,7 +150,13 @@ fun AsystentNavHost() {
                 CaseSummaryScreen(
                     scenario = scenario,
                     viewModel = urgentViewModel,
-                    onBack = { navController.popBackStack() }
+                    onBack = { navController.popBackStack() },
+                    onOpenDocuments = {
+                        val caseId = urgentViewModel.activeCaseId
+                        if (caseId != null) {
+                            navController.navigate(Screen.CaseDocuments.createRoute(caseId))
+                        }
+                    }
                 )
             } else {
                 EmptyStateMessage(
@@ -166,6 +173,9 @@ fun AsystentNavHost() {
                 },
                 onNewCase = {
                     navController.navigate(Screen.ScenarioPicker.route)
+                },
+                onOpenDocuments = { caseId ->
+                    navController.navigate(Screen.CaseDocuments.createRoute(caseId))
                 }
             )
         }
@@ -181,6 +191,16 @@ fun AsystentNavHost() {
                         }
                     }
                 }
+            )
+        }
+        composable(
+            route = Screen.CaseDocuments.route,
+            arguments = listOf(navArgument("caseId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val caseId = backStackEntry.arguments?.getString("caseId").orEmpty()
+            CaseDocumentsScreen(
+                caseId = caseId,
+                onBack = { navController.popBackStack() }
             )
         }
     }
