@@ -3,6 +3,7 @@ package pl.mikoch.asystentsocjalny.features.procedures
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,7 +15,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import pl.mikoch.asystentsocjalny.core.model.Procedure
 
@@ -24,7 +27,7 @@ fun ProceduresScreen(
     onOpenDetail: (String) -> Unit
 ) {
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Procedury pilne") }) }
+        topBar = { TopAppBar(title = { Text("Procedury") }) }
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier
@@ -39,12 +42,35 @@ fun ProceduresScreen(
                         .fillMaxWidth()
                         .clickable { onOpenDetail(procedure.id) }
                 ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Text(procedure.title, style = MaterialTheme.typography.titleMedium)
-                        Text(procedure.situation, style = MaterialTheme.typography.bodyMedium)
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = procedure.title,
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier.weight(1f)
+                            )
+                            val severityColor = when (procedure.severity) {
+                                "Wysoki" -> MaterialTheme.colorScheme.error
+                                "Średni" -> MaterialTheme.colorScheme.tertiary
+                                else -> MaterialTheme.colorScheme.secondary
+                            }
+                            Text(
+                                text = procedure.severity,
+                                style = MaterialTheme.typography.labelMedium,
+                                color = severityColor,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                         Text(
-                            text = "Priorytet: ${procedure.severity}",
-                            style = MaterialTheme.typography.labelMedium
+                            text = procedure.situation,
+                            style = MaterialTheme.typography.bodyMedium
                         )
                     }
                 }

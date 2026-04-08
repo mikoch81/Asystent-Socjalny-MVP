@@ -1,32 +1,28 @@
 package pl.mikoch.asystentsocjalny.features.procedures
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import pl.mikoch.asystentsocjalny.core.model.Procedure
 
 @Composable
 fun ProcedureDetailScreen(procedure: Procedure) {
-    val checkedStates = remember(procedure.id) {
-        mutableStateListOf<Boolean>().apply {
-            repeat(procedure.nowSteps.size) { add(false) }
-        }
-    }
-
     Scaffold(
         topBar = { TopAppBar(title = { Text(procedure.title) }) }
     ) { innerPadding ->
@@ -38,30 +34,64 @@ fun ProcedureDetailScreen(procedure: Procedure) {
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Section("Co zrobić teraz") {
-                procedure.nowSteps.forEachIndexed { index, step ->
-                    ChecklistRow(
-                        checked = checkedStates[index],
-                        onCheckedChange = { checkedStates[index] = it },
-                        text = step
-                    )
-                }
+            // Summary + severity
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = procedure.situation,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.weight(1f)
+                )
+                SeverityBadge(procedure.severity)
             }
-            Section("Kogo powiadomić") {
-                procedure.notify.forEach { Text("• $it") }
-            }
-            Section("Czego nie pominąć") {
-                procedure.doNotMiss.forEach { Text("• $it") }
-            }
-            Section("Podstawa prawna / źródło") {
-                procedure.legalBasis.forEach { Text("• $it") }
-            }
+
+            ProcedureSection("Co zrobić teraz", procedure.nowSteps)
+            ProcedureSection("Kogo powiadomić", procedure.notify)
+            ProcedureSection("Czego nie pominąć", procedure.doNotMiss)
+            ProcedureSection("Podstawa prawna / źródło", procedure.legalBasis)
+
             Section("Czy wymagana konsultacja") {
-                Text(procedure.escalation)
+                Text(
+                    text = procedure.escalation,
+                    style = MaterialTheme.typography.bodyMedium
+                )
             }
-            Section("Jakie dokumenty przygotować") {
-                procedure.documents.forEach { Text("• $it") }
-            }
+
+            ProcedureSection("Jakie dokumenty przygotować", procedure.documents)
+        }
+    }
+}
+
+@Composable
+private fun SeverityBadge(severity: String) {
+    val color = when (severity) {
+        "Wysoki" -> MaterialTheme.colorScheme.error
+        "Średni" -> MaterialTheme.colorScheme.tertiary
+        else -> MaterialTheme.colorScheme.secondary
+    }
+    Text(
+        text = severity,
+        style = MaterialTheme.typography.labelLarge,
+        color = color,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier
+            .clip(RoundedCornerShape(4.dp))
+            .background(color.copy(alpha = 0.12f))
+            .padding(horizontal = 8.dp, vertical = 4.dp)
+    )
+}
+
+@Composable
+private fun ProcedureSection(title: String, items: List<String>) {
+    if (items.isEmpty()) return
+    Section(title) {
+        items.forEachIndexed { index, item ->
+            Text(
+                text = "${index + 1}. $item",
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
     }
 }
@@ -72,19 +102,11 @@ private fun Section(
     content: @Composable () -> Unit
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(title, style = MaterialTheme.typography.titleMedium)
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
         content()
-    }
-}
-
-@Composable
-private fun ChecklistRow(
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
-    text: String
-) {
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        Checkbox(checked = checked, onCheckedChange = onCheckedChange)
-        Text(text, modifier = Modifier.padding(top = 12.dp))
     }
 }
