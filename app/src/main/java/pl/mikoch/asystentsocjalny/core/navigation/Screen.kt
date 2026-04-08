@@ -12,9 +12,13 @@ sealed class Screen(val route: String) {
         fun createRoute(procedureId: String): String = "procedureDetail/$procedureId"
     }
     data object UrgentList : Screen("urgentList")
-    data object UrgentDetail : Screen("urgentDetail/{scenarioId}") {
-        fun createRoute(scenarioId: String): String = "urgentDetail/$scenarioId"
+    data object UrgentDetail : Screen("urgentDetail/{scenarioId}?caseId={caseId}") {
+        fun createRoute(scenarioId: String, caseId: String? = null): String =
+            if (caseId != null) "urgentDetail/$scenarioId?caseId=$caseId"
+            else "urgentDetail/$scenarioId"
     }
     data object NotePreview : Screen("notePreview")
     data object CaseSummary : Screen("caseSummary")
+    data object CaseList : Screen("caseList")
+    data object ScenarioPicker : Screen("scenarioPicker")
 }

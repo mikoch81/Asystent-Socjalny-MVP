@@ -33,6 +33,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import pl.mikoch.asystentsocjalny.core.model.ActionRecommendation
+import pl.mikoch.asystentsocjalny.core.model.RecommendationPriority
 import pl.mikoch.asystentsocjalny.core.model.RiskAssessment
 import pl.mikoch.asystentsocjalny.core.model.RiskLevel
 import pl.mikoch.asystentsocjalny.features.urgent.model.ChecklistStepUi
@@ -46,10 +48,11 @@ fun UrgentDetailScreen(
     scenario: UrgentScenarioUi,
     viewModel: UrgentViewModel,
     onNavigateToPreview: () -> Unit,
-    onNavigateToSummary: () -> Unit
+    onNavigateToSummary: () -> Unit,
+    caseId: String? = null
 ) {
-    LaunchedEffect(scenario.id) {
-        viewModel.initDetailState(scenario)
+    LaunchedEffect(scenario.id, caseId) {
+        viewModel.initDetailState(scenario, caseId)
     }
 
     DisposableEffect(scenario.id) {
@@ -58,6 +61,7 @@ fun UrgentDetailScreen(
 
     val progress by viewModel.progress
     val riskAssessment by viewModel.riskAssessment
+    val recommendation by viewModel.recommendation
     val draftRestored by viewModel.draftRestored
 
     Scaffold(
@@ -93,6 +97,9 @@ fun UrgentDetailScreen(
 
             // --- Risk Assessment ---
             RiskAssessmentSection(riskAssessment)
+
+            // --- Action Recommendation ---
+            ActionRecommendationSection(recommendation)
 
             // --- Unchecked critical steps ---
             if (progress.uncheckedCriticalSteps.isNotEmpty()) {
@@ -432,3 +439,105 @@ private fun RiskAssessmentSection(assessment: RiskAssessment) {
         }
     }
 }
+
+@Composable
+private fun ActionRecommendationSection(recommendation: ActionRecommendation) {
+    val (bgColor, contentColor, badgeColor, icon) = when (recommendation.priority) {
+        RecommendationPriority.HIGH -> RecommendationColors(
+            Color(0xFFFCE4EC),
+            Color(0xFFC62828),
+            Color(0xFFFFCDD2),
+            "🚨"
+        )
+        RecommendationPriority.MEDIUM -> RecommendationColors(
+            Color(0xFFFFF3E0),
+            Color(0xFFE65100),
+            Color(0xFFFFE0B2),
+            "📌"
+        )
+        RecommendationPriority.LOW -> RecommendationColors(
+            Color(0xFFE8F5E9),
+            Color(0xFF2E7D32),
+            Color(0xFFC8E6C9),
+            "✅"
+        )
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(bgColor)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "$icon  ${recommendation.title}",
+                style = MaterialTheme.typography.titleSmall,
+                color = contentColor,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.weight(1f)
+            )
+            Text(
+                text = recommendation.priority.label,
+                style = MaterialTheme.typography.labelSmall,
+                color = contentColor,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(badgeColor)
+                    .padding(horizontal = 8.dp, vertical = 2.dp)
+            )
+        }
+
+        Text(
+            text = recommendation.summary,
+            style = MaterialTheme.typography.bodyMedium,
+            color = contentColor
+        )
+
+        if (recommendation.actions.isNotEmpty()) {
+            Text(
+                text = "Zalecane działania:",
+                style = MaterialTheme.typography.labelLarge,
+                color = contentColor,
+                fontWeight = FontWeight.SemiBold
+            )
+            recommendation.actions.forEach { action ->
+                Text(
+                    text = "  •  $action",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = contentColor
+                )
+            }
+        }
+
+        if (recommendation.warnings.isNotEmpty()) {
+            Text(
+                text = "⚠  Uwaga:",
+                style = MaterialTheme.typography.labelLarge,
+                color = contentColor,
+                fontWeight = FontWeight.SemiBold
+            )
+            recommendation.warnings.forEach { warning ->
+                Text(
+                    text = "  •  $warning",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = contentColor
+                )
+            }
+        }
+    }
+}
+
+private data class RecommendationColors(
+    val bgColor: Color,
+    val contentColor: Color,
+    val badgeColor: Color,
+    val icon: String
+)

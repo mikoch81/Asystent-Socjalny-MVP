@@ -26,7 +26,8 @@ fun HomeScreen(
     onOpenProcedures: () -> Unit,
     onOpenBenefits: () -> Unit,
     onOpenNotes: () -> Unit,
-    onOpenUrgent: () -> Unit
+    onOpenUrgent: () -> Unit,
+    onOpenCases: () -> Unit = {}
 ) {
     Scaffold(
         topBar = {
@@ -73,6 +74,12 @@ fun HomeScreen(
                 description = "Szkic notatki po interwencji",
                 buttonText = "Utwórz",
                 onClick = onOpenNotes
+            )
+            HomeCard(
+                title = "📋  Sprawy",
+                description = "Lista prowadzonych spraw",
+                buttonText = "Otwórz",
+                onClick = onOpenCases
             )
         }
     }

@@ -11,6 +11,8 @@ import androidx.navigation.navArgument
 import pl.mikoch.asystentsocjalny.core.data.KnowledgeRepository
 import pl.mikoch.asystentsocjalny.features.benefits.BenefitDetailScreen
 import pl.mikoch.asystentsocjalny.features.benefits.BenefitsScreen
+import pl.mikoch.asystentsocjalny.features.cases.CaseListScreen
+import pl.mikoch.asystentsocjalny.features.cases.CaseListViewModel
 import pl.mikoch.asystentsocjalny.features.common.EmptyStateMessage
 import pl.mikoch.asystentsocjalny.features.home.HomeScreen
 import pl.mikoch.asystentsocjalny.features.notes.NotesScreen
@@ -30,6 +32,7 @@ fun AsystentNavHost() {
     val procedures = repository.loadProcedures()
     val benefits = repository.loadBenefits()
     val urgentViewModel: UrgentViewModel = viewModel()
+    val caseListViewModel: CaseListViewModel = viewModel()
 
     NavHost(
         navController = navController,
@@ -40,7 +43,8 @@ fun AsystentNavHost() {
                 onOpenProcedures = { navController.navigate(Screen.Procedures.route) },
                 onOpenBenefits = { navController.navigate(Screen.Benefits.route) },
                 onOpenNotes = { navController.navigate(Screen.Notes.route) },
-                onOpenUrgent = { navController.navigate(Screen.UrgentList.route) }
+                onOpenUrgent = { navController.navigate(Screen.UrgentList.route) },
+                onOpenCases = { navController.navigate(Screen.CaseList.route) }
             )
         }
         composable(Screen.Procedures.route) {
@@ -102,9 +106,17 @@ fun AsystentNavHost() {
         }
         composable(
             route = Screen.UrgentDetail.route,
-            arguments = listOf(navArgument("scenarioId") { type = NavType.StringType })
+            arguments = listOf(
+                navArgument("scenarioId") { type = NavType.StringType },
+                navArgument("caseId") {
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
+                }
+            )
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getString("scenarioId").orEmpty()
+            val caseId = backStackEntry.arguments?.getString("caseId")
             val scenario = urgentViewModel.scenarioById(id)
             if (scenario != null) {
                 UrgentDetailScreen(
@@ -115,7 +127,8 @@ fun AsystentNavHost() {
                     },
                     onNavigateToSummary = {
                         navController.navigate(Screen.CaseSummary.route)
-                    }
+                    },
+                    caseId = caseId
                 )
             } else {
                 EmptyStateMessage(
@@ -144,6 +157,31 @@ fun AsystentNavHost() {
                     subtitle = "Wróć i wybierz scenariusz."
                 )
             }
+        }
+        composable(Screen.CaseList.route) {
+            CaseListScreen(
+                viewModel = caseListViewModel,
+                onOpenCase = { caseId, scenarioId ->
+                    navController.navigate(Screen.UrgentDetail.createRoute(scenarioId, caseId))
+                },
+                onNewCase = {
+                    navController.navigate(Screen.ScenarioPicker.route)
+                }
+            )
+        }
+        composable(Screen.ScenarioPicker.route) {
+            UrgentListScreen(
+                scenarios = urgentViewModel.scenarios,
+                onOpenDetail = { scenarioId ->
+                    val scenario = urgentViewModel.scenarioById(scenarioId)
+                    if (scenario != null) {
+                        val caseId = caseListViewModel.createCase(scenarioId, scenario.title)
+                        navController.navigate(Screen.UrgentDetail.createRoute(scenarioId, caseId)) {
+                            popUpTo(Screen.CaseList.route)
+                        }
+                    }
+                }
+            )
         }
     }
 }

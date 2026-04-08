@@ -8,11 +8,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import pl.mikoch.asystentsocjalny.core.data.ActionRecommendationEngine
+import pl.mikoch.asystentsocjalny.core.data.CaseStore
 import pl.mikoch.asystentsocjalny.core.data.DraftStore
 import pl.mikoch.asystentsocjalny.core.data.KnowledgeRepository
 import pl.mikoch.asystentsocjalny.core.data.NoteDraftBuilder
 import pl.mikoch.asystentsocjalny.core.data.RiskAssessmentEngine
 import pl.mikoch.asystentsocjalny.core.data.UrgentDraft
+import pl.mikoch.asystentsocjalny.core.model.CaseStatus
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentProgressCalculator
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentScenarioUi
 import pl.mikoch.asystentsocjalny.features.urgent.model.toUi
@@ -21,6 +24,7 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
 
     private val repository = KnowledgeRepository(application)
     private val draftStore = DraftStore(application)
+    private val caseStore = CaseStore(application)
 
     val scenarios: List<UrgentScenarioUi> by lazy {
         repository.loadUrgentScenarios().map { it.toUi() }
@@ -32,6 +36,7 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
     // --- detail screen state ---
 
     private var currentScenarioId: String? = null
+    private var currentCaseId: String? = null
 
     val currentScenario: UrgentScenarioUi?
         get() = currentScenarioId?.let { scenarioById(it) }
@@ -57,13 +62,29 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
         )
     }
 
-    fun initDetailState(scenario: UrgentScenarioUi) {
-        if (currentScenarioId == scenario.id) return
+    val recommendation = derivedStateOf {
+        ActionRecommendationEngine.recommend(
+            riskAssessment = riskAssessment.value,
+            progress = progress.value,
+            guidance = currentScenario?.guidance
+        )
+    }
+
+    fun initDetailState(scenario: UrgentScenarioUi, caseId: String? = null) {
+        val stateKey = caseId ?: scenario.id
+        if (currentCaseId == caseId && currentScenarioId == scenario.id && caseId != null) return
+        if (caseId == null && currentScenarioId == scenario.id && currentCaseId == null) return
+
         currentScenarioId = scenario.id
+        currentCaseId = caseId
         currentSteps = scenario.steps
         draftRestored.value = false
 
-        val draft = runBlocking { draftStore.loadDraft(scenario.id) }
+        val draft = if (caseId != null) {
+            runBlocking { draftStore.loadDraftForCase(caseId) }
+        } else {
+            runBlocking { draftStore.loadDraft(scenario.id) }
+        }
 
         checkedStates.clear()
         if (draft != null && draft.checkedStates.size == scenario.steps.size) {
@@ -84,26 +105,62 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
 
     fun saveDraft() {
         val scenarioId = currentScenarioId ?: return
+        val caseId = currentCaseId
         val draft = UrgentDraft(
             scenarioId = scenarioId,
             checkedStates = checkedStates.toList(),
             location = location.value,
             situationDescription = situationDescription.value,
             additionalNotes = additionalNotes.value,
-            generatedNoteText = generatedNoteText.value
+            generatedNoteText = generatedNoteText.value,
+            caseId = caseId ?: ""
         )
-        viewModelScope.launch { draftStore.saveDraft(draft) }
+        viewModelScope.launch {
+            if (caseId != null) {
+                draftStore.saveDraftForCase(draft)
+                updateCaseRecord(caseId, scenarioId)
+            } else {
+                draftStore.saveDraft(draft)
+            }
+        }
     }
 
     fun clearDraft() {
         val scenarioId = currentScenarioId ?: return
+        val caseId = currentCaseId
         checkedStates.indices.forEach { checkedStates[it] = false }
         location.value = ""
         situationDescription.value = ""
         additionalNotes.value = ""
         generatedNoteText.value = ""
         draftRestored.value = false
-        viewModelScope.launch { draftStore.clearDraft(scenarioId) }
+        viewModelScope.launch {
+            if (caseId != null) {
+                draftStore.clearDraftForCase(caseId)
+            } else {
+                draftStore.clearDraft(scenarioId)
+            }
+        }
+    }
+
+    private suspend fun updateCaseRecord(caseId: String, scenarioId: String) {
+        val existing = caseStore.loadCase(caseId) ?: return
+        val risk = riskAssessment.value
+        val prog = progress.value
+        val status = when {
+            prog.completedSteps == 0 -> CaseStatus.DRAFT
+            prog.completedSteps == prog.totalSteps -> CaseStatus.READY_TO_CLOSE
+            else -> CaseStatus.IN_PROGRESS
+        }
+        caseStore.saveCase(
+            existing.copy(
+                status = status,
+                riskLevel = risk.level,
+                updatedAt = System.currentTimeMillis(),
+                isDraft = status == CaseStatus.DRAFT,
+                locationPreview = location.value.take(50)
+            )
+        )
     }
 
     fun dismissDraftHint() {
