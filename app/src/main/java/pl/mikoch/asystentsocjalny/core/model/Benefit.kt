@@ -5,5 +5,6 @@ data class Benefit(
     val name: String,
     val description: String,
     val documents: List<String>,
+    val conditions: List<String>,
     val note: String
 )

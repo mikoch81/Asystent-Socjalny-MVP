@@ -2,24 +2,81 @@
   "benefits": [
     {
       "id": "temporary-support",
-      "name": "Pomoc okresowa – informacja wstępna",
-      "description": "Przykładowa pozycja katalogu wsparcia. Służy do szybkiego poinformowania rodziny o możliwej ścieżce pomocy.",
+      "name": "Zasiłek okresowy",
+      "description": "Świadczenie przyznawane osobom i rodzinom w trudnej sytuacji materialnej, np. z powodu długotrwałej choroby, niepełnosprawności lub bezrobocia.",
       "documents": [
         "Dokument tożsamości",
-        "Dokumenty potwierdzające sytuację dochodową",
-        "Inne dokumenty zgodnie z wymaganiami jednostki"
+        "Zaświadczenie o dochodach lub oświadczenie",
+        "Orzeczenie o niepełnosprawności (jeśli dotyczy)",
+        "Zaświadczenie lekarskie (przy długotrwałej chorobie)"
       ],
-      "note": "Informacja poglądowa. Ostateczna ocena uprawnień wymaga weryfikacji zgodnie z obowiązującymi przepisami i procedurą jednostki."
+      "conditions": [
+        "Dochód poniżej kryterium dochodowego (776 zł / os. w rodzinie lub 1 052 zł os. samotna)",
+        "Trudna sytuacja życiowa: choroba, niepełnosprawność, bezrobocie",
+        "Wywiad środowiskowy przeprowadzony przez pracownika socjalnego"
+      ],
+      "note": "Wysokość i okres przyznania zależą od indywidualnej sytuacji. Decyzję wydaje OPS na podstawie wywiadu środowiskowego."
     },
     {
       "id": "material-support",
-      "name": "Pomoc rzeczowa / żywnościowa – informacja wstępna",
-      "description": "Szybki opis formy pomocy rzeczowej w celu wsparcia rozmowy z rodziną.",
+      "name": "Pomoc rzeczowa / żywnościowa",
+      "description": "Wsparcie w formie żywności, odzieży, środków czystości lub innych artykułów pierwszej potrzeby.",
       "documents": [
-        "Dokumenty wymagane lokalnie",
-        "Ewentualne potwierdzenie sytuacji bytowej"
+        "Dokument tożsamości",
+        "Dokumenty potwierdzające sytuację bytową (opcjonalnie)"
       ],
-      "note": "Treść demo. Zakres, forma i wartość pomocy wymagają lokalnej walidacji."
+      "conditions": [
+        "Trudna sytuacja bytowa potwierdzona wywiadem środowiskowym",
+        "Brak możliwości samodzielnego zaspokojenia podstawowych potrzeb"
+      ],
+      "note": "Zakres i forma pomocy zależą od możliwości jednostki. Może być realizowana we współpracy z organizacjami pozarządowymi (np. Bank Żywności)."
+    },
+    {
+      "id": "purpose-benefit",
+      "name": "Zasiłek celowy",
+      "description": "Jednorazowe świadczenie na pokrycie konkretnego wydatku: leków, opału, odzieży, drobnych napraw mieszkania lub kosztów leczenia.",
+      "documents": [
+        "Dokument tożsamości",
+        "Rachunki lub faktury potwierdzające wydatek (jeśli dotyczy)",
+        "Zaświadczenie lekarskie (przy wydatkach zdrowotnych)"
+      ],
+      "conditions": [
+        "Dochód poniżej kryterium dochodowego",
+        "Konkretny, uzasadniony cel wydatku",
+        "Wywiad środowiskowy"
+      ],
+      "note": "Zasiłek celowy może być przyznany także w formie specjalnej (powyżej kryterium) w szczególnie uzasadnionych przypadkach — decyzja kierownika OPS."
+    },
+    {
+      "id": "permanent-benefit",
+      "name": "Zasiłek stały",
+      "description": "Comiesięczne świadczenie dla osób niezdolnych do pracy z powodu wieku lub całkowitej niepełnosprawności, których dochód jest poniżej kryterium.",
+      "documents": [
+        "Dokument tożsamości",
+        "Orzeczenie o znacznym lub umiarkowanym stopniu niepełnosprawności",
+        "Zaświadczenie o dochodach"
+      ],
+      "conditions": [
+        "Całkowita niezdolność do pracy z powodu wieku lub niepełnosprawności",
+        "Dochód poniżej kryterium dochodowego",
+        "Orzeczenie o niepełnosprawności (znaczny lub umiarkowany stopień)"
+      ],
+      "note": "Zasiłek stały przysługuje do czasu zmiany sytuacji dochodowej lub zdrowotnej. Weryfikowany okresowo."
+    },
+    {
+      "id": "shelter-services",
+      "name": "Schronienie / noclegownia",
+      "description": "Zapewnienie tymczasowego miejsca pobytu osobom bezdomnym lub zagrożonym bezdomnością.",
+      "documents": [
+        "Dokument tożsamości (jeśli dostępny)",
+        "Skierowanie z OPS (w przypadku schroniska)"
+      ],
+      "conditions": [
+        "Brak miejsca zamieszkania lub zagrożenie bezdomnością",
+        "Decyzja administracyjna OPS o skierowaniu",
+        "Kontrakt socjalny (w przypadku schroniska)"
+      ],
+      "note": "Noclegownia nie wymaga decyzji administracyjnej. Schronisko wymaga skierowania i kontraktu socjalnego."
     }
   ]
 }

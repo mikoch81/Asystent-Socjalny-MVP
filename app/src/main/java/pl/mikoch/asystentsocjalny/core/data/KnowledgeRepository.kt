@@ -62,6 +62,7 @@ class KnowledgeRepository(private val context: Context) {
                 name = item.getString("name"),
                 description = item.getString("description"),
                 documents = item.getJSONArray("documents").toStringList(),
+                conditions = if (item.has("conditions")) item.getJSONArray("conditions").toStringList() else emptyList(),
                 note = item.getString("note")
             )
         }

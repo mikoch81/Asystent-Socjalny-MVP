@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import pl.mikoch.asystentsocjalny.core.data.KnowledgeRepository
+import pl.mikoch.asystentsocjalny.features.benefits.BenefitDetailScreen
 import pl.mikoch.asystentsocjalny.features.benefits.BenefitsScreen
 import pl.mikoch.asystentsocjalny.features.home.HomeScreen
 import pl.mikoch.asystentsocjalny.features.notes.NotesScreen
@@ -50,7 +51,22 @@ fun AsystentNavHost() {
             )
         }
         composable(Screen.Benefits.route) {
-            BenefitsScreen(benefits = benefits)
+            BenefitsScreen(
+                benefits = benefits,
+                onOpenDetail = { id ->
+                    navController.navigate(Screen.BenefitDetail.createRoute(id))
+                }
+            )
+        }
+        composable(
+            route = Screen.BenefitDetail.route,
+            arguments = listOf(navArgument("benefitId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("benefitId").orEmpty()
+            val benefit = benefits.firstOrNull { it.id == id }
+            if (benefit != null) {
+                BenefitDetailScreen(benefit = benefit)
+            }
         }
         composable(Screen.Notes.route) {
             NotesScreen(procedures = procedures)
