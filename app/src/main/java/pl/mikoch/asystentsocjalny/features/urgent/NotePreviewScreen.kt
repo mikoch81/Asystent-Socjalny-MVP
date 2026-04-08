@@ -1,8 +1,7 @@
 package pl.mikoch.asystentsocjalny.features.urgent
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -33,6 +32,9 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun NotePreviewScreen(
     noteText: String,
+    pdfReadiness: PdfReadiness,
+    onSaveDraft: () -> Unit,
+    onGeneratePdf: () -> Unit,
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
@@ -63,12 +65,45 @@ fun NotePreviewScreen(
             }
 
             Button(
-                onClick = { copyToClipboard(context, noteText) },
+                onClick = {
+                    onSaveDraft()
+                    Toast.makeText(context, "Zapisano wersję roboczą", Toast.LENGTH_SHORT).show()
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp)
             ) {
-                Text("Kopiuj do schowka")
+                Text("Zapisz jako robocze")
+            }
+
+            Button(
+                onClick = { shareNote(context, noteText) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+            ) {
+                Text("Udostępnij")
+            }
+
+            Button(
+                onClick = {
+                    onGeneratePdf()
+                    Toast.makeText(context, "Wygenerowano PDF", Toast.LENGTH_SHORT).show()
+                },
+                enabled = pdfReadiness.enabled,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+            ) {
+                Text("Generuj PDF do uzupełnienia i podpisu")
+            }
+
+            if (!pdfReadiness.enabled && pdfReadiness.reason.isNotBlank()) {
+                Text(
+                    text = pdfReadiness.reason,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
 
             OutlinedButton(
@@ -154,8 +189,10 @@ private fun NoteFormattedContent(noteText: String) {
     }
 }
 
-private fun copyToClipboard(context: Context, text: String) {
-    val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    clipboard.setPrimaryClip(ClipData.newPlainText("Notatka", text))
-    Toast.makeText(context, "Skopiowano do schowka", Toast.LENGTH_SHORT).show()
+private fun shareNote(context: Context, text: String) {
+    val sendIntent = Intent(Intent.ACTION_SEND).apply {
+        putExtra(Intent.EXTRA_TEXT, text)
+        type = "text/plain"
+    }
+    context.startActivity(Intent.createChooser(sendIntent, "Udostępnij notatkę"))
 }

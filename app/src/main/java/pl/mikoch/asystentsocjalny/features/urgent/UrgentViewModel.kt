@@ -13,12 +13,20 @@ import pl.mikoch.asystentsocjalny.core.data.CaseStore
 import pl.mikoch.asystentsocjalny.core.data.DraftStore
 import pl.mikoch.asystentsocjalny.core.data.KnowledgeRepository
 import pl.mikoch.asystentsocjalny.core.data.NoteDraftBuilder
+import pl.mikoch.asystentsocjalny.core.data.PdfDraftGenerator
 import pl.mikoch.asystentsocjalny.core.data.RiskAssessmentEngine
 import pl.mikoch.asystentsocjalny.core.data.UrgentDraft
 import pl.mikoch.asystentsocjalny.core.model.CaseStatus
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentProgressCalculator
 import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentScenarioUi
+import pl.mikoch.asystentsocjalny.features.urgent.model.UrgentStatus
 import pl.mikoch.asystentsocjalny.features.urgent.model.toUi
+import java.io.File
+
+data class PdfReadiness(
+    val enabled: Boolean,
+    val reason: String
+)
 
 class UrgentViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -68,6 +76,28 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
             progress = progress.value,
             guidance = currentScenario?.guidance
         )
+    }
+
+    val pdfReadiness = derivedStateOf {
+        val p = progress.value
+        val noteExists = generatedNoteText.value.isNotBlank()
+        val descriptionExists = situationDescription.value.isNotBlank()
+        val noCriticalLeft = p.uncheckedCriticalSteps.isEmpty()
+        val notNeedsAttention = p.status != UrgentStatus.NEEDS_ATTENTION
+
+        when {
+            !noteExists -> PdfReadiness(false, "Najpierw wygeneruj notatkę")
+            !descriptionExists -> PdfReadiness(false, "Uzupełnij opis sytuacji")
+            !noCriticalLeft -> PdfReadiness(false, "Wykonaj wszystkie kroki krytyczne")
+            !notNeedsAttention -> PdfReadiness(false, "Sprawa wymaga jeszcze uwagi")
+            else -> PdfReadiness(true, "")
+        }
+    }
+
+    fun generatePdf(): File {
+        val context = getApplication<Application>()
+        val title = currentScenario?.title ?: "notatka"
+        return PdfDraftGenerator.generate(context, generatedNoteText.value, title)
     }
 
     fun initDetailState(scenario: UrgentScenarioUi, caseId: String? = null) {

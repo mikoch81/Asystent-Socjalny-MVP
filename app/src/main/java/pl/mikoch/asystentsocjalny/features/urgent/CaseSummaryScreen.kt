@@ -1,8 +1,7 @@
 package pl.mikoch.asystentsocjalny.features.urgent
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -44,6 +43,7 @@ fun CaseSummaryScreen(
     val context = LocalContext.current
     val progress by viewModel.progress
     val noteText = viewModel.generatedNoteText.value
+    val pdfReadiness by viewModel.pdfReadiness
 
     Scaffold(
         topBar = { TopAppBar(title = { Text("Podsumowanie sprawy") }) }
@@ -109,15 +109,50 @@ fun CaseSummaryScreen(
             if (noteText.isNotBlank()) {
                 Button(
                     onClick = {
-                        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                        clipboard.setPrimaryClip(ClipData.newPlainText("notatka", noteText))
-                        Toast.makeText(context, "Skopiowano notatkę", Toast.LENGTH_SHORT).show()
+                        viewModel.saveDraft()
+                        Toast.makeText(context, "Zapisano wersję roboczą", Toast.LENGTH_SHORT).show()
                     },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp)
                 ) {
-                    Text("Kopiuj notatkę")
+                    Text("Zapisz jako robocze")
+                }
+
+                Button(
+                    onClick = {
+                        val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                            putExtra(Intent.EXTRA_TEXT, noteText)
+                            type = "text/plain"
+                        }
+                        context.startActivity(Intent.createChooser(sendIntent, "Udostępnij notatkę"))
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                ) {
+                    Text("Udostępnij")
+                }
+
+                Button(
+                    onClick = {
+                        viewModel.generatePdf()
+                        Toast.makeText(context, "Wygenerowano PDF", Toast.LENGTH_SHORT).show()
+                    },
+                    enabled = pdfReadiness.enabled,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                ) {
+                    Text("Generuj PDF do uzupełnienia i podpisu")
+                }
+
+                if (!pdfReadiness.enabled && pdfReadiness.reason.isNotBlank()) {
+                    Text(
+                        text = pdfReadiness.reason,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
             }
 
