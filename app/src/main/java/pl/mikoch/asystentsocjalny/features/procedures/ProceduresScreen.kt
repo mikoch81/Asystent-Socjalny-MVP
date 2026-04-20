@@ -30,10 +30,13 @@ import pl.mikoch.asystentsocjalny.features.common.EmptyStateMessage
 
 private val CATEGORY_ORDER = listOf(
     "Interwencyjne",
-    "Rodzinne i opiekuńcze",
-    "Seniorzy i osoby zależne",
-    "Kryzys bytowy",
-    "Proceduralno-formalne"
+    "Zasiłki",
+    "Niepełnosprawność",
+    "Edukacja",
+    "Rodzina i przemoc",
+    "Seniorzy",
+    "Bezdomność",
+    "Inne formy pomocy"
 )
 
 @Composable

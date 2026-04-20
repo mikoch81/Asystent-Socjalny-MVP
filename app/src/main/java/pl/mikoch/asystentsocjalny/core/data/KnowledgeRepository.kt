@@ -5,6 +5,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import pl.mikoch.asystentsocjalny.core.model.Benefit
 import pl.mikoch.asystentsocjalny.core.model.ChecklistStep
+import pl.mikoch.asystentsocjalny.core.model.ContactInfo
 import pl.mikoch.asystentsocjalny.core.model.Procedure
 import pl.mikoch.asystentsocjalny.core.model.UrgentGuidance
 import pl.mikoch.asystentsocjalny.core.model.UrgentScenario
@@ -50,7 +51,12 @@ class KnowledgeRepository(private val context: Context) {
                 doNotMiss = item.getJSONArray("doNotMiss").toStringList(),
                 legalBasis = item.getJSONArray("legalBasis").toStringList(),
                 escalation = item.getString("escalation"),
-                documents = item.getJSONArray("documents").toStringList()
+                documents = item.getJSONArray("documents").toStringList(),
+                relatedBenefits = item.optJSONArray("relatedBenefits")?.toStringList().orEmpty(),
+                contact = item.optJSONObject("contact")?.toContactInfo(),
+                legalUpdatedAt = item.optString("legalUpdatedAt", ""),
+                legalReviewDueAt = item.optString("legalReviewDueAt", ""),
+                legalValidationStatus = item.optString("legalValidationStatus", "Wymaga walidacji")
             )
         }
     }
@@ -64,7 +70,12 @@ class KnowledgeRepository(private val context: Context) {
                 description = item.getString("description"),
                 documents = item.getJSONArray("documents").toStringList(),
                 conditions = if (item.has("conditions")) item.getJSONArray("conditions").toStringList() else emptyList(),
-                note = item.getString("note")
+                note = item.getString("note"),
+                category = item.optString("category", "Inne"),
+                procedure = item.optString("procedure", "").ifBlank { null },
+                legalUpdatedAt = item.optString("legalUpdatedAt", ""),
+                legalReviewDueAt = item.optString("legalReviewDueAt", ""),
+                legalValidationStatus = item.optString("legalValidationStatus", "Wymaga walidacji")
             )
         }
     }
@@ -102,4 +113,13 @@ class KnowledgeRepository(private val context: Context) {
 
 private fun JSONArray.toStringList(): List<String> {
     return (0 until length()).map { index -> getString(index) }
+}
+
+private fun JSONObject.toContactInfo(): ContactInfo {
+    return ContactInfo(
+        unitName = optString("unitName"),
+        phone = optString("phone"),
+        hours = optString("hours"),
+        address = optString("address")
+    )
 }

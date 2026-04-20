@@ -1,82 +1,808 @@
 {
   "benefits": [
     {
-      "id": "temporary-support",
-      "name": "Zasiłek okresowy",
-      "description": "Świadczenie przyznawane osobom i rodzinom w trudnej sytuacji materialnej, np. z powodu długotrwałej choroby, niepełnosprawności lub bezrobocia.",
+      "id": "family-allowance",
+      "name": "Zasiłek rodzinny",
+      "description": "Wsparcie finansowe dla rodzin spełniających kryteria dochodowe.",
       "documents": [
+        "Wniosek",
         "Dokument tożsamości",
-        "Zaświadczenie o dochodach lub oświadczenie",
-        "Orzeczenie o niepełnosprawności (jeśli dotyczy)",
-        "Zaświadczenie lekarskie (przy długotrwałej chorobie)"
+        "Dokumenty dochodowe"
       ],
       "conditions": [
-        "Dochód poniżej kryterium dochodowego (776 zł / os. w rodzinie lub 1 052 zł os. samotna)",
-        "Trudna sytuacja życiowa: choroba, niepełnosprawność, bezrobocie",
-        "Wywiad środowiskowy przeprowadzony przez pracownika socjalnego"
+        "Spełnienie kryterium dochodowego",
+        "Prawidłowo złożony wniosek"
       ],
-      "note": "Wysokość i okres przyznania zależą od indywidualnej sytuacji. Decyzję wydaje OPS na podstawie wywiadu środowiskowego."
+      "note": "Wymaga walidacji aktualnych progów dochodowych.",
+      "category": "Zasiłki",
+      "procedure": "Zasiłek rodzinny – przyjęcie i weryfikacja wniosku",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
     },
     {
-      "id": "material-support",
-      "name": "Pomoc rzeczowa / żywnościowa",
-      "description": "Wsparcie w formie żywności, odzieży, środków czystości lub innych artykułów pierwszej potrzeby.",
+      "id": "family-allowance-supplements",
+      "name": "Dodatki do zasiłku rodzinnego",
+      "description": "Dodatkowe wsparcie do zasiłku rodzinnego w określonych sytuacjach.",
       "documents": [
-        "Dokument tożsamości",
-        "Dokumenty potwierdzające sytuację bytową (opcjonalnie)"
+        "Wniosek",
+        "Dokumenty potwierdzające przesłankę dodatku"
       ],
       "conditions": [
-        "Trudna sytuacja bytowa potwierdzona wywiadem środowiskowym",
-        "Brak możliwości samodzielnego zaspokojenia podstawowych potrzeb"
+        "Posiadanie prawa do zasiłku rodzinnego",
+        "Spełnienie warunków dodatku"
       ],
-      "note": "Zakres i forma pomocy zależą od możliwości jednostki. Może być realizowana we współpracy z organizacjami pozarządowymi (np. Bank Żywności)."
+      "note": "Zakres dodatków zależy od sytuacji rodziny. Wymaga walidacji.",
+      "category": "Zasiłki",
+      "procedure": "Zasiłek rodzinny – przyjęcie i weryfikacja wniosku",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
     },
     {
-      "id": "purpose-benefit",
-      "name": "Zasiłek celowy",
-      "description": "Jednorazowe świadczenie na pokrycie konkretnego wydatku: leków, opału, odzieży, drobnych napraw mieszkania lub kosztów leczenia.",
+      "id": "parental-benefit",
+      "name": "Świadczenie rodzicielskie",
+      "description": "Świadczenie dla rodziców/opiekunów w okresie opieki nad dzieckiem.",
       "documents": [
-        "Dokument tożsamości",
-        "Rachunki lub faktury potwierdzające wydatek (jeśli dotyczy)",
-        "Zaświadczenie lekarskie (przy wydatkach zdrowotnych)"
+        "Wniosek",
+        "Akt urodzenia dziecka",
+        "Oświadczenia wymagane lokalnie"
       ],
       "conditions": [
-        "Dochód poniżej kryterium dochodowego",
-        "Konkretny, uzasadniony cel wydatku",
-        "Wywiad środowiskowy"
+        "Spełnienie przesłanek ustawowych",
+        "Brak kolizji z innymi świadczeniami"
       ],
-      "note": "Zasiłek celowy może być przyznany także w formie specjalnej (powyżej kryterium) w szczególnie uzasadnionych przypadkach — decyzja kierownika OPS."
+      "note": "Wymaga walidacji warunków szczegółowych.",
+      "category": "Zasiłki",
+      "procedure": "Świadczenie rodzicielskie – obsługa wniosku",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "becikowe",
+      "name": "Becikowe",
+      "description": "Jednorazowa zapomoga z tytułu urodzenia dziecka.",
+      "documents": [
+        "Wniosek",
+        "Akt urodzenia",
+        "Dokumenty wymagane ustawowo"
+      ],
+      "conditions": [
+        "Spełnienie kryteriów ustawowych"
+      ],
+      "note": "Wymaga walidacji aktualnych terminów i kryteriów.",
+      "category": "Zasiłki",
+      "procedure": "Świadczenie rodzicielskie – obsługa wniosku",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "alimony-fund",
+      "name": "Fundusz Alimentacyjny",
+      "description": "Wsparcie dla osób uprawnionych do alimentów przy bezskutecznej egzekucji.",
+      "documents": [
+        "Wniosek",
+        "Zaświadczenie o bezskutecznej egzekucji",
+        "Dokumenty dochodowe"
+      ],
+      "conditions": [
+        "Bezskuteczna egzekucja alimentów",
+        "Spełnienie kryterium dochodowego"
+      ],
+      "note": "Wymaga walidacji progów i okresów świadczeniowych.",
+      "category": "Zasiłki",
+      "procedure": "Fundusz alimentacyjny – przyjęcie wniosku",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "large-family-card",
+      "name": "Karta Dużej Rodziny",
+      "description": "System ulg dla rodzin wielodzietnych.",
+      "documents": [
+        "Wniosek KDR",
+        "Dokumenty potwierdzające skład rodziny"
+      ],
+      "conditions": [
+        "Uprawnienie do KDR"
+      ],
+      "note": "Zakres ulg lokalnych może się różnić. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Zasiłki",
+      "procedure": "Karta Dużej Rodziny – obsługa zgłoszenia",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "pregnancy-support-za-zyciem",
+      "name": "Wsparcie kobiet w ciąży i rodzin Za życiem",
+      "description": "Pakiet uprawnień i usług dla kobiet w ciąży i rodzin.",
+      "documents": [
+        "Wniosek",
+        "Dokumentacja medyczna (jeśli wymagana)"
+      ],
+      "conditions": [
+        "Spełnienie przesłanek programu"
+      ],
+      "note": "Wymaga walidacji aktualnego zakresu świadczeń.",
+      "category": "Zasiłki",
+      "procedure": "Świadczenie rodzicielskie – obsługa wniosku",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "care-allowance",
+      "name": "Zasiłek pielęgnacyjny",
+      "description": "Świadczenie wspierające osoby niepełnosprawne i wymagające opieki.",
+      "documents": [
+        "Wniosek",
+        "Orzeczenie o niepełnosprawności",
+        "Dokument tożsamości"
+      ],
+      "conditions": [
+        "Spełnienie przesłanek ustawowych"
+      ],
+      "note": "Wymaga walidacji zaktualizowanych warunków.",
+      "category": "Niepełnosprawność",
+      "procedure": "Zasiłek pielęgnacyjny – obsługa wniosku",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "caregiver-benefit",
+      "name": "Świadczenie pielęgnacyjne",
+      "description": "Wsparcie dla opiekunów osób z niepełnosprawnością.",
+      "documents": [
+        "Wniosek",
+        "Orzeczenie",
+        "Oświadczenia opiekuna"
+      ],
+      "conditions": [
+        "Opieka nad osobą spełniającą kryteria",
+        "Brak kolizji świadczeń"
+      ],
+      "note": "Wymaga walidacji przepisów przejściowych.",
+      "category": "Niepełnosprawność",
+      "procedure": "Świadczenie pielęgnacyjne – kwalifikacja i wniosek",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "special-care-benefit",
+      "name": "Specjalny zasiłek opiekuńczy",
+      "description": "Świadczenie dla opiekunów w określonych sytuacjach.",
+      "documents": [
+        "Wniosek",
+        "Orzeczenie",
+        "Dokumenty dochodowe"
+      ],
+      "conditions": [
+        "Spełnienie przesłanek dochodowych i opiekuńczych"
+      ],
+      "note": "Wymaga walidacji bieżących regulacji.",
+      "category": "Niepełnosprawność",
+      "procedure": "Świadczenie pielęgnacyjne – kwalifikacja i wniosek",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
     },
     {
       "id": "permanent-benefit",
       "name": "Zasiłek stały",
-      "description": "Comiesięczne świadczenie dla osób niezdolnych do pracy z powodu wieku lub całkowitej niepełnosprawności, których dochód jest poniżej kryterium.",
+      "description": "Comiesięczne świadczenie dla osób niezdolnych do pracy.",
       "documents": [
-        "Dokument tożsamości",
-        "Orzeczenie o znacznym lub umiarkowanym stopniu niepełnosprawności",
-        "Zaświadczenie o dochodach"
+        "Wniosek",
+        "Dokumenty dochodowe",
+        "Dokumentacja zdrowotna"
       ],
       "conditions": [
-        "Całkowita niezdolność do pracy z powodu wieku lub niepełnosprawności",
-        "Dochód poniżej kryterium dochodowego",
-        "Orzeczenie o niepełnosprawności (znaczny lub umiarkowany stopień)"
+        "Dochód poniżej kryterium",
+        "Spełnienie przesłanek ustawowych"
       ],
-      "note": "Zasiłek stały przysługuje do czasu zmiany sytuacji dochodowej lub zdrowotnej. Weryfikowany okresowo."
+      "note": "Wysokość zależy od sytuacji. Wymaga walidacji kwot.",
+      "category": "Niepełnosprawność",
+      "procedure": "Zasiłek stały – weryfikacja uprawnień",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
     },
     {
-      "id": "shelter-services",
-      "name": "Schronienie / noclegownia",
-      "description": "Zapewnienie tymczasowego miejsca pobytu osobom bezdomnym lub zagrożonym bezdomnością.",
+      "id": "periodic-benefit",
+      "name": "Zasiłek okresowy",
+      "description": "Świadczenie dla osób i rodzin w trudnej sytuacji życiowej.",
       "documents": [
-        "Dokument tożsamości (jeśli dostępny)",
-        "Skierowanie z OPS (w przypadku schroniska)"
+        "Wniosek",
+        "Dokumenty dochodowe",
+        "Wywiad środowiskowy"
       ],
       "conditions": [
-        "Brak miejsca zamieszkania lub zagrożenie bezdomnością",
-        "Decyzja administracyjna OPS o skierowaniu",
-        "Kontrakt socjalny (w przypadku schroniska)"
+        "Dochód poniżej kryterium",
+        "Trudna sytuacja życiowa"
       ],
-      "note": "Noclegownia nie wymaga decyzji administracyjnej. Schronisko wymaga skierowania i kontraktu socjalnego."
+      "note": "Wymaga walidacji aktualnych kryteriów dochodowych.",
+      "category": "Niepełnosprawność",
+      "procedure": "Zasiłek stały – weryfikacja uprawnień",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "purpose-benefit",
+      "name": "Zasiłek celowy",
+      "description": "Jednorazowa pomoc na konkretny wydatek niezbędny.",
+      "documents": [
+        "Wniosek",
+        "Dokumenty dochodowe",
+        "Potwierdzenie celu wydatku"
+      ],
+      "conditions": [
+        "Uzasadniony cel",
+        "Sytuacja materialna uzasadniająca pomoc"
+      ],
+      "note": "Możliwe rozstrzygnięcie indywidualne. Wymaga walidacji.",
+      "category": "Niepełnosprawność",
+      "procedure": "Zasiłek stały – weryfikacja uprawnień",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "school-scholarship",
+      "name": "Stypendia i zasiłek szkolny",
+      "description": "Pomoc materialna dla uczniów w trudnej sytuacji.",
+      "documents": [
+        "Wniosek",
+        "Zaświadczenie ze szkoły",
+        "Dokumenty dochodowe"
+      ],
+      "conditions": [
+        "Status ucznia",
+        "Spełnienie kryterium dochodowego"
+      ],
+      "note": "Terminy składania wniosków wymagają walidacji rocznej. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Edukacja",
+      "procedure": "Stypendium szkolne – przyjęcie i weryfikacja",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "school-outside-residence",
+      "name": "Nauka w szkole poza miejscem zamieszkania",
+      "description": "Wsparcie kosztów związanych z nauką poza miejscem zamieszkania.",
+      "documents": [
+        "Wniosek",
+        "Zaświadczenie ze szkoły",
+        "Dokumenty kosztowe"
+      ],
+      "conditions": [
+        "Spełnienie warunków ustawowych"
+      ],
+      "note": "Wymaga walidacji lokalnej praktyki rozliczeniowej.",
+      "category": "Edukacja",
+      "procedure": "Nauka poza miejscem zamieszkania – weryfikacja wsparcia",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "education-rehabilitation-child",
+      "name": "Dodatek z tytułu kształcenia i rehabilitacji dziecka",
+      "description": "Dodatkowe wsparcie dla rodzin wychowujących dziecko z niepełnosprawnością.",
+      "documents": [
+        "Wniosek",
+        "Orzeczenie dziecka",
+        "Dokumenty wymagane lokalnie"
+      ],
+      "conditions": [
+        "Prawo do świadczenia bazowego",
+        "Spełnienie przesłanek dodatku"
+      ],
+      "note": "Wymaga walidacji warunków szczegółowych.",
+      "category": "Edukacja",
+      "procedure": "Zasiłek szkolny – zdarzenie losowe",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "family-assistant",
+      "name": "Asystent rodziny",
+      "description": "Wsparcie rodziny w przezwyciężaniu trudności opiekuńczo-wychowawczych.",
+      "documents": [
+        "Notatka kwalifikacyjna",
+        "Plan pracy z rodziną"
+      ],
+      "conditions": [
+        "Stwierdzenie potrzeby wsparcia rodziny"
+      ],
+      "note": "Zakres wsparcia ustalany indywidualnie. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Rodzina i przemoc",
+      "procedure": "Asystent rodziny – kwalifikacja rodziny",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "day-support-centers",
+      "name": "Placówki wsparcia dziennego",
+      "description": "Wsparcie dzienne dla dzieci i młodzieży z rodzin wymagających pomocy.",
+      "documents": [
+        "Wniosek / skierowanie",
+        "Dokumenty dziecka"
+      ],
+      "conditions": [
+        "Ocena potrzeby wsparcia"
+      ],
+      "note": "Dostępność miejsc wymaga potwierdzenia lokalnego. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Rodzina i przemoc",
+      "procedure": "Asystent rodziny – kwalifikacja rodziny",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "supporting-families",
+      "name": "Rodziny wspierające",
+      "description": "Wsparcie rodzin przeżywających trudności przez rodzinę wspierającą.",
+      "documents": [
+        "Dokumentacja kwalifikacyjna"
+      ],
+      "conditions": [
+        "Zakwalifikowanie rodziny do wsparcia"
+      ],
+      "note": "Wymaga walidacji lokalnych zasad kwalifikacji.",
+      "category": "Rodzina i przemoc",
+      "procedure": "Piecza zastępcza – koordynacja wsparcia",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "foster-care",
+      "name": "Piecza zastępcza",
+      "description": "Wsparcie i organizacja opieki zastępczej dla dzieci.",
+      "documents": [
+        "Dokumentacja dziecka",
+        "Dokumentacja opiekunów"
+      ],
+      "conditions": [
+        "Przesłanki ustawowe dla pieczy zastępczej"
+      ],
+      "note": "Proces wymaga współpracy międzyinstytucjonalnej. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Rodzina i przemoc",
+      "procedure": "Piecza zastępcza – koordynacja wsparcia",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "violence-prevention-support",
+      "name": "Przeciwdziałanie przemocy w rodzinie",
+      "description": "Działania wspierające osoby dotknięte przemocą domową.",
+      "documents": [
+        "Notatka interwencyjna",
+        "Dokumentacja zgodna z procedurą"
+      ],
+      "conditions": [
+        "Rozpoznanie przemocy domowej"
+      ],
+      "note": "Wymaga walidacji ścieżek lokalnych.",
+      "category": "Rodzina i przemoc",
+      "procedure": "Punkt konsultacyjny ds. przemocy – skierowanie osoby",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "care-services",
+      "name": "Usługi opiekuńcze",
+      "description": "Usługi wspierające osoby niesamodzielne w miejscu zamieszkania.",
+      "documents": [
+        "Wniosek",
+        "Wywiad środowiskowy",
+        "Dokumentacja medyczna (jeśli wymagana)"
+      ],
+      "conditions": [
+        "Potwierdzona potrzeba opieki"
+      ],
+      "note": "Zakres usług zależy od decyzji i zasobów. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Seniorzy",
+      "procedure": "Usługi opiekuńcze dla seniora – kwalifikacja",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "care-75-plus",
+      "name": "Program Opieka 75+",
+      "description": "Program wsparcia usług opiekuńczych dla osób 75+.",
+      "documents": [
+        "Wniosek",
+        "Dokument tożsamości",
+        "Wywiad środowiskowy"
+      ],
+      "conditions": [
+        "Wiek 75+",
+        "Spełnienie wymogów programu"
+      ],
+      "note": "Dostępność zależna od realizacji programu lokalnie. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Seniorzy",
+      "procedure": "Program Opieka 75+ – kwalifikacja",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "nursing-home",
+      "name": "Dom Pomocy Społecznej",
+      "description": "Całodobowa opieka dla osób wymagających stałego wsparcia.",
+      "documents": [
+        "Wniosek",
+        "Wywiad środowiskowy",
+        "Dokumentacja medyczna"
+      ],
+      "conditions": [
+        "Brak możliwości zapewnienia opieki w domu"
+      ],
+      "note": "Wymaga walidacji zasad odpłatności i kierowania.",
+      "category": "Seniorzy",
+      "procedure": "Dom Pomocy Społecznej – skierowanie",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "support-centers",
+      "name": "Ośrodki wsparcia",
+      "description": "Dzienna lub czasowa forma wsparcia dla osób wymagających opieki.",
+      "documents": [
+        "Wniosek",
+        "Dokumentacja kwalifikacyjna"
+      ],
+      "conditions": [
+        "Ocena potrzeby wsparcia"
+      ],
+      "note": "Zakres oferty zależy od lokalnej dostępności. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Seniorzy",
+      "procedure": "Dom Pomocy Społecznej – skierowanie",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "shelter-food-clothing",
+      "name": "Schronienie, posiłek, ubranie",
+      "description": "Doraźna pomoc dla osób bezdomnych i zagrożonych bezdomnością.",
+      "documents": [
+        "Notatka interwencyjna",
+        "Skierowanie (gdy wymagane)"
+      ],
+      "conditions": [
+        "Brak schronienia lub skrajna sytuacja bytowa"
+      ],
+      "note": "Noclegownia może działać na zasadach uproszczonych. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Bezdomność",
+      "procedure": "Pierwszy kontakt z osobą bezdomną",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "homelessness-exit",
+      "name": "Program wychodzenia z bezdomności",
+      "description": "Długofalowe wsparcie usamodzielniające osoby bezdomne.",
+      "documents": [
+        "Kontrakt socjalny",
+        "Plan usamodzielnienia"
+      ],
+      "conditions": [
+        "Gotowość do realizacji planu",
+        "Współpraca z pracownikiem socjalnym"
+      ],
+      "note": "Wymaga regularnego monitorowania postępów. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Bezdomność",
+      "procedure": "Program wychodzenia z bezdomności – rozpoczęcie pracy",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "material-food-support",
+      "name": "Pomoc żywnościowa",
+      "description": "Pomoc rzeczowa i żywnościowa dla osób w trudnej sytuacji.",
+      "documents": [
+        "Wniosek lub zgłoszenie",
+        "Dokumentacja sytuacji bytowej"
+      ],
+      "conditions": [
+        "Trudna sytuacja materialna"
+      ],
+      "note": "Możliwa realizacja z NGO i PCK. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Inne formy pomocy",
+      "procedure": "Dodatek mieszkaniowy – obsługa wniosku",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "housing-allowance",
+      "name": "Dodatek mieszkaniowy",
+      "description": "Wsparcie kosztów utrzymania mieszkania.",
+      "documents": [
+        "Wniosek",
+        "Deklaracja dochodowa",
+        "Dokumenty mieszkaniowe"
+      ],
+      "conditions": [
+        "Spełnienie kryteriów ustawowych"
+      ],
+      "note": "Wymaga walidacji aktualnych progów.",
+      "category": "Inne formy pomocy",
+      "procedure": "Dodatek mieszkaniowy – obsługa wniosku",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "energy-allowance",
+      "name": "Dodatek energetyczny",
+      "description": "Wsparcie części kosztów energii dla uprawnionych gospodarstw.",
+      "documents": [
+        "Wniosek",
+        "Dokumenty wymagane lokalnie"
+      ],
+      "conditions": [
+        "Spełnienie warunków programu"
+      ],
+      "note": "Wymaga walidacji aktualnych naborów.",
+      "category": "Inne formy pomocy",
+      "procedure": "Wsparcie energetyczne – dobór właściwego świadczenia",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "advisory-services",
+      "name": "Poradnictwo specjalistyczne",
+      "description": "Wsparcie psychologiczne, rodzinne i socjalne.",
+      "documents": [
+        "Notatka z kontaktu"
+      ],
+      "conditions": [
+        "Zidentyfikowana potrzeba wsparcia"
+      ],
+      "note": "Zakres pomocy zależny od dostępności specjalistów. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Inne formy pomocy",
+      "procedure": "Nieodpłatna pomoc prawna – skierowanie klienta",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "social-work",
+      "name": "Praca socjalna",
+      "description": "Działania wspierające osoby i rodziny w poprawie funkcjonowania społecznego.",
+      "documents": [
+        "Notatka służbowa",
+        "Plan pracy"
+      ],
+      "conditions": [
+        "Potrzeba wsparcia socjalnego"
+      ],
+      "note": "Forma podstawowa, często łączona z innymi świadczeniami. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Inne formy pomocy",
+      "procedure": "Nieodpłatna pomoc prawna – skierowanie klienta",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "independence-support",
+      "name": "Usamodzielnienie",
+      "description": "Wsparcie procesu wychodzenia z kryzysu i odbudowy samodzielności.",
+      "documents": [
+        "Plan usamodzielnienia",
+        "Notatka socjalna"
+      ],
+      "conditions": [
+        "Gotowość do realizacji planu"
+      ],
+      "note": "Wymaga współpracy i monitoringu. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Inne formy pomocy",
+      "procedure": "Program wychodzenia z bezdomności – rozpoczęcie pracy",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "crisis-intervention",
+      "name": "Interwencja kryzysowa",
+      "description": "Doraźne wsparcie w sytuacji kryzysu psychicznego, rodzinnego lub bytowego.",
+      "documents": [
+        "Notatka interwencyjna"
+      ],
+      "conditions": [
+        "Wystąpienie kryzysu"
+      ],
+      "note": "Priorytet bezpieczeństwa klienta i otoczenia. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Inne formy pomocy",
+      "procedure": "Osoba pod wpływem alkoholu lub substancji",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "free-legal-aid",
+      "name": "Bezpłatna pomoc prawna",
+      "description": "Nieodpłatne poradnictwo prawne dla osób uprawnionych.",
+      "documents": [
+        "Dokument tożsamości",
+        "Dokumenty sprawy"
+      ],
+      "conditions": [
+        "Spełnienie przesłanek ustawowych"
+      ],
+      "note": "Wymaga walidacji lokalnego harmonogramu dyżurów.",
+      "category": "Inne formy pomocy",
+      "procedure": "Nieodpłatna pomoc prawna – skierowanie klienta",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "addiction-support",
+      "name": "Pomoc uzależnionym",
+      "description": "Wsparcie motywujące i kierowanie do leczenia uzależnień.",
+      "documents": [
+        "Notatka z kontaktu"
+      ],
+      "conditions": [
+        "Rozpoznanie problemu uzależnienia"
+      ],
+      "note": "Współpraca z placówkami terapii i pomocą kryzysową. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Inne formy pomocy",
+      "procedure": "Osoba pod wpływem alkoholu lub substancji",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "coal-allowance",
+      "name": "Dodatek węglowy",
+      "description": "Świadczenie okresowe dla gospodarstw spełniających warunki programu.",
+      "documents": [
+        "Wniosek",
+        "Oświadczenia wymagane przepisami"
+      ],
+      "conditions": [
+        "Spełnienie warunków naboru"
+      ],
+      "note": "Nabory mają charakter czasowy. Wymaga walidacji.",
+      "category": "Inne formy pomocy",
+      "procedure": "Wsparcie energetyczne – dobór właściwego świadczenia",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "household-allowance",
+      "name": "Dodatek dla gospodarstw domowych",
+      "description": "Wsparcie osłonowe dla gospodarstw w okresach podwyższonych kosztów.",
+      "documents": [
+        "Wniosek",
+        "Oświadczenia wymagane"
+      ],
+      "conditions": [
+        "Warunki programu osłonowego"
+      ],
+      "note": "Program okresowy, wymaga walidacji aktualności.",
+      "category": "Inne formy pomocy",
+      "procedure": "Wsparcie energetyczne – dobór właściwego świadczenia",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "electricity-allowance",
+      "name": "Dodatek elektryczny",
+      "description": "Wsparcie kosztów energii elektrycznej dla kwalifikujących się gospodarstw.",
+      "documents": [
+        "Wniosek",
+        "Dokumenty wymagane programem"
+      ],
+      "conditions": [
+        "Spełnienie warunków programu"
+      ],
+      "note": "Wymaga walidacji aktualnych kryteriów.",
+      "category": "Inne formy pomocy",
+      "procedure": "Wsparcie energetyczne – dobór właściwego świadczenia",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "clean-air-guidance",
+      "name": "Czyste powietrze",
+      "description": "Informacja i wsparcie w dostępie do programu poprawy efektywności energetycznej.",
+      "documents": [
+        "Dokumenty programu"
+      ],
+      "conditions": [
+        "Spełnienie warunków programu"
+      ],
+      "note": "Kanał informacyjny i kierowanie do właściwych punktów. Wymaga walidacji przez kierownika MOPS i eksperta prawnego.",
+      "category": "Inne formy pomocy",
+      "procedure": "Wsparcie energetyczne – dobór właściwego świadczenia",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "shield-allowance",
+      "name": "Dodatek osłonowy",
+      "description": "Świadczenie osłonowe zależne od obowiązujących przepisów okresowych.",
+      "documents": [
+        "Wniosek",
+        "Dokumenty wymagane aktualnym naborem"
+      ],
+      "conditions": [
+        "Spełnienie kryteriów programu"
+      ],
+      "note": "Program czasowy, wymaga walidacji aktualności.",
+      "category": "Inne formy pomocy",
+      "procedure": "Wsparcie energetyczne – dobór właściwego świadczenia",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "energy-voucher",
+      "name": "Bon energetyczny",
+      "description": "Forma wsparcia kosztów energii w ramach dedykowanego programu.",
+      "documents": [
+        "Wniosek",
+        "Dokumenty potwierdzające uprawnienie"
+      ],
+      "conditions": [
+        "Warunki programu"
+      ],
+      "note": "Wymaga walidacji terminów naboru.",
+      "category": "Inne formy pomocy",
+      "procedure": "Wsparcie energetyczne – dobór właściwego świadczenia",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "heating-voucher",
+      "name": "Bon ciepłowniczy",
+      "description": "Wsparcie dla odbiorców ciepła systemowego w określonych programach.",
+      "documents": [
+        "Wniosek",
+        "Dokumenty wymagane programem"
+      ],
+      "conditions": [
+        "Warunki programu"
+      ],
+      "note": "Program okresowy, wymaga walidacji.",
+      "category": "Inne formy pomocy",
+      "procedure": "Wsparcie energetyczne – dobór właściwego świadczenia",
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
     }
-  ]
+  ],
+  "metadata": {
+    "jurisdiction": "MOPS Zgierz",
+    "legalSnapshotDate": "2026-04-20",
+    "nextSuggestedReview": "2026-06-30",
+    "validationNote": "Treści prawne wymagają walidacji przez kierownika MOPS i eksperta prawnego."
+  }
 }

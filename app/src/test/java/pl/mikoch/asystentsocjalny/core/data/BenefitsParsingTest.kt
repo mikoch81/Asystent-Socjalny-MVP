@@ -17,7 +17,12 @@ class BenefitsParsingTest {
             "description": "Opis testowy",
             "documents": ["Dowód osobisty", "Zaświadczenie"],
             "conditions": ["Dochód poniżej kryterium", "Wywiad środowiskowy"],
-            "note": "Uwaga testowa"
+            "note": "Uwaga testowa",
+            "category": "Zasiłki",
+            "procedure": "Procedura testowa",
+            "legalUpdatedAt": "2026-04-20",
+            "legalReviewDueAt": "2026-06-30",
+            "legalValidationStatus": "Wymaga walidacji"
         }
         """.trimIndent())
 
@@ -29,6 +34,11 @@ class BenefitsParsingTest {
         assertEquals(listOf("Dowód osobisty", "Zaświadczenie"), benefit.documents)
         assertEquals(listOf("Dochód poniżej kryterium", "Wywiad środowiskowy"), benefit.conditions)
         assertEquals("Uwaga testowa", benefit.note)
+        assertEquals("Zasiłki", benefit.category)
+        assertEquals("Procedura testowa", benefit.procedure)
+        assertEquals("2026-04-20", benefit.legalUpdatedAt)
+        assertEquals("2026-06-30", benefit.legalReviewDueAt)
+        assertEquals("Wymaga walidacji", benefit.legalValidationStatus)
     }
 
     @Test
@@ -67,6 +77,28 @@ class BenefitsParsingTest {
         assertEquals(listOf("Warunek"), benefit.conditions)
     }
 
+    @Test
+    fun `parseBenefit uses defaults when category and procedure are missing`() {
+        val json = JSONObject("""
+        {
+            "id": "defaults",
+            "name": "Domyślny",
+            "description": "Opis",
+            "documents": [],
+            "conditions": [],
+            "note": "Uwaga"
+        }
+        """.trimIndent())
+
+        val benefit = parseBenefitItem(json)
+
+        assertEquals("Inne", benefit.category)
+        assertEquals(null, benefit.procedure)
+        assertEquals("", benefit.legalUpdatedAt)
+        assertEquals("", benefit.legalReviewDueAt)
+        assertEquals("Wymaga walidacji", benefit.legalValidationStatus)
+    }
+
     private fun parseBenefitItem(item: JSONObject): Benefit {
         val conditions = if (item.has("conditions")) {
             val arr = item.getJSONArray("conditions")
@@ -82,7 +114,12 @@ class BenefitsParsingTest {
                 (0 until arr.length()).map { arr.getString(it) }
             },
             conditions = conditions,
-            note = item.getString("note")
+            note = item.getString("note"),
+            category = item.optString("category", "Inne"),
+            procedure = item.optString("procedure", "").ifBlank { null },
+            legalUpdatedAt = item.optString("legalUpdatedAt", ""),
+            legalReviewDueAt = item.optString("legalReviewDueAt", ""),
+            legalValidationStatus = item.optString("legalValidationStatus", "Wymaga walidacji")
         )
     }
 }

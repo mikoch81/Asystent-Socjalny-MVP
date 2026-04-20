@@ -11,5 +11,10 @@ data class Procedure(
     val doNotMiss: List<String>,
     val legalBasis: List<String>,
     val escalation: String,
-    val documents: List<String>
+    val documents: List<String>,
+    val relatedBenefits: List<String> = emptyList(),
+    val contact: ContactInfo? = null,
+    val legalUpdatedAt: String = "",
+    val legalReviewDueAt: String = "",
+    val legalValidationStatus: String = "Wymaga walidacji"
 )

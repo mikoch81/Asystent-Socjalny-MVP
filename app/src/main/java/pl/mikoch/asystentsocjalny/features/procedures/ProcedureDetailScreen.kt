@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -19,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import pl.mikoch.asystentsocjalny.core.model.ContactInfo
 import pl.mikoch.asystentsocjalny.core.model.Procedure
 
 @Composable
@@ -48,6 +51,12 @@ fun ProcedureDetailScreen(procedure: Procedure) {
                 SeverityBadge(procedure.severity)
             }
 
+            LegalStatusBanner(
+                status = procedure.legalValidationStatus,
+                updatedAt = procedure.legalUpdatedAt,
+                reviewDueAt = procedure.legalReviewDueAt
+            )
+
             ProcedureSection("Co zrobić teraz", procedure.nowSteps)
             ProcedureSection("Kogo powiadomić", procedure.notify)
             ProcedureSection("Czego nie pominąć", procedure.doNotMiss)
@@ -61,6 +70,12 @@ fun ProcedureDetailScreen(procedure: Procedure) {
             }
 
             ProcedureSection("Jakie dokumenty przygotować", procedure.documents)
+
+            ProcedureSection("Powiązane świadczenia", procedure.relatedBenefits)
+
+            procedure.contact?.let {
+                ContactSection(contact = it)
+            }
         }
     }
 }
@@ -109,5 +124,65 @@ private fun Section(
             fontWeight = FontWeight.Bold
         )
         content()
+    }
+}
+
+@Composable
+private fun ContactSection(contact: ContactInfo) {
+    Section("Kontakt MOPS") {
+        Text(text = contact.unitName, style = MaterialTheme.typography.bodyMedium)
+        Text(text = "Telefon: ${contact.phone}", style = MaterialTheme.typography.bodyMedium)
+        Text(text = "Godziny: ${contact.hours}", style = MaterialTheme.typography.bodyMedium)
+        Text(text = "Adres: ${contact.address}", style = MaterialTheme.typography.bodyMedium)
+    }
+}
+
+@Composable
+private fun LegalStatusBanner(
+    status: String,
+    updatedAt: String,
+    reviewDueAt: String
+) {
+    val isValidated = status.equals("Zweryfikowane", ignoreCase = true)
+    val background = if (isValidated) {
+        MaterialTheme.colorScheme.secondaryContainer
+    } else {
+        MaterialTheme.colorScheme.errorContainer
+    }
+    val contentColor = if (isValidated) {
+        MaterialTheme.colorScheme.onSecondaryContainer
+    } else {
+        MaterialTheme.colorScheme.onErrorContainer
+    }
+
+    Card(
+        colors = CardDefaults.cardColors(containerColor = background),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+            modifier = Modifier.padding(12.dp)
+        ) {
+            Text(
+                text = "Status prawny: $status",
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.Bold,
+                color = contentColor
+            )
+            if (updatedAt.isNotBlank()) {
+                Text(
+                    text = "Ostatnia aktualizacja: $updatedAt",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = contentColor
+                )
+            }
+            if (reviewDueAt.isNotBlank()) {
+                Text(
+                    text = "Przegląd wymagany do: $reviewDueAt",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = contentColor
+                )
+            }
+        }
     }
 }

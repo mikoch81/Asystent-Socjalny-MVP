@@ -8,423 +8,1170 @@
       "severity": "Wysoki",
       "nowSteps": [
         "Zadbaj o własne bezpieczeństwo i oceń pilność sytuacji.",
-        "Jeżeli występuje bezpośrednie zagrożenie zdrowia lub życia – niezwłocznie wezwij odpowiednie służby.",
-        "Udokumentuj najważniejsze obserwacje w sposób rzeczowy i konkretny.",
-        "Postępuj zgodnie z lokalną procedurą interwencyjną jednostki."
+        "Przy bezpośrednim zagrożeniu życia lub zdrowia natychmiast wezwij 112.",
+        "Udokumentuj fakty: kto, co, kiedy, gdzie.",
+        "Przekaż sprawę zgodnie z lokalną procedurą interwencyjną."
       ],
       "notify": [
-        "Przełożony / kierownik",
-        "Policja – jeśli wymaga tego sytuacja",
-        "Ochrona zdrowia – jeśli potrzebna pomoc medyczna"
+        "Przełożony / kierownik MOPS",
+        "Policja",
+        "Ratownictwo medyczne (jeśli potrzebne)",
+        "Sąd rodzinny (zgodnie z procedurą)"
       ],
       "doNotMiss": [
-        "Nie podejmuj działań wykraczających poza kompetencje.",
-        "Nie opieraj notatki na domysłach – zapisuj fakty i obserwacje.",
-        "Sprawdź, czy konieczna jest formalna eskalacja i dalsza dokumentacja."
+        "Nie opieraj notatki na domysłach.",
+        "Sprawdź, czy w lokalu są inne dzieci.",
+        "Potwierdź ścieżkę eskalacji z przełożonym."
       ],
       "legalBasis": [
-        "Źródło demonstracyjne – do zastąpienia zweryfikowaną podstawą prawną.",
-        "Wymaga walidacji przez eksperta merytorycznego jednostki."
+        "Ustawa o przeciwdziałaniu przemocy domowej – Wymaga walidacji.",
+        "Ustawa o wspieraniu rodziny i systemie pieczy zastępczej – Wymaga walidacji."
       ],
-      "escalation": "Tak – w razie wątpliwości lub ryzyka dla dziecka wymagana jest niezwłoczna konsultacja z przełożonym i postępowanie zgodnie z procedurami.",
+      "escalation": "Tak, niezwłoczna konsultacja z przełożonym i uruchomienie właściwej ścieżki ochrony dziecka.",
       "documents": [
         "Notatka służbowa",
-        "Wewnętrzna checklista interwencji",
-        "Dalsze pisma zgodnie z lokalną procedurą"
-      ]
+        "Checklista interwencji",
+        "Pismo do właściwego organu (zgodnie z procedurą)"
+      ],
+      "relatedBenefits": [
+        "Asystent rodziny",
+        "Praca socjalna"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
     },
     {
       "id": "domestic-violence-adult",
       "title": "Przemoc domowa – osoba dorosła",
       "category": "Interwencyjne",
-      "situation": "Zgłoszenie lub stwierdzenie przemocy domowej wobec osoby dorosłej podczas wizyty lub kontaktu z klientem.",
+      "situation": "Zgłoszenie przemocy wobec osoby dorosłej podczas wizyty lub kontaktu z klientem.",
       "severity": "Wysoki",
       "nowSteps": [
-        "Oceń bezpośrednie zagrożenie życia lub zdrowia – jeśli tak, wezwij odpowiednie służby.",
-        "Zapewnij osobie poszkodowanej bezpieczne miejsce do rozmowy.",
-        "Poinformuj o przysługujących prawach i dostępnych formach pomocy.",
-        "Rozpocznij dokumentowanie zgodnie z procedurą jednostki."
+        "Oceń zagrożenie życia i zdrowia.",
+        "Zapewnij bezpieczne warunki rozmowy.",
+        "Przekaż informacje o dostępnych formach wsparcia.",
+        "Sporządź notatkę i uruchom dalszą ścieżkę pomocy."
       ],
       "notify": [
-        "Przełożony / kierownik",
-        "Policja – jeśli bezpośrednie zagrożenie",
-        "Zespół interdyscyplinarny ds. przeciwdziałania przemocy"
+        "Przełożony / kierownik MOPS",
+        "Policja (w razie zagrożenia)",
+        "Zespół interdyscyplinarny"
       ],
       "doNotMiss": [
-        "Poinformuj osobę o prawie do bezpłatnej pomocy prawnej.",
-        "Przekaż kontakt do specjalistycznego ośrodka wsparcia.",
-        "Kontakt monitorujący powinien nastąpić w ciągu 7 dni."
+        "Przekaż kontakt do pomocy prawnej.",
+        "Ustal bezpieczny sposób kontaktu zwrotnego.",
+        "Sprawdź, czy zagrożone są też dzieci."
       ],
       "legalBasis": [
-        "Źródło demonstracyjne – do walidacji prawnej."
+        "Ustawa o przeciwdziałaniu przemocy domowej – Wymaga walidacji."
       ],
-      "escalation": "Obowiązkowe przekazanie sprawy do zespołu interdyscyplinarnego. W sytuacji zagrożenia życia – natychmiastowe powiadomienie Policji.",
+      "escalation": "Tak, przy zagrożeniu życia lub zdrowia eskalacja natychmiastowa.",
       "documents": [
-        "Notatka służbowa z interwencji",
-        "Informacja pisemna dla osoby doświadczającej przemocy"
-      ]
+        "Notatka służbowa",
+        "Informacja o możliwościach pomocy"
+      ],
+      "relatedBenefits": [
+        "Poradnictwo specjalistyczne",
+        "Bezpłatna pomoc prawna"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
     },
     {
       "id": "person-under-influence",
       "title": "Osoba pod wpływem alkoholu lub substancji",
       "category": "Interwencyjne",
-      "situation": "Podczas wizyty terenowej osoba kluczowa jest w stanie upojenia alkoholowego lub pod wpływem innych substancji.",
+      "situation": "Osoba w miejscu interwencji jest pod wpływem i utrudnia czynności służbowe.",
       "severity": "Średni",
       "nowSteps": [
-        "Oceń, czy osoba stanowi zagrożenie dla siebie lub innych.",
-        "Jeśli zagrożenie – wezwij odpowiednie służby.",
-        "Nie prowadź wywiadu merytorycznego – odnotuj stan faktyczny.",
-        "Uzgodnij termin ponownej wizyty."
+        "Oceń, czy osoba stanowi zagrożenie.",
+        "W razie zagrożenia wezwij służby.",
+        "Odnotuj stan faktyczny bez oceniania.",
+        "Ustal termin ponownego kontaktu merytorycznego."
       ],
       "notify": [
-        "Przełożony / kierownik",
-        "Policja lub pogotowie – w razie zagrożenia"
+        "Przełożony / kierownik MOPS",
+        "Policja lub pogotowie (jeśli konieczne)"
       ],
       "doNotMiss": [
-        "Zapisz obserwacje dotyczące stanu osoby (bez ocen moralnych).",
-        "Nie podejmuj wiążących ustaleń z osobą w stanie upojenia.",
-        "Sprawdź, czy w miejscu przebywają dzieci lub osoby zależne."
+        "Sprawdź obecność dzieci i osób zależnych.",
+        "Nie prowadź ustaleń formalnych z osobą nietrzeźwą.",
+        "Zapisz obiektywne obserwacje."
       ],
       "legalBasis": [
-        "Źródło demonstracyjne – do walidacji."
+        "Ustawa o pomocy społecznej – Wymaga walidacji."
       ],
-      "escalation": "Konsultacja z przełożonym wymagana, jeśli sytuacja powtarza się lub obecne są dzieci.",
+      "escalation": "Tak, gdy istnieje ryzyko dla dzieci lub osób zależnych.",
       "documents": [
         "Notatka służbowa",
-        "Informacja o przyczynach nieprzeprowadzenia wywiadu"
-      ]
+        "Informacja o przerwaniu czynności"
+      ],
+      "relatedBenefits": [
+        "Pomoc uzależnionym",
+        "Interwencja kryzysowa"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
     },
     {
       "id": "refusal-of-cooperation",
       "title": "Odmowa współpracy podczas wizyty",
       "category": "Interwencyjne",
-      "situation": "Osoba lub rodzina odmawia rozmowy albo uniemożliwia przeprowadzenie czynności.",
+      "situation": "Klient odmawia rozmowy lub uniemożliwia przeprowadzenie czynności.",
       "severity": "Średni",
       "nowSteps": [
         "Zachowaj spokój i nie eskaluj konfliktu.",
-        "Poinformuj o celu wizyty w sposób jasny i zwięzły.",
-        "Odnotuj fakt odmowy współpracy oraz kontekst zdarzenia.",
-        "Sprawdź, czy potrzebne jest ponowienie kontaktu lub dalsza ścieżka formalna."
+        "Krótko wyjaśnij cel wizyty i możliwe skutki odmowy.",
+        "Udokumentuj zakres odmowy.",
+        "Ustal dalsze kroki formalne z przełożonym."
       ],
       "notify": [
-        "Przełożony / kierownik",
-        "W razie potrzeby właściwa komórka organizacyjna jednostki"
+        "Przełożony / kierownik MOPS"
       ],
       "doNotMiss": [
-        "Zapisz dokładnie, czego odmowa dotyczyła.",
-        "Nie wchodź w spór przekraczający cel czynności.",
-        "Zweryfikuj dalsze kroki zgodnie z procedurą jednostki."
+        "Zapisz dokładny kontekst odmowy.",
+        "Nie podejmuj działań poza kompetencjami.",
+        "Sprawdź, czy występuje ryzyko dla dziecka."
       ],
       "legalBasis": [
-        "Źródło demonstracyjne – do uzupełnienia po walidacji prawnej."
+        "Ustawa o pomocy społecznej – Wymaga walidacji."
       ],
-      "escalation": "Może być wymagana konsultacja, jeśli odmowa blokuje istotne czynności lub wpływa na bezpieczeństwo.",
+      "escalation": "Tak, jeśli odmowa blokuje czynności kluczowe dla bezpieczeństwa.",
       "documents": [
         "Notatka służbowa",
         "Informacja dla przełożonego"
-      ]
+      ],
+      "relatedBenefits": [
+        "Praca socjalna"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
     },
     {
-      "id": "child-neglect",
-      "title": "Zaniedbanie małoletniego",
-      "category": "Rodzinne i opiekuńcze",
-      "situation": "Pracownik stwierdza oznaki zaniedbania dziecka: brak higieny, niedożywienie, brak opieki medycznej lub edukacyjnej.",
-      "severity": "Wysoki",
-      "nowSteps": [
-        "Oceń bezpieczeństwo dziecka i jego stan zdrowia.",
-        "Przeprowadź rozmowę z opiekunem – ustal przyczyny sytuacji.",
-        "Udokumentuj obserwacje rzeczowo i konkretnie.",
-        "Rozważ uruchomienie procedury ochrony dziecka."
-      ],
-      "notify": [
-        "Przełożony / kierownik OPS",
-        "Asystent rodziny (jeśli przydzielony)",
-        "Sąd rodzinny – przy poważnym zagrożeniu dobra dziecka"
-      ],
-      "doNotMiss": [
-        "Nie oceniaj – dokumentuj fakty.",
-        "Sprawdź, czy dziecko uczęszcza do szkoły/przedszkola.",
-        "Zweryfikuj, czy rodzina korzysta z dostępnych form pomocy."
-      ],
-      "legalBasis": [
-        "Źródło demonstracyjne – wymaga walidacji prawnej."
-      ],
-      "escalation": "Wymagana konsultacja z przełożonym. Przy bezpośrednim zagrożeniu – zawiadomienie sądu rodzinnego.",
-      "documents": [
-        "Notatka służbowa",
-        "Wniosek do sądu rodzinnego (jeśli wymagany)",
-        "Informacja do szkoły/przedszkola (jeśli zasadne)"
-      ]
-    },
-    {
-      "id": "foster-care-support",
-      "title": "Wsparcie rodziny zastępczej",
-      "category": "Rodzinne i opiekuńcze",
-      "situation": "Rodzina zastępcza zgłasza trudności wychowawcze, problemy adaptacyjne dziecka lub potrzebę dodatkowego wsparcia.",
+      "id": "family-allowance-application",
+      "title": "Zasiłek rodzinny – przyjęcie i weryfikacja wniosku",
+      "category": "Zasiłki",
+      "situation": "Klient składa wniosek o zasiłek rodzinny i wymaga wsparcia proceduralnego.",
       "severity": "Niski",
       "nowSteps": [
-        "Wysłuchaj zgłoszenia i zidentyfikuj kluczowe potrzeby.",
-        "Sprawdź dostępne formy wsparcia (psycholog, pedagog, grupy wsparcia).",
-        "Ustal plan działania z rodziną zastępczą.",
-        "Zaplanuj wizytę monitorującą."
+        "Zweryfikuj kompletność wniosku i załączników.",
+        "Sprawdź kryterium dochodowe i okres zasiłkowy.",
+        "Ustal brakujące dokumenty i termin uzupełnienia.",
+        "Przekaż do dalszego procedowania zgodnie z obiegiem."
       ],
       "notify": [
-        "Koordynator rodzinnej pieczy zastępczej",
-        "Psycholog / pedagog (jeśli potrzebna konsultacja)"
+        "Pracownik realizujący świadczenia rodzinne",
+        "Przełożony (w przypadku wątpliwości)"
       ],
       "doNotMiss": [
-        "Zapytaj o potrzeby samego dziecka – nie tylko opiekuna.",
-        "Sprawdź terminowość świadczeń przysługujących rodzinie zastępczej.",
-        "Upewnij się, że dziecko ma dostęp do opieki zdrowotnej."
+        "Sprawdź zgodność danych dzieci i opiekunów.",
+        "Ustal czy przysługują dodatki do zasiłku.",
+        "Potwierdź terminy ustawowe."
       ],
       "legalBasis": [
-        "Źródło demonstracyjne – do walidacji."
+        "Ustawa o świadczeniach rodzinnych – Wymaga walidacji."
       ],
-      "escalation": "Konsultacja z koordynatorem pieczy. Eskalacja do sądu tylko przy zagrożeniu dobra dziecka.",
+      "escalation": "Konsultacja wymagana przy nietypowej sytuacji rodzinnej lub dochodowej.",
       "documents": [
-        "Notatka z wizyty",
-        "Plan pomocy rodzinie zastępczej"
-      ]
+        "Wniosek o zasiłek rodzinny",
+        "Dokument tożsamości",
+        "Dokumenty dochodowe"
+      ],
+      "relatedBenefits": [
+        "Zasiłek rodzinny",
+        "Dodatki do zasiłku rodzinnego"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
     },
     {
-      "id": "parental-authority-concern",
-      "title": "Wątpliwości co do władzy rodzicielskiej",
-      "category": "Rodzinne i opiekuńcze",
-      "situation": "Pracownik ma uzasadnione podejrzenia, że sprawowanie władzy rodzicielskiej zagraża dobru dziecka.",
-      "severity": "Wysoki",
+      "id": "parental-benefit-application",
+      "title": "Świadczenie rodzicielskie – obsługa wniosku",
+      "category": "Zasiłki",
+      "situation": "Rodzic składa wniosek o świadczenie rodzicielskie.",
+      "severity": "Niski",
       "nowSteps": [
-        "Zebrać informacje i obserwacje potwierdzające podejrzenia.",
-        "Skonsultować sytuację z przełożonym.",
-        "Rozważyć konieczność zawiadomienia sądu rodzinnego.",
-        "Udokumentować podjęte działania."
+        "Sprawdź status opiekuna i uprawnienia do świadczenia.",
+        "Zweryfikuj kompletność dokumentów.",
+        "Ustal terminy wypłat i decyzji.",
+        "Przekaż informację o dalszych krokach klientowi."
       ],
       "notify": [
-        "Przełożony / kierownik OPS",
-        "Sąd rodzinny (jeśli wymagane zawiadomienie)"
+        "Pracownik ds. świadczeń rodzinnych"
       ],
       "doNotMiss": [
-        "Działaj na podstawie faktów, nie przypuszczeń.",
-        "Sprawdź historię kontaktów rodziny z OPS.",
-        "Nie informuj podejrzewanego sprawcy o planowanym zawiadomieniu."
+        "Zweryfikuj, czy nie zachodzi zbieg świadczeń.",
+        "Sprawdź daty urodzenia i okres pobierania.",
+        "Poinformuj o obowiązku zgłaszania zmian."
       ],
       "legalBasis": [
-        "Źródło demonstracyjne – wymaga walidacji prawnej."
+        "Ustawa o świadczeniach rodzinnych – Wymaga walidacji."
       ],
-      "escalation": "Wymagana konsultacja z przełożonym. Zawiadomienie sądu rodzinnego w uzasadnionych przypadkach.",
+      "escalation": "Konsultacja przy kolizji świadczeń lub brakach dokumentów.",
       "documents": [
-        "Notatka służbowa z uzasadnieniem",
-        "Zawiadomienie do sądu rodzinnego (wzór jednostki)"
-      ]
+        "Wniosek",
+        "Akt urodzenia dziecka",
+        "Oświadczenia wymagane lokalnie"
+      ],
+      "relatedBenefits": [
+        "Świadczenie rodzicielskie",
+        "Becikowe"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
     },
     {
-      "id": "elderly-self-neglect",
-      "title": "Samoistne zaniedbanie osoby starszej",
-      "category": "Seniorzy i osoby zależne",
-      "situation": "Osoba starsza mieszka samotnie i wykazuje oznaki zaniedbania: bałagan, brak jedzenia, problemy higieniczne, zagubienie.",
+      "id": "alimony-fund-application",
+      "title": "Fundusz alimentacyjny – przyjęcie wniosku",
+      "category": "Zasiłki",
+      "situation": "Opiekun zgłasza bezskuteczność egzekucji alimentów i składa wniosek.",
       "severity": "Średni",
       "nowSteps": [
-        "Oceń stan zdrowia i warunki bytowe osoby.",
-        "Sprawdź, czy osoba ma kontakt z rodziną lub opiekunem.",
-        "Zaproponuj dostępne formy wsparcia (usługi opiekuńcze, posiłki).",
-        "Zaplanuj wizytę monitorującą."
+        "Zweryfikuj dokument o bezskuteczności egzekucji.",
+        "Sprawdź kryteria dochodowe.",
+        "Przyjmij dokumenty i przekaż do weryfikacji.",
+        "Poinformuj o terminach i obowiązkach strony."
       ],
       "notify": [
-        "Przełożony / kierownik OPS",
-        "Lekarz rodzinny (jeśli stan zdrowia budzi obawy)"
+        "Pracownik ds. funduszu alimentacyjnego",
+        "Przełożony przy sytuacjach spornych"
       ],
       "doNotMiss": [
-        "Sprawdź, czy osoba rozumie swoją sytuację i wyraża zgodę na pomoc.",
-        "Oceń, czy wymagana jest opieka całodobowa.",
-        "Upewnij się, że osoba ma dostęp do leków i opieki zdrowotnej."
+        "Sprawdź zgodność danych dziecka i opiekuna.",
+        "Poinformuj o konieczności aktualizacji dokumentów.",
+        "Wskaż możliwość pomocy prawnej."
       ],
       "legalBasis": [
-        "Źródło demonstracyjne – do walidacji."
+        "Ustawa o pomocy osobom uprawnionym do alimentów – Wymaga walidacji."
       ],
-      "escalation": "Konsultacja z przełożonym. Przy odmowie pomocy i zagrożeniu życia – rozważ wniosek do sądu.",
+      "escalation": "Eskalacja w przypadku niejednoznacznej sytuacji prawnej.",
       "documents": [
-        "Notatka służbowa",
-        "Wniosek o usługi opiekuńcze"
-      ]
+        "Wniosek",
+        "Zaświadczenie o bezskutecznej egzekucji",
+        "Dokumenty dochodowe"
+      ],
+      "relatedBenefits": [
+        "Fundusz Alimentacyjny",
+        "Bezpłatna pomoc prawna"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "large-family-card-application",
+      "title": "Karta Dużej Rodziny – obsługa zgłoszenia",
+      "category": "Zasiłki",
+      "situation": "Rodzina uprawniona składa wniosek o Kartę Dużej Rodziny.",
+      "severity": "Niski",
+      "nowSteps": [
+        "Zweryfikuj uprawnienie do Karty Dużej Rodziny.",
+        "Sprawdź komplet danych członków rodziny.",
+        "Przyjmij wniosek i poinformuj o dalszej ścieżce.",
+        "Przekaż informację o formie odbioru karty."
+      ],
+      "notify": [
+        "Pracownik realizujący świadczenia rodzinne"
+      ],
+      "doNotMiss": [
+        "Sprawdź dokumenty potwierdzające skład rodziny.",
+        "Upewnij się, że dane kontaktowe są aktualne.",
+        "Poinformuj o możliwych ulgach lokalnych."
+      ],
+      "legalBasis": [
+        "Ustawa o Karcie Dużej Rodziny – Wymaga walidacji."
+      ],
+      "escalation": "Zwykle niewymagana.",
+      "documents": [
+        "Wniosek KDR",
+        "Dokumenty potwierdzające skład rodziny"
+      ],
+      "relatedBenefits": [
+        "Karta Dużej Rodziny"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "care-allowance-application",
+      "title": "Zasiłek pielęgnacyjny – obsługa wniosku",
+      "category": "Niepełnosprawność",
+      "situation": "Osoba składa wniosek o zasiłek pielęgnacyjny.",
+      "severity": "Niski",
+      "nowSteps": [
+        "Sprawdź kompletność wniosku i orzeczenia.",
+        "Zweryfikuj warunki przyznania.",
+        "Poinformuj o terminach rozpatrzenia.",
+        "Przekaż sprawę do realizacji."
+      ],
+      "notify": [
+        "Pracownik ds. świadczeń"
+      ],
+      "doNotMiss": [
+        "Sprawdź ważność orzeczenia.",
+        "Zweryfikuj czy nie występuje zbieg świadczeń.",
+        "Poinformuj klienta o obowiązku zgłoszenia zmian."
+      ],
+      "legalBasis": [
+        "Ustawa o świadczeniach rodzinnych – Wymaga walidacji."
+      ],
+      "escalation": "Konsultacja przy złożonych przypadkach orzeczniczych.",
+      "documents": [
+        "Wniosek",
+        "Orzeczenie o niepełnosprawności",
+        "Dokument tożsamości"
+      ],
+      "relatedBenefits": [
+        "Zasiłek pielęgnacyjny"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "caregiver-benefit-application",
+      "title": "Świadczenie pielęgnacyjne – kwalifikacja i wniosek",
+      "category": "Niepełnosprawność",
+      "situation": "Opiekun osoby z niepełnosprawnością składa wniosek o świadczenie pielęgnacyjne.",
+      "severity": "Średni",
+      "nowSteps": [
+        "Zweryfikuj status opiekuna i osoby wymagającej opieki.",
+        "Sprawdź dokumenty i oświadczenia wymagane lokalnie.",
+        "Poinformuj o warunkach utraty uprawnienia.",
+        "Przekaż wniosek do rozpoznania."
+      ],
+      "notify": [
+        "Pracownik ds. świadczeń",
+        "Przełożony w razie wątpliwości"
+      ],
+      "doNotMiss": [
+        "Sprawdź, czy opiekun nie pobiera kolizyjnych świadczeń.",
+        "Zweryfikuj zgodność orzeczenia.",
+        "Odnotuj datę rozpoczęcia opieki."
+      ],
+      "legalBasis": [
+        "Ustawa o świadczeniach rodzinnych – Wymaga walidacji."
+      ],
+      "escalation": "Tak, przy skomplikowanym stanie faktycznym.",
+      "documents": [
+        "Wniosek",
+        "Orzeczenie",
+        "Oświadczenia opiekuna"
+      ],
+      "relatedBenefits": [
+        "Świadczenie pielęgnacyjne",
+        "Specjalny zasiłek opiekuńczy"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "permanent-benefit-application",
+      "title": "Zasiłek stały – weryfikacja uprawnień",
+      "category": "Niepełnosprawność",
+      "situation": "Klient ubiega się o zasiłek stały z tytułu wieku lub niezdolności do pracy.",
+      "severity": "Niski",
+      "nowSteps": [
+        "Zweryfikuj dochód oraz przesłanki ustawowe.",
+        "Przygotuj wywiad środowiskowy.",
+        "Zbierz dokumenty potwierdzające stan zdrowia.",
+        "Przekaż do dalszego procedowania."
+      ],
+      "notify": [
+        "Pracownik socjalny prowadzący",
+        "Przełożony (w razie potrzeby)"
+      ],
+      "doNotMiss": [
+        "Sprawdź aktualność danych dochodowych.",
+        "Odnotuj zmiany sytuacji zdrowotnej.",
+        "Poinformuj klienta o obowiązku aktualizacji danych."
+      ],
+      "legalBasis": [
+        "Ustawa o pomocy społecznej – Wymaga walidacji."
+      ],
+      "escalation": "Zwykle niewymagana.",
+      "documents": [
+        "Wniosek",
+        "Dokumenty dochodowe",
+        "Orzeczenie / zaświadczenia"
+      ],
+      "relatedBenefits": [
+        "Zasiłek stały",
+        "Zasiłek okresowy"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
     },
     {
       "id": "disability-support-review",
-      "title": "Weryfikacja potrzeb osoby z niepełnosprawnością",
-      "category": "Seniorzy i osoby zależne",
-      "situation": "Okresowa ocena sytuacji osoby z niepełnosprawnością korzystającej z pomocy społecznej – weryfikacja adekwatności wsparcia.",
+      "title": "Okresowa weryfikacja wsparcia osoby z niepełnosprawnością",
+      "category": "Niepełnosprawność",
+      "situation": "Potrzebna jest ocena, czy aktualne formy pomocy odpowiadają obecnym potrzebom.",
       "severity": "Niski",
       "nowSteps": [
-        "Przeprowadź wywiad z osobą i/lub opiekunem.",
-        "Zweryfikuj aktualność orzeczenia o niepełnosprawności.",
-        "Oceń, czy dotychczasowe formy pomocy odpowiadają potrzebom.",
-        "Zaproponuj modyfikację planu pomocy, jeśli wymagana."
+        "Przeprowadź wywiad z osobą i opiekunem.",
+        "Zbierz informacje o barierach i potrzebach.",
+        "Zaproponuj aktualizację planu pomocy.",
+        "Ustal termin monitoringu."
       ],
       "notify": [
-        "Przełożony – jeśli potrzebna zmiana decyzji administracyjnej"
+        "Pracownik prowadzący",
+        "Przełożony przy zmianie decyzji"
       ],
       "doNotMiss": [
-        "Sprawdź datę ważności orzeczenia o niepełnosprawności.",
-        "Zapytaj o bariery architektoniczne i potrzeby transportowe.",
-        "Upewnij się, że osoba zna przysługujące jej prawa."
+        "Zweryfikuj ważność orzeczenia.",
+        "Sprawdź potrzeby transportowe i opiekuńcze.",
+        "Potwierdź, że klient zna dostępne formy wsparcia."
       ],
       "legalBasis": [
-        "Źródło demonstracyjne – do walidacji."
+        "Ustawa o pomocy społecznej – Wymaga walidacji."
       ],
-      "escalation": "Zwykle niewymagana. Eskalacja przy odmowie świadczeń lub istotnym pogorszeniu sytuacji.",
+      "escalation": "Eskalacja, gdy stwierdzono znaczące pogorszenie sytuacji.",
       "documents": [
-        "Kwestionariusz wywiadu środowiskowego",
-        "Zaktualizowany plan pomocy"
-      ]
+        "Wywiad środowiskowy",
+        "Aktualizacja planu pomocy"
+      ],
+      "relatedBenefits": [
+        "Usługi opiekuńcze",
+        "Zasiłek pielęgnacyjny"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "school-scholarship-application",
+      "title": "Stypendium szkolne – przyjęcie i weryfikacja",
+      "category": "Edukacja",
+      "situation": "Rodzina zgłasza potrzebę wsparcia edukacyjnego dziecka.",
+      "severity": "Niski",
+      "nowSteps": [
+        "Zweryfikuj kryterium dochodowe i kompletność dokumentów.",
+        "Sprawdź termin naboru wniosków.",
+        "Przyjmij wniosek i poinformuj o dalszej procedurze.",
+        "Odnotuj wymagane uzupełnienia."
+      ],
+      "notify": [
+        "Pracownik realizujący świadczenia edukacyjne"
+      ],
+      "doNotMiss": [
+        "Sprawdź status ucznia.",
+        "Potwierdź aktualny rok szkolny.",
+        "Poinformuj o sposobie dokumentowania wydatków."
+      ],
+      "legalBasis": [
+        "Ustawa o systemie oświaty (świadczenia pomocy materialnej) – Wymaga walidacji."
+      ],
+      "escalation": "Konsultacja przy brakach dokumentów lub przekroczeniu terminu.",
+      "documents": [
+        "Wniosek",
+        "Dokumenty dochodowe",
+        "Zaświadczenie ze szkoły"
+      ],
+      "relatedBenefits": [
+        "Stypendia i zasiłek szkolny"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "school-allowance-emergency",
+      "title": "Zasiłek szkolny – zdarzenie losowe",
+      "category": "Edukacja",
+      "situation": "Uczeń potrzebuje doraźnego wsparcia po zdarzeniu losowym.",
+      "severity": "Średni",
+      "nowSteps": [
+        "Ustal rodzaj zdarzenia i jego wpływ na sytuację ucznia.",
+        "Zweryfikuj dokumenty potwierdzające zdarzenie.",
+        "Przyjmij i opisz pilność sprawy.",
+        "Przekaż do niezwłocznego rozpatrzenia."
+      ],
+      "notify": [
+        "Pracownik świadczeń edukacyjnych",
+        "Przełożony (gdy wymagane szybkie rozstrzygnięcie)"
+      ],
+      "doNotMiss": [
+        "Sprawdź terminy ustawowe dla zasiłku szkolnego.",
+        "Ustal czy rodzina korzysta z innych form wsparcia.",
+        "Poinformuj o brakujących dokumentach."
+      ],
+      "legalBasis": [
+        "Ustawa o systemie oświaty – Wymaga walidacji."
+      ],
+      "escalation": "Tak, jeśli sytuacja rodziny jest nagła i wielowymiarowa.",
+      "documents": [
+        "Wniosek",
+        "Dokument potwierdzający zdarzenie losowe",
+        "Dokumenty dochodowe"
+      ],
+      "relatedBenefits": [
+        "Stypendia i zasiłek szkolny",
+        "Pomoc rzeczowa / żywnościowa"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "out-of-area-school-support",
+      "title": "Nauka poza miejscem zamieszkania – weryfikacja wsparcia",
+      "category": "Edukacja",
+      "situation": "Uczeń dojeżdża lub mieszka poza miejscem zamieszkania ze względu na naukę.",
+      "severity": "Niski",
+      "nowSteps": [
+        "Sprawdź przesłanki do wsparcia kosztów nauki.",
+        "Zweryfikuj dokumenty szkoły i potwierdzenia kosztów.",
+        "Przyjmij wniosek i poinformuj o rozliczeniu.",
+        "Ustal terminy kolejnych etapów."
+      ],
+      "notify": [
+        "Pracownik ds. świadczeń edukacyjnych"
+      ],
+      "doNotMiss": [
+        "Sprawdź aktualny status ucznia.",
+        "Potwierdź okres, którego dotyczy wsparcie.",
+        "Ustal sposób dokumentowania wydatków."
+      ],
+      "legalBasis": [
+        "Ustawa o systemie oświaty – Wymaga walidacji."
+      ],
+      "escalation": "Zwykle niewymagana.",
+      "documents": [
+        "Wniosek",
+        "Zaświadczenie ze szkoły",
+        "Dokumenty kosztowe"
+      ],
+      "relatedBenefits": [
+        "Nauka w szkole poza miejscem zamieszkania"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "assistant-family-referral",
+      "title": "Asystent rodziny – kwalifikacja rodziny",
+      "category": "Rodzina i przemoc",
+      "situation": "Rodzina wymaga wsparcia opiekuńczo-wychowawczego i organizacji życia codziennego.",
+      "severity": "Średni",
+      "nowSteps": [
+        "Zbierz informacje o problemach opiekuńczo-wychowawczych.",
+        "Skonsultuj możliwość przydzielenia asystenta rodziny.",
+        "Ustal wstępny plan wsparcia.",
+        "Przekaż sprawę do realizacji."
+      ],
+      "notify": [
+        "Koordynator asystentów rodziny",
+        "Przełożony"
+      ],
+      "doNotMiss": [
+        "Sprawdź bezpieczeństwo dzieci.",
+        "Ustal gotowość rodziny do współpracy.",
+        "Udokumentuj cele wsparcia."
+      ],
+      "legalBasis": [
+        "Ustawa o wspieraniu rodziny i systemie pieczy zastępczej – Wymaga walidacji."
+      ],
+      "escalation": "Tak, gdy występuje ryzyko dla dobra dziecka.",
+      "documents": [
+        "Notatka służbowa",
+        "Plan pracy z rodziną"
+      ],
+      "relatedBenefits": [
+        "Asystent rodziny",
+        "Placówki wsparcia dziennego"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "foster-care-support",
+      "title": "Piecza zastępcza – koordynacja wsparcia",
+      "category": "Rodzina i przemoc",
+      "situation": "Rodzina zastępcza zgłasza trudności i potrzebę dodatkowego wsparcia.",
+      "severity": "Niski",
+      "nowSteps": [
+        "Zidentyfikuj główne trudności i potrzeby.",
+        "Ustal możliwe formy wsparcia specjalistycznego.",
+        "Opracuj plan monitoringu.",
+        "Przekaż rodzinie informację o dostępnych usługach."
+      ],
+      "notify": [
+        "Koordynator pieczy zastępczej"
+      ],
+      "doNotMiss": [
+        "Zapytaj o potrzeby dziecka.",
+        "Sprawdź terminy świadczeń.",
+        "Potwierdź dostęp do opieki medycznej."
+      ],
+      "legalBasis": [
+        "Ustawa o wspieraniu rodziny i systemie pieczy zastępczej – Wymaga walidacji."
+      ],
+      "escalation": "Konsultacja przy ryzyku destabilizacji opieki.",
+      "documents": [
+        "Notatka z wizyty",
+        "Plan wsparcia rodziny zastępczej"
+      ],
+      "relatedBenefits": [
+        "Piecza zastępcza",
+        "Rodziny wspierające"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "violence-consultation-point",
+      "title": "Punkt konsultacyjny ds. przemocy – skierowanie osoby",
+      "category": "Rodzina i przemoc",
+      "situation": "Osoba dotknięta przemocą potrzebuje szybkiego wsparcia specjalistycznego.",
+      "severity": "Wysoki",
+      "nowSteps": [
+        "Przeprowadź krótką ocenę bezpieczeństwa.",
+        "Przekaż kontakt i zasady działania punktu konsultacyjnego.",
+        "Ustal bezpieczny kanał kontaktu zwrotnego.",
+        "Odnotuj przekazane informacje."
+      ],
+      "notify": [
+        "Przełożony",
+        "Zespół interdyscyplinarny (wg procedury)"
+      ],
+      "doNotMiss": [
+        "Sprawdź, czy potrzebna natychmiastowa interwencja służb.",
+        "Nie udostępniaj informacji osobie podejrzanej o przemoc.",
+        "Poinformuj o bezpłatnej pomocy prawnej."
+      ],
+      "legalBasis": [
+        "Ustawa o przeciwdziałaniu przemocy domowej – Wymaga walidacji."
+      ],
+      "escalation": "Tak, przy zagrożeniu życia i zdrowia.",
+      "documents": [
+        "Notatka służbowa",
+        "Informacja o skierowaniu"
+      ],
+      "relatedBenefits": [
+        "Poradnictwo specjalistyczne",
+        "Bezpłatna pomoc prawna"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "parental-authority-concern",
+      "title": "Wątpliwości co do wykonywania władzy rodzicielskiej",
+      "category": "Rodzina i przemoc",
+      "situation": "Zebrane fakty wskazują na możliwość zagrożenia dobra dziecka.",
+      "severity": "Wysoki",
+      "nowSteps": [
+        "Zbierz i uporządkuj fakty oraz obserwacje.",
+        "Skonsultuj sprawę z przełożonym.",
+        "Ustal zasadność zawiadomienia sądu rodzinnego.",
+        "Udokumentuj podjęte czynności."
+      ],
+      "notify": [
+        "Przełożony / kierownik MOPS",
+        "Sąd rodzinny (zgodnie z procedurą)"
+      ],
+      "doNotMiss": [
+        "Działaj na faktach.",
+        "Sprawdź historię sprawy w jednostce.",
+        "Zabezpiecz poufność informacji."
+      ],
+      "legalBasis": [
+        "Kodeks rodzinny i opiekuńczy – Wymaga walidacji.",
+        "Ustawa o wspieraniu rodziny i systemie pieczy zastępczej – Wymaga walidacji."
+      ],
+      "escalation": "Tak, niezwłocznie przy istotnym ryzyku dla dziecka.",
+      "documents": [
+        "Notatka służbowa",
+        "Zawiadomienie do sądu (wg wzoru jednostki)"
+      ],
+      "relatedBenefits": [
+        "Asystent rodziny",
+        "Praca socjalna"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "care-services-senior",
+      "title": "Usługi opiekuńcze dla seniora – kwalifikacja",
+      "category": "Seniorzy",
+      "situation": "Osoba starsza lub rodzina zgłasza potrzebę usług opiekuńczych.",
+      "severity": "Średni",
+      "nowSteps": [
+        "Przeprowadź ocenę potrzeb opiekuńczych.",
+        "Ustal zakres pomocy i częstotliwość.",
+        "Poinformuj o zasadach odpłatności (jeśli dotyczy).",
+        "Przekaż do realizacji."
+      ],
+      "notify": [
+        "Pracownik prowadzący",
+        "Przełożony przy pilnych przypadkach"
+      ],
+      "doNotMiss": [
+        "Sprawdź samotność i ryzyko zaniedbania.",
+        "Zweryfikuj wsparcie rodziny.",
+        "Ustal dostęp do leków i opieki zdrowotnej."
+      ],
+      "legalBasis": [
+        "Ustawa o pomocy społecznej – Wymaga walidacji."
+      ],
+      "escalation": "Tak, przy wysokim ryzyku zdrowotnym.",
+      "documents": [
+        "Wniosek o usługi opiekuńcze",
+        "Wywiad środowiskowy"
+      ],
+      "relatedBenefits": [
+        "Usługi opiekuńcze",
+        "Program Opieka 75+"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "opieka-75-plus",
+      "title": "Program Opieka 75+ – kwalifikacja",
+      "category": "Seniorzy",
+      "situation": "Senior 75+ wymaga wsparcia opiekuńczego realizowanego w programie.",
+      "severity": "Niski",
+      "nowSteps": [
+        "Zweryfikuj wiek i kryteria udziału.",
+        "Oceń zakres potrzeb opiekuńczych.",
+        "Przyjmij dokumenty i przekaż do rozpoznania.",
+        "Poinformuj o dalszych krokach."
+      ],
+      "notify": [
+        "Pracownik realizujący program"
+      ],
+      "doNotMiss": [
+        "Potwierdź aktualny status seniora.",
+        "Sprawdź, czy usługi nie dublują innych form wsparcia.",
+        "Ustal osobę kontaktową rodziny."
+      ],
+      "legalBasis": [
+        "Program rządowy Opieka 75+ – Wymaga walidacji."
+      ],
+      "escalation": "Zwykle niewymagana.",
+      "documents": [
+        "Wniosek",
+        "Dokument tożsamości",
+        "Wywiad środowiskowy"
+      ],
+      "relatedBenefits": [
+        "Program Opieka 75+",
+        "Usługi opiekuńcze"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "nursing-home-referral",
+      "title": "Dom Pomocy Społecznej – skierowanie",
+      "category": "Seniorzy",
+      "situation": "Osoba wymaga całodobowej opieki i rozważane jest skierowanie do DPS.",
+      "severity": "Średni",
+      "nowSteps": [
+        "Oceń przesłanki medyczne i bytowe.",
+        "Wyjaśnij rodzinie przebieg postępowania.",
+        "Skompletuj dokumenty wymagane do skierowania.",
+        "Przekaż do procedowania zgodnie z obiegiem."
+      ],
+      "notify": [
+        "Przełożony",
+        "Właściwy organ prowadzący postępowanie"
+      ],
+      "doNotMiss": [
+        "Potwierdź brak możliwości zapewnienia opieki w miejscu zamieszkania.",
+        "Zweryfikuj dokumentację medyczną.",
+        "Poinformuj o kosztach i zasadach odpłatności."
+      ],
+      "legalBasis": [
+        "Ustawa o pomocy społecznej (DPS) – Wymaga walidacji."
+      ],
+      "escalation": "Tak, gdy stan osoby gwałtownie się pogarsza.",
+      "documents": [
+        "Wniosek o skierowanie do DPS",
+        "Wywiad środowiskowy",
+        "Dokumentacja medyczna"
+      ],
+      "relatedBenefits": [
+        "Dom Pomocy Społecznej",
+        "Ośrodki wsparcia"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
     },
     {
       "id": "homelessness-first-contact",
       "title": "Pierwszy kontakt z osobą bezdomną",
-      "category": "Kryzys bytowy",
-      "situation": "Napotkanie lub zgłoszenie dotyczące osoby bezdomnej wymagającej wsparcia socjalnego.",
+      "category": "Bezdomność",
+      "situation": "Zgłoszenie osoby bezdomnej wymagającej wsparcia.",
       "severity": "Średni",
       "nowSteps": [
-        "Oceń stan zdrowia osoby – wezwij pomoc medyczną, jeśli potrzebna.",
-        "Zaproponuj schronienie (noclegownia, ogrzewalnia, schronisko).",
-        "Zbierz podstawowe informacje o sytuacji osoby.",
-        "Poinformuj o dostępnych formach pomocy."
+        "Oceń stan zdrowia i bezpieczeństwo osoby.",
+        "Zaproponuj schronienie i posiłek.",
+        "Przekaż informację o dostępnych formach pomocy.",
+        "Udokumentuj przebieg interwencji."
       ],
       "notify": [
-        "Straż Miejska / streetworkerzy",
-        "Noclegownia (informacja o wolnych miejscach)",
-        "Służby medyczne – jeśli stan zdrowia tego wymaga"
+        "Przełożony",
+        "Noclegownia / schronisko",
+        "Służby medyczne przy potrzebie"
       ],
       "doNotMiss": [
-        "Nie ignoruj odmowy pomocy – odnotuj ją w notatce.",
-        "Sprawdź, czy osoba posiada dokumenty tożsamości.",
-        "Oceń potrzebę objęcia osoby indywidualnym programem wychodzenia z bezdomności."
+        "Odnotuj odmowę pomocy, jeśli wystąpi.",
+        "Sprawdź, czy osoba ma dokument tożsamości.",
+        "Oceń potrzebę kontraktu socjalnego."
       ],
       "legalBasis": [
-        "Źródło demonstracyjne – do walidacji."
+        "Ustawa o pomocy społecznej – Wymaga walidacji."
       ],
-      "escalation": "Eskalacja wymagana, gdy osoba jest nieprzytomna lub odmawia pomocy w warunkach zagrożenia życia.",
+      "escalation": "Tak, przy zagrożeniu zdrowia lub życia.",
       "documents": [
-        "Notatka służbowa z interwencji",
+        "Notatka służbowa",
         "Skierowanie do schroniska (jeśli zasadne)"
-      ]
+      ],
+      "relatedBenefits": [
+        "Schronienie, posiłek, ubranie",
+        "Program wychodzenia z bezdomności"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
     },
     {
-      "id": "eviction-threat",
-      "title": "Zagrożenie eksmisją",
-      "category": "Kryzys bytowy",
-      "situation": "Klient zgłasza otrzymanie nakazu eksmisji lub zagrożenie utratą mieszkania z powodu zaległości czynszowych.",
-      "severity": "Wysoki",
+      "id": "homelessness-exit-program",
+      "title": "Program wychodzenia z bezdomności – rozpoczęcie pracy",
+      "category": "Bezdomność",
+      "situation": "Osoba bezdomna deklaruje gotowość do udziału w programie usamodzielnienia.",
+      "severity": "Niski",
       "nowSteps": [
-        "Ustal stan faktyczny – terminy, kwoty zaległości, etap postępowania.",
-        "Poinformuj o prawie do lokalu socjalnego i pomocy prawnej.",
-        "Sprawdź możliwość przyznania zasiłku celowego na zaległości.",
-        "Skieruj do punktu bezpłatnej pomocy prawnej."
+        "Omów cele i etapy programu.",
+        "Ustal realistyczny plan działań.",
+        "Zawrzyj kontrakt socjalny.",
+        "Wyznacz harmonogram monitoringu."
       ],
       "notify": [
-        "Przełożony / kierownik OPS",
-        "Punkt pomocy prawnej (informacja dla klienta)"
+        "Pracownik socjalny prowadzący",
+        "Przełożony"
       ],
       "doNotMiss": [
-        "Sprawdź, czy w mieszkaniu zamieszkują dzieci lub osoby zależne.",
-        "Nie obiecuj wyniku – informuj o procedurze.",
-        "Zweryfikuj, czy klient złożył już wniosek o lokal socjalny."
+        "Plan musi być możliwy do realizacji.",
+        "Uwzględnij wsparcie mieszkaniowe i zawodowe.",
+        "Zapisz mierzalne cele."
       ],
       "legalBasis": [
-        "Źródło demonstracyjne – do walidacji prawnej."
+        "Ustawa o pomocy społecznej (kontrakt socjalny) – Wymaga walidacji."
       ],
-      "escalation": "Konsultacja z przełożonym wymagana. Przy obecności dzieci – rozważ zawiadomienie sądu rodzinnego.",
+      "escalation": "Konsultacja przy braku realizacji kontraktu lub pogorszeniu sytuacji.",
       "documents": [
-        "Notatka służbowa",
-        "Wniosek o zasiłek celowy (jeśli zasadne)",
-        "Informacja o punkcie pomocy prawnej"
-      ]
+        "Kontrakt socjalny",
+        "Plan usamodzielnienia"
+      ],
+      "relatedBenefits": [
+        "Program wychodzenia z bezdomności",
+        "Usamodzielnienie"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
     },
     {
-      "id": "crisis-food-insecurity",
-      "title": "Nagły brak środków do życia",
-      "category": "Kryzys bytowy",
-      "situation": "Klient lub rodzina zgłaszają brak środków na żywność, leki lub inne potrzeby podstawowe.",
+      "id": "housing-allowance-application",
+      "title": "Dodatek mieszkaniowy – obsługa wniosku",
+      "category": "Inne formy pomocy",
+      "situation": "Gospodarstwo domowe ma trudności z opłacaniem mieszkania.",
       "severity": "Średni",
       "nowSteps": [
-        "Ustal zakres potrzeb – żywność, leki, opał, higiena.",
-        "Sprawdź możliwość doraźnej pomocy rzeczowej lub zasiłku celowego.",
-        "Poinformuj o programach pomocowych (np. Bank Żywności, FEAD).",
-        "Zaplanuj kompleksową ocenę sytuacji rodziny."
+        "Zweryfikuj dokumenty dochodowe i mieszkaniowe.",
+        "Sprawdź kryteria powierzchni i dochodu.",
+        "Przyjmij wniosek i wskaż terminy.",
+        "Przekaż sprawę do dalszego postępowania."
       ],
       "notify": [
-        "Przełożony – jeśli potrzebna szybka decyzja",
-        "Organizacje pozarządowe współpracujące z OPS"
+        "Pracownik realizujący dodatki mieszkaniowe"
       ],
       "doNotMiss": [
-        "Sprawdź, czy w rodzinie są dzieci lub osoby chore.",
-        "Oceń, czy sytuacja jest jednorazowa czy chroniczna.",
-        "Nie oceniaj – pomóż ustalić fakty."
+        "Sprawdź tytuł prawny do lokalu.",
+        "Zweryfikuj komplet opłat i zaległości.",
+        "Poinformuj o obowiązku aktualizacji danych."
       ],
       "legalBasis": [
-        "Źródło demonstracyjne – do walidacji."
+        "Ustawa o dodatkach mieszkaniowych – Wymaga walidacji."
       ],
-      "escalation": "Zwykle niewymagana. Eskalacja przy odmowie pomocy lub podejrzeniu głębszego kryzysu.",
+      "escalation": "Konsultacja przy nietypowej sytuacji prawnej lokalu.",
+      "documents": [
+        "Wniosek",
+        "Deklaracja dochodowa",
+        "Dokumenty mieszkaniowe"
+      ],
+      "relatedBenefits": [
+        "Dodatek mieszkaniowy",
+        "Dodatek energetyczny"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "energy-support-application",
+      "title": "Wsparcie energetyczne – dobór właściwego świadczenia",
+      "category": "Inne formy pomocy",
+      "situation": "Klient pyta o dostępne świadczenia związane z kosztami energii i ogrzewania.",
+      "severity": "Niski",
+      "nowSteps": [
+        "Ustal źródło ogrzewania i typ gospodarstwa.",
+        "Zweryfikuj, które świadczenie jest aktualnie aktywne naborem.",
+        "Przyjmij wniosek do właściwego świadczenia.",
+        "Przekaż informację o terminach i wymaganych załącznikach."
+      ],
+      "notify": [
+        "Pracownik ds. dodatków energetycznych"
+      ],
+      "doNotMiss": [
+        "Sprawdź sezonowość naborów.",
+        "Zweryfikuj wymagane oświadczenia.",
+        "Poinformuj klienta o zmianach przepisów."
+      ],
+      "legalBasis": [
+        "Przepisy szczególne dotyczące dodatków energetycznych i osłonowych – Wymaga walidacji."
+      ],
+      "escalation": "Konsultacja przy rozbieżnościach dokumentów i deklaracji.",
+      "documents": [
+        "Wniosek",
+        "Dokument tożsamości",
+        "Dokumenty potwierdzające źródło ogrzewania (jeśli wymagane)"
+      ],
+      "relatedBenefits": [
+        "Dodatek energetyczny",
+        "Dodatek osłonowy",
+        "Bon energetyczny",
+        "Bon ciepłowniczy"
+      ],
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
+    },
+    {
+      "id": "free-legal-aid-referral",
+      "title": "Nieodpłatna pomoc prawna – skierowanie klienta",
+      "category": "Inne formy pomocy",
+      "situation": "Klient potrzebuje wsparcia prawnego w sprawie socjalnej lub rodzinnej.",
+      "severity": "Niski",
+      "nowSteps": [
+        "Ustal zakres problemu prawnego.",
+        "Przekaż informacje o punktach pomocy prawnej.",
+        "Poinformuj o dokumentach potrzebnych na poradę.",
+        "Odnotuj przekazanie informacji."
+      ],
+      "notify": [
+        "Przełożony (jeśli sprawa dotyczy ryzyka interwencyjnego)"
+      ],
+      "doNotMiss": [
+        "Sprawdź, czy klient nie wymaga dodatkowego wsparcia kryzysowego.",
+        "Przekaż bezpieczny kontakt zwrotny.",
+        "Ustal, czy potrzebna jest pomoc asystenta rodziny."
+      ],
+      "legalBasis": [
+        "Ustawa o nieodpłatnej pomocy prawnej – Wymaga walidacji."
+      ],
+      "escalation": "Tak, jeśli sprawa obejmuje ryzyko przemocy lub bezdomności.",
       "documents": [
         "Notatka służbowa",
-        "Wniosek o pomoc rzeczową lub zasiłek celowy"
-      ]
-    },
-    {
-      "id": "community-interview",
-      "title": "Wywiad środowiskowy – standardowy",
-      "category": "Proceduralno-formalne",
-      "situation": "Przeprowadzenie wywiadu środowiskowego w ramach postępowania o przyznanie świadczenia z pomocy społecznej.",
-      "severity": "Niski",
-      "nowSteps": [
-        "Przygotuj dokumentację i formularz wywiadu.",
-        "Przeprowadź rozmowę z osobą/rodziną w miejscu zamieszkania.",
-        "Zbierz informacje o sytuacji dochodowej, zdrowotnej i bytowej.",
-        "Wypełnij formularz wywiadu i przekaż do rozpatrzenia."
+        "Informacja o punktach pomocy prawnej"
       ],
-      "notify": [
-        "Przełożony – jeśli wymagana konsultacja merytoryczna"
+      "relatedBenefits": [
+        "Bezpłatna pomoc prawna",
+        "Poradnictwo specjalistyczne"
       ],
-      "doNotMiss": [
-        "Przed wizytą zweryfikuj dane z poprzednich kontaktów.",
-        "Upewnij się, że osoba rozumie cel i zakres wywiadu.",
-        "Zachowaj poufność uzyskanych informacji."
-      ],
-      "legalBasis": [
-        "Źródło demonstracyjne – do walidacji."
-      ],
-      "escalation": "Zwykle niewymagana. Eskalacja przy odmowie wywiadu lub wykryciu nowych okoliczności.",
-      "documents": [
-        "Formularz wywiadu środowiskowego",
-        "Zaświadczenia o dochodach",
-        "Inne dokumenty wymagane w procedurze"
-      ]
-    },
-    {
-      "id": "social-contract",
-      "title": "Kontrakt socjalny – zawarcie i monitorowanie",
-      "category": "Proceduralno-formalne",
-      "situation": "Osoba korzystająca z pomocy społecznej kwalifikuje się do zawarcia kontraktu socjalnego lub trwa jego realizacja.",
-      "severity": "Niski",
-      "nowSteps": [
-        "Omów cele i zobowiązania wynikające z kontraktu.",
-        "Ustal realistyczny harmonogram działań.",
-        "Podpisz kontrakt z klientem – wręcz kopię.",
-        "Zaplanuj terminy wizyt monitorujących."
-      ],
-      "notify": [
-        "Przełożony – do akceptacji kontraktu"
-      ],
-      "doNotMiss": [
-        "Kontrakt musi być dobrowolny – nie przymuszaj do podpisu.",
-        "Cele muszą być mierzalne i realistyczne.",
-        "Monitoruj realizację zgodnie z harmonogramem."
-      ],
-      "legalBasis": [
-        "Źródło demonstracyjne – do walidacji."
-      ],
-      "escalation": "Przy rażącym niewykonaniu kontraktu – konsultacja z przełożonym ws. dalszych kroków.",
-      "documents": [
-        "Kontrakt socjalny (formularz)",
-        "Notatka z wizyty monitorującej"
-      ]
+      "contact": {
+        "unitName": "MOPS Zgierz",
+        "phone": "42 716 42 13",
+        "hours": "pon, śr, czw 8:00-16:00; wt 8:00-17:00; pt 8:00-15:00",
+        "address": "Długa 56, 95-100 Zgierz"
+      },
+      "legalUpdatedAt": "2026-04-20",
+      "legalReviewDueAt": "2026-06-30",
+      "legalValidationStatus": "Wymaga walidacji"
     }
-  ]
+  ],
+  "metadata": {
+    "jurisdiction": "MOPS Zgierz",
+    "legalSnapshotDate": "2026-04-20",
+    "nextSuggestedReview": "2026-06-30",
+    "validationNote": "Treści prawne wymagają walidacji przez kierownika MOPS i eksperta prawnego."
+  }
 }

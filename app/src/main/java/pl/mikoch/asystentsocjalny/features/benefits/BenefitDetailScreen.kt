@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -30,6 +32,18 @@ fun BenefitDetailScreen(benefit: Benefit) {
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            LegalStatusBanner(
+                status = benefit.legalValidationStatus,
+                updatedAt = benefit.legalUpdatedAt,
+                reviewDueAt = benefit.legalReviewDueAt
+            )
+
+            Text(
+                text = "Kategoria: ${benefit.category}",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary
+            )
+
             Text(
                 text = benefit.description,
                 style = MaterialTheme.typography.bodyLarge
@@ -43,6 +57,15 @@ fun BenefitDetailScreen(benefit: Benefit) {
                     text = benefit.note,
                     style = MaterialTheme.typography.bodyMedium
                 )
+            }
+
+            benefit.procedure?.let { linkedProcedure ->
+                Section("Powiązana procedura") {
+                    Text(
+                        text = linkedProcedure,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
             }
         }
     }
@@ -73,5 +96,54 @@ private fun Section(
             fontWeight = FontWeight.Bold
         )
         content()
+    }
+}
+
+@Composable
+private fun LegalStatusBanner(
+    status: String,
+    updatedAt: String,
+    reviewDueAt: String
+) {
+    val isValidated = status.equals("Zweryfikowane", ignoreCase = true)
+    val background = if (isValidated) {
+        MaterialTheme.colorScheme.secondaryContainer
+    } else {
+        MaterialTheme.colorScheme.errorContainer
+    }
+    val contentColor = if (isValidated) {
+        MaterialTheme.colorScheme.onSecondaryContainer
+    } else {
+        MaterialTheme.colorScheme.onErrorContainer
+    }
+
+    Card(
+        colors = CardDefaults.cardColors(containerColor = background)
+    ) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+            modifier = Modifier.padding(12.dp)
+        ) {
+            Text(
+                text = "Status prawny: $status",
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.Bold,
+                color = contentColor
+            )
+            if (updatedAt.isNotBlank()) {
+                Text(
+                    text = "Ostatnia aktualizacja: $updatedAt",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = contentColor
+                )
+            }
+            if (reviewDueAt.isNotBlank()) {
+                Text(
+                    text = "Przegląd wymagany do: $reviewDueAt",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = contentColor
+                )
+            }
+        }
     }
 }

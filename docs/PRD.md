@@ -5,6 +5,8 @@ Mobilna aplikacja wspierająca pracowników MOPS/GOPS w pracy terenowej i formal
 
 Produkt nie podejmuje decyzji za użytkownika. Pomaga przejść przez procedurę, odnaleźć podstawę prawną, przygotować szkic dokumentacji i nie pominąć krytycznych kroków.
 
+Na etapie MVP baza wiedzy ma charakter demonstracyjny i jest utrzymywana jako wersja specyficzna dla MOPS Zgierz; parametryzacja zależna od lokalizacji jest planowana jako rozwój po MVP.
+
 ## 2. Problem
 Pracownik socjalny działa:
 - pod presją czasu,
