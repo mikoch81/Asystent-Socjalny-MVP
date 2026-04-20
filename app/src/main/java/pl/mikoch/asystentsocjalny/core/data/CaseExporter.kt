@@ -89,7 +89,7 @@ object CaseExporter {
     private fun String.ensureExtension(ext: String): String =
         if (endsWith(ext, ignoreCase = true)) this else "$this$ext"
 
-    private fun caseToJson(case: CaseRecord, docs: List<CaseDocument>): JSONObject {
+    internal fun caseToJson(case: CaseRecord, docs: List<CaseDocument>): JSONObject {
         val obj = JSONObject()
         obj.put("caseId", case.caseId)
         obj.put("scenarioId", case.scenarioId)
@@ -117,7 +117,7 @@ object CaseExporter {
         return obj
     }
 
-    private fun buildReadme(case: CaseRecord, docs: List<CaseDocument>): String {
+    internal fun buildReadme(case: CaseRecord, docs: List<CaseDocument>): String {
         val ts = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ROOT).format(Date())
         val noteCount = docs.count { it.type == DocumentType.NOTE_DRAFT }
         val pdfCount = docs.count { it.type == DocumentType.PDF_DRAFT }

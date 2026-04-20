@@ -259,6 +259,6 @@ private fun DocumentCard(
 }
 
 private fun formatDocTimestamp(millis: Long): String {
-    val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale("pl"))
+    val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.forLanguageTag("pl-PL"))
     return sdf.format(Date(millis))
 }
