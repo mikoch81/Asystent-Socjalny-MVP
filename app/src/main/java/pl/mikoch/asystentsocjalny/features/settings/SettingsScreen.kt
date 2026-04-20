@@ -11,24 +11,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import kotlinx.coroutines.launch
-import pl.mikoch.asystentsocjalny.core.data.WorkerProfileStore
+import androidx.hilt.navigation.compose.hiltViewModel
 import pl.mikoch.asystentsocjalny.core.model.WorkerProfile
 import pl.mikoch.asystentsocjalny.features.common.BaseScrollableScreen
 
 @Composable
 fun SettingsScreen(
     onSaved: () -> Unit = {},
-    onOpenChangelog: () -> Unit = {}
+    onOpenChangelog: () -> Unit = {},
+    viewModel: WorkerProfileViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
-    val store = remember { WorkerProfileStore(context) }
-    val saved by store.profileFlow.collectAsState(initial = WorkerProfile.EMPTY)
-    val scope = rememberCoroutineScope()
+    val saved by viewModel.profileFlow.collectAsState(initial = WorkerProfile.EMPTY)
 
     var firstName by remember(saved) { mutableStateOf(saved.firstName) }
     var lastName by remember(saved) { mutableStateOf(saved.lastName) }
@@ -121,8 +116,7 @@ fun SettingsScreen(
                         phone = phone,
                         email = email
                     )
-                    scope.launch {
-                        store.save(profile)
+                    viewModel.save(profile) {
                         savedToast = true
                         onSaved()
                     }

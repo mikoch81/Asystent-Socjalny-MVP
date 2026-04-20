@@ -22,7 +22,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,10 +29,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
-import pl.mikoch.asystentsocjalny.core.data.CaseDocumentStore
+import androidx.hilt.navigation.compose.hiltViewModel
 import pl.mikoch.asystentsocjalny.core.data.CaseExporter
-import pl.mikoch.asystentsocjalny.core.data.CaseStore
 import pl.mikoch.asystentsocjalny.core.data.PdfFileHelper
 import pl.mikoch.asystentsocjalny.core.model.CaseDocument
 import pl.mikoch.asystentsocjalny.core.model.CaseRecord
@@ -48,19 +45,16 @@ import java.util.Locale
 @Composable
 fun CaseDocumentsScreen(
     caseId: String,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    viewModel: CaseDocumentsViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val store = remember { CaseDocumentStore(context) }
-    val caseStore = remember { CaseStore(context) }
-    val scope = rememberCoroutineScope()
-    var documents by remember { mutableStateOf<List<CaseDocument>>(emptyList()) }
-    var caseRecord by remember { mutableStateOf<CaseRecord?>(null) }
+    val documents by viewModel.documents
+    val caseRecord by viewModel.caseRecord
     var previewDocument by remember { mutableStateOf<CaseDocument?>(null) }
 
     LaunchedEffect(caseId) {
-        documents = store.loadForCase(caseId)
-        caseRecord = caseStore.loadCase(caseId)
+        viewModel.load(caseId)
     }
 
     BaseScrollableScreen(title = "Dokumenty sprawy") {
@@ -128,13 +122,7 @@ fun CaseDocumentsScreen(
                         }
                     },
                     onDelete = {
-                        scope.launch {
-                            if (doc.type == DocumentType.PDF_DRAFT && doc.filePath.isNotBlank()) {
-                                File(doc.filePath).delete()
-                            }
-                            store.delete(doc.documentId, caseId)
-                            documents = store.loadForCase(caseId)
-                        }
+                        viewModel.delete(doc, caseId)
                     }
                 )
             }

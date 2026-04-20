@@ -9,6 +9,17 @@ internal data class ChangelogEntry(
 
 internal val CHANGELOG: List<ChangelogEntry> = listOf(
     ChangelogEntry(
+        version = "0.6.1",
+        date = "2026-04",
+        title = "Hilt domknięte: ViewModele, test DI, dokumentacja",
+        highlights = listOf(
+            "Settings, Home, Notes i CaseDocuments używają dedykowanych @HiltViewModel",
+            "Wszystkie stores wstrzykiwane jako @Singleton — koniec z remember { Store(ctx) }",
+            "Nowy AppModuleInjectionTest (Hilt instrumentation) pilnuje grafu DI",
+            "docs/TOOLCHAIN.md z macierzą wersji AGP/Kotlin/KSP/Hilt"
+        )
+    ),
+    ChangelogEntry(
         version = "0.6.0",
         date = "2026-04",
         title = "Hilt DI: refaktor architektury",

@@ -22,13 +22,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import pl.mikoch.asystentsocjalny.core.data.WorkerProfileStore
+import androidx.hilt.navigation.compose.hiltViewModel
 import pl.mikoch.asystentsocjalny.core.model.WorkerProfile
+import pl.mikoch.asystentsocjalny.features.settings.WorkerProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,11 +38,10 @@ fun HomeScreen(
     onOpenUrgent: () -> Unit,
     onOpenCases: () -> Unit = {},
     onOpenSettings: () -> Unit = {},
-    onOpenContacts: () -> Unit = {}
+    onOpenContacts: () -> Unit = {},
+    viewModel: WorkerProfileViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
-    val store = remember { WorkerProfileStore(context) }
-    val profile by store.profileFlow.collectAsState(initial = WorkerProfile.EMPTY)
+    val profile by viewModel.profileFlow.collectAsState(initial = WorkerProfile.EMPTY)
 
     Scaffold(
         topBar = {

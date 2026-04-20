@@ -29,19 +29,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import pl.mikoch.asystentsocjalny.core.data.LastLocationStore
+import androidx.hilt.navigation.compose.hiltViewModel
 import pl.mikoch.asystentsocjalny.core.data.PdfDraftContent
 import pl.mikoch.asystentsocjalny.core.data.PdfDraftGenerator
 import pl.mikoch.asystentsocjalny.core.data.PdfFileHelper
-import pl.mikoch.asystentsocjalny.core.data.SimpleNoteDraftStore
-import pl.mikoch.asystentsocjalny.core.data.WorkerProfileStore
 import pl.mikoch.asystentsocjalny.core.model.Procedure
 import pl.mikoch.asystentsocjalny.core.model.WorkerProfile
 import pl.mikoch.asystentsocjalny.features.common.BaseScrollableScreen
 import pl.mikoch.asystentsocjalny.features.common.EmptyStateMessage
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -49,14 +45,12 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun NotesScreen(
     procedures: List<Procedure>,
-    onCreateCase: (procedureId: String, procedureTitle: String, noteText: String) -> Unit = { _, _, _ -> }
+    onCreateCase: (procedureId: String, procedureTitle: String, noteText: String) -> Unit = { _, _, _ -> },
+    viewModel: NotesViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val workerProfileStore = remember { WorkerProfileStore(context) }
-    val workerProfile by workerProfileStore.profileFlow.collectAsState(initial = WorkerProfile.EMPTY)
-    val lastLocationStore = remember { LastLocationStore(context) }
-    val lastLocation by lastLocationStore.flow.collectAsState(initial = "")
-    val scope = rememberCoroutineScope()
+    val workerProfile by viewModel.profileFlow.collectAsState(initial = WorkerProfile.EMPTY)
+    val lastLocation by viewModel.lastLocationFlow.collectAsState(initial = "")
     var location by remember { mutableStateOf("") }
     LaunchedEffect(lastLocation) {
         if (location.isBlank() && lastLocation.isNotBlank()) location = lastLocation
@@ -65,7 +59,6 @@ fun NotesScreen(
     var selectedProcedure by remember { mutableStateOf<Procedure?>(procedures.firstOrNull()) }
     var draftText by remember { mutableStateOf("") }
     var isEditing by remember { mutableStateOf(false) }
-    val draftStore = remember { SimpleNoteDraftStore(context) }
 
     // Restore saved draft when procedure changes
     val hasDraft = draftText.isNotBlank()
@@ -114,7 +107,7 @@ fun NotesScreen(
                                     selectedProcedure = procedure
                                     expanded = false
                                     // Load saved draft for newly selected procedure
-                                    val saved = draftStore.load(procedure.id)
+                                    val saved = viewModel.loadDraft(procedure.id)
                                     if (saved != null) {
                                         draftText = saved
                                         isEditing = false
@@ -146,9 +139,7 @@ fun NotesScreen(
                         selectedProcedure?.let { procedure ->
                             draftText = buildNoteDraft(procedure, workerProfile, location)
                             isEditing = false
-                            if (location.isNotBlank()) {
-                                scope.launch { lastLocationStore.save(location) }
-                            }
+                            viewModel.rememberLocation(location)
                         }
                     },
                     modifier = Modifier.fillMaxWidth()
@@ -206,7 +197,7 @@ fun NotesScreen(
                     Button(
                         onClick = {
                             selectedProcedure?.let { procedure ->
-                                draftStore.save(procedure.id, draftText)
+                                viewModel.saveDraft(procedure.id, draftText)
                                 Toast.makeText(context, "Zapisano wersję roboczą", Toast.LENGTH_SHORT).show()
                             }
                         },
@@ -222,7 +213,7 @@ fun NotesScreen(
                     Button(
                         onClick = {
                             selectedProcedure?.let { procedure ->
-                                draftStore.save(procedure.id, draftText)
+                                viewModel.saveDraft(procedure.id, draftText)
                                 onCreateCase(procedure.id, procedure.title, draftText)
                             }
                         },

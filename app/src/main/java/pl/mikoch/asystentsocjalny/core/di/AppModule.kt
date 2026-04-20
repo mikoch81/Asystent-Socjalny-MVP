@@ -11,6 +11,9 @@ import pl.mikoch.asystentsocjalny.core.data.CaseDocumentStore
 import pl.mikoch.asystentsocjalny.core.data.CaseStore
 import pl.mikoch.asystentsocjalny.core.data.DraftStore
 import pl.mikoch.asystentsocjalny.core.data.KnowledgeRepository
+import pl.mikoch.asystentsocjalny.core.data.LastLocationStore
+import pl.mikoch.asystentsocjalny.core.data.SimpleNoteDraftStore
+import pl.mikoch.asystentsocjalny.core.data.WorkerProfileStore
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -35,4 +38,19 @@ object AppModule {
     @Singleton
     fun provideCaseDocumentStore(@ApplicationContext context: Context): CaseDocumentStore =
         CaseDocumentStore(context)
+
+    @Provides
+    @Singleton
+    fun provideWorkerProfileStore(@ApplicationContext context: Context): WorkerProfileStore =
+        WorkerProfileStore(context)
+
+    @Provides
+    @Singleton
+    fun provideLastLocationStore(@ApplicationContext context: Context): LastLocationStore =
+        LastLocationStore(context)
+
+    @Provides
+    @Singleton
+    fun provideSimpleNoteDraftStore(@ApplicationContext context: Context): SimpleNoteDraftStore =
+        SimpleNoteDraftStore(context)
 }
