@@ -8,7 +8,7 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import kotlinx.coroutines.launch
 import androidx.navigation.compose.NavHost
@@ -46,8 +46,8 @@ fun AsystentNavHost() {
     val repository = KnowledgeRepository(LocalContext.current)
     val procedures = repository.loadProcedures()
     val benefits = repository.loadBenefits()
-    val urgentViewModel: UrgentViewModel = viewModel()
-    val caseListViewModel: CaseListViewModel = viewModel()
+    val urgentViewModel: UrgentViewModel = hiltViewModel()
+    val caseListViewModel: CaseListViewModel = hiltViewModel()
     val coroutineScope = rememberCoroutineScope()
     val appContext = LocalContext.current.applicationContext
 

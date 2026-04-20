@@ -1,9 +1,10 @@
 package pl.mikoch.asystentsocjalny.features.cases
 
-import android.app.Application
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 import pl.mikoch.asystentsocjalny.core.data.CaseDocumentStore
 import pl.mikoch.asystentsocjalny.core.data.CaseLifecycleRules
@@ -15,11 +16,12 @@ import pl.mikoch.asystentsocjalny.core.model.CaseStatus
 import pl.mikoch.asystentsocjalny.core.model.RiskLevel
 import java.util.UUID
 
-class CaseListViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val caseStore = CaseStore(application)
-    private val draftStore = DraftStore(application)
-    private val documentStore = CaseDocumentStore(application)
+@HiltViewModel
+class CaseListViewModel @Inject constructor(
+    private val caseStore: CaseStore,
+    private val draftStore: DraftStore,
+    private val documentStore: CaseDocumentStore
+) : ViewModel() {
 
     val cases = mutableStateOf<List<CaseRecord>>(emptyList())
     val lifecycleFilter = mutableStateOf<CaseLifecycle?>(null)

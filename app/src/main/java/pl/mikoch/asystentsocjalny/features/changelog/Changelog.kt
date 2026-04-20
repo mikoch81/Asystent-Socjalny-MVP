@@ -9,6 +9,17 @@ internal data class ChangelogEntry(
 
 internal val CHANGELOG: List<ChangelogEntry> = listOf(
     ChangelogEntry(
+        version = "0.6.0",
+        date = "2026-04",
+        title = "Hilt DI: refaktor architektury",
+        highlights = listOf(
+            "Wstrzykiwanie zależności przez Hilt 2.59.2 + KSP 2.3.6",
+            "ViewModele migrowane na @HiltViewModel z konstruktorami @Inject",
+            "Nowy moduł AppModule udostępnia singletony stores i repository",
+            "Application i MainActivity oznaczone @HiltAndroidApp / @AndroidEntryPoint"
+        )
+    ),
+    ChangelogEntry(
         version = "0.5.1",
         date = "2026-04",
         title = "Polish: motyw, animacje, lepsze empty states",

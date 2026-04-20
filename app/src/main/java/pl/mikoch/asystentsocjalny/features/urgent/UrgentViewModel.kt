@@ -1,12 +1,15 @@
 package pl.mikoch.asystentsocjalny.features.urgent
 
-import android.app.Application
+import android.content.Context
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import pl.mikoch.asystentsocjalny.core.data.ActionRecommendationEngine
@@ -37,12 +40,14 @@ data class PdfReadiness(
     val reason: String
 )
 
-class UrgentViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository = KnowledgeRepository(application)
-    private val draftStore = DraftStore(application)
-    private val caseStore = CaseStore(application)
-    private val documentStore = CaseDocumentStore(application)
+@HiltViewModel
+class UrgentViewModel @Inject constructor(
+    @ApplicationContext private val appContext: Context,
+    private val repository: KnowledgeRepository,
+    private val draftStore: DraftStore,
+    private val caseStore: CaseStore,
+    private val documentStore: CaseDocumentStore
+) : ViewModel() {
 
     val scenarios: List<UrgentScenarioUi> by lazy {
         repository.loadUrgentScenarios().map { it.toUi() }
@@ -131,7 +136,7 @@ class UrgentViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun generatePdf(): File {
-        val context = getApplication<Application>()
+        val context = appContext
         val title = currentScenario?.title ?: "notatka"
         val content = PdfDraftContent(
             scenarioTitle = title,
