@@ -1,74 +1,92 @@
 # Asystent-Socjalny-MVP
 
-Starter repo pod demo aplikacji Android dla pracowników MOPS/GOPS.
+Demo aplikacji Android dla pracownikow MOPS/GOPS.
+Aplikacja jest asystentem proceduralnym offline-first i nie podejmuje decyzji prawnych za uzytkownika.
 
-## Cel repo
-To repo jest przygotowane pod pracę z agentami w Copilocie / Claude Opus 4.6. Zawiera:
+## Status projektu
 
-- gotowy zestaw dokumentów produktowych,
-- instrukcje dla agentów,
-- prompt files do implementacji,
-- backlog issue do wrzucenia do GitHuba,
-- prosty, działający szkielet aplikacji Android w Kotlin + Jetpack Compose,
-- przykładową lokalną bazę wiedzy w `assets/knowledge`.
+Repo nie jest juz "starterem". Aktualny MVP zawiera:
 
-## Założenia
-- aplikacja jest **asystentem proceduralnym**, nie autonomicznym doradcą decyzyjnym,
-- MVP działa **offline-first**,
-- brak zewnętrznych wywołań AI z poziomu aplikacji mobilnej,
-- dane wrażliwe mają być minimalizowane.
+- baze wiedzy zintegrowana pod MOPS Zgierz,
+- procedury pogrupowane w 8 kategoriach,
+- katalog swiadczen i form pomocy z mapowaniem do procedur,
+- generator szkicu notatki,
+- lokalny parser JSON i modele domenowe,
+- oznaczenia statusu prawnego tresci (wymaga walidacji).
 
-## Stack startowy
+## Zalozenia produktowe
+
+- aplikacja wspiera prace proceduralna, a nie autonomiczne decyzje,
+- dziala offline-first,
+- nie wykonuje public-cloud AI calls z poziomu aplikacji mobilnej,
+- nie zapisuje danych wrazliwych w logach,
+- dane w repo to dane demonstracyjne.
+
+## Stack
+
 - Kotlin
 - Jetpack Compose
 - Navigation Compose
 - Material 3
-- ViewModel
-- lokalna wiedza z `assets`
+- lokalna wiedza z `app/src/main/assets/knowledge`
 
-## Co jest gotowe
-1. Ekran główny z 4 wejściami.
-2. Lista procedur pilnych.
-3. Szczegół procedury z checklistą.
-4. Ekran świadczeń / form pomocy.
-5. Generator szkicu notatki.
-6. Przykładowe dane domenowe.
-7. Dokumenty i prompty dla agentów.
+## Zakres MVP
 
-## Szybki start lokalnie
-1. Skopiuj zawartość tego pakietu do katalogu:
-   `C:\Users\Michał\Asystent MOPS`
-2. Otwórz katalog w Android Studio / IntelliJ.
-3. Poczekaj aż Gradle pobierze zależności.
-4. Uruchom aplikację na emulatorze lub telefonie Android.
+1. Ekran glowny i nawigacja po modulach.
+2. Lista i szczegol procedur.
+3. Lista i szczegol swiadczen/form pomocy.
+4. Powiazania procedura <-> swiadczenie.
+5. Sekcje kontaktowe MOPS w procedurach.
+6. Generator szkicu notatki.
+7. Oznaczenia statusu prawnego tresci:
+   - `legalValidationStatus`
+   - `legalUpdatedAt`
+   - `legalReviewDueAt`
 
-## Szybki start z Git
+## Dane wiedzy i walidacja prawna
+
+Pliki danych:
+
+- `app/src/main/assets/knowledge/procedures.json`
+- `app/src/main/assets/knowledge/benefits.json`
+
+Kazdy rekord procedury i swiadczenia zawiera status prawny. Dodatkowo oba zbiory maja sekcje `metadata` z informacja o jurysdykcji i dacie snapshotu.
+
+Wazne: tresci prawne w MVP sa oznaczone jako "Wymaga walidacji" i musza byc zweryfikowane przez kierownika MOPS oraz eksperta prawnego przed uzyciem operacyjnym.
+
+## Uruchomienie lokalne
+
+1. Otworz repo w Android Studio.
+2. Poczekaj na synchronizacje Gradle.
+3. Uruchom aplikacje na emulatorze lub urzadzeniu Android.
+
+Przydatne komendy:
+
 ```powershell
-cd "C:\Users\Michał"
-git clone https://github.com/mikoch81/Asystent-Socjalny-MVP.git "Asystent MOPS"
+.\gradlew.bat :app:compileDebugKotlin
+.\gradlew.bat :app:assembleDebug
 ```
 
-Następnie wklej pliki startera do repo i wykonaj:
+## Testy
+
+Testy parsera sa w `app/src/test/java/pl/mikoch/asystentsocjalny/core/data`.
 
 ```powershell
-cd "C:\Users\Michał\Asystent MOPS"
-git checkout -b feature/bootstrap-starter
-git add .
-git commit -m "bootstrap starter for Asystent Socjalny MVP"
-git push -u origin feature/bootstrap-starter
+.\gradlew.bat :app:testDebugUnitTest
 ```
 
-## Jak pracować z agentami
-1. Zacznij od `docs/PRD.md`, `docs/ARCHITECTURE.md`, `docs/DOMAIN_RULES.md`.
-2. Dodaj `copilot-instructions.md` do kontekstu.
-3. Uruchamiaj agentów na małych taskach z katalogu `issues/`.
-4. Do implementacji używaj prompt files z `.github/prompts/`.
+Jesli testy lokalnie nie startuja z powodow srodowiskowych Gradle worker, traktuj `compileDebugKotlin` i `assembleDebug` jako minimalny gate techniczny dla zmian.
 
-## Pierwsze zadania polecane do odpalenia
-- `issues/01-bootstrap-ui-shell.md`
-- `issues/02-knowledge-model-and-loader.md`
-- `issues/03-urgent-procedure-list.md`
-- `issues/04-procedure-detail-and-checklist.md`
+## Dokumentacja
 
-## Uwaga
-Ten starter jest przygotowany tak, żeby możliwie szybko wejść w pracę agentową i pokazać demo. Pełne bezpieczeństwo produkcyjne, integracje OPS i silnik świadczeń są poza pierwszym krokiem.
+- `docs/PRD.md`
+- `docs/ARCHITECTURE.md`
+- `docs/DOMAIN_RULES.md`
+- `docs/DEMO_SMOKE_CHECKLIST.md`
+
+## Bezpieczenstwo i granice odpowiedzialnosci
+
+- brak analytics,
+- brak sekretow w repo,
+- brak danych osobowych w sample data,
+- aplikacja nie zastępuje doradcy prawnego, przelozonego ani decyzji administracyjnej.
