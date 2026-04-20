@@ -1,5 +1,10 @@
 package pl.mikoch.asystentsocjalny.core.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
@@ -48,7 +53,21 @@ fun AsystentNavHost() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.Home.route,
+        enterTransition = {
+            slideInHorizontally(
+                initialOffsetX = { it / 6 },
+                animationSpec = tween(220)
+            ) + fadeIn(animationSpec = tween(220))
+        },
+        exitTransition = { fadeOut(animationSpec = tween(180)) },
+        popEnterTransition = { fadeIn(animationSpec = tween(180)) },
+        popExitTransition = {
+            slideOutHorizontally(
+                targetOffsetX = { it / 6 },
+                animationSpec = tween(220)
+            ) + fadeOut(animationSpec = tween(220))
+        }
     ) {
         composable(Screen.Home.route) {
             HomeScreen(

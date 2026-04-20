@@ -18,8 +18,8 @@ android {
         applicationId = "pl.mikoch.asystentsocjalny"
         minSdk = 27
         targetSdk = 36
-        versionCode = 5
-        versionName = "0.5.0"
+        versionCode = 6
+        versionName = "0.5.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

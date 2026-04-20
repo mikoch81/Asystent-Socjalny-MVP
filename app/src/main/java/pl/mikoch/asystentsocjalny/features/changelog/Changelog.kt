@@ -9,6 +9,17 @@ internal data class ChangelogEntry(
 
 internal val CHANGELOG: List<ChangelogEntry> = listOf(
     ChangelogEntry(
+        version = "0.5.1",
+        date = "2026-04",
+        title = "Polish: motyw, animacje, lepsze empty states",
+        highlights = listOf(
+            "Markowy motyw kolorów (granat MOPS) z pełną obsługą dark mode",
+            "Płynne animacje przejść między ekranami",
+            "Empty states w wyszukiwaniu z ikoną i przyciskiem „Wyczyść filtry”",
+            "Lepsze copy: brak wyników pokazuje wpisaną frazę"
+        )
+    ),
+    ChangelogEntry(
         version = "0.5.0",
         date = "2026-04",
         title = "Polish demo flow + changelog",

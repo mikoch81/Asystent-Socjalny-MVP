@@ -97,12 +97,19 @@ fun BenefitsScreen(
             )
             when {
                 benefits.isEmpty() -> EmptyStateMessage(
+                    icon = "📁",
                     title = "Brak danych o świadczeniach",
-                    subtitle = "Nie udało się wczytać danych."
+                    subtitle = "Nie udało się wczytać danych z paczki offline."
                 )
                 filtered.isEmpty() -> EmptyStateMessage(
-                    title = "Brak wyników",
-                    subtitle = "Zmień frazę lub wybraną kategorię."
+                    icon = "🔍",
+                    title = "Nic nie pasuje do „$query”",
+                    subtitle = "Spróbuj krótszej frazy lub innej kategorii.",
+                    actionLabel = "Wyczyść filtry",
+                    onAction = {
+                        query = ""
+                        selectedCategory = pl.mikoch.asystentsocjalny.features.common.ALL_CATEGORIES
+                    }
                 )
                 else -> LazyColumn(
                     modifier = Modifier.fillMaxSize(),
