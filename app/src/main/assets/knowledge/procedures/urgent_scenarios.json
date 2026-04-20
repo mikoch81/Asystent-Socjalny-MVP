@@ -96,6 +96,197 @@
         "escalationRequired": false,
         "escalationNote": "Eskalacja wymagana tylko gdy osoba jest nieprzytomna lub odmawia pomocy w warunkach zagrożenia życia."
       }
+    },
+    {
+      "id": "urgent_eviction",
+      "title": "Eksmisja w toku – rodzina z dziećmi",
+      "description": "Komornik prowadzi czynności eksmisyjne. Rodzina (w tym dzieci lub osoby zależne) traci dach nad głową w trybie natychmiastowym.",
+      "steps": [
+        { "id": "s1", "text": "Zweryfikuj termin i tytuł wykonawczy eksmisji (wyrok sądu, postanowienie)", "isCritical": true },
+        { "id": "s2", "text": "Sprawdź, czy wyrok przyznaje prawo do lokalu socjalnego lub pomieszczenia tymczasowego", "isCritical": true },
+        { "id": "s3", "text": "Skontaktuj się z gminą / wydziałem mieszkaniowym w sprawie wskazania lokalu", "isCritical": true },
+        { "id": "s4", "text": "Ustal listę osób eksmitowanych — szczególnie dzieci, osoby starsze, niepełnosprawne", "isCritical": true },
+        { "id": "s5", "text": "Zorganizuj tymczasowe schronienie (noclegownia, schronisko, pomieszczenie tymczasowe)", "isCritical": false },
+        { "id": "s6", "text": "Poinformuj o możliwości złożenia wniosku o zasiłek celowy (zakwaterowanie, żywność)", "isCritical": false },
+        { "id": "s7", "text": "Sporządź notatkę służbową i wniosek o uruchomienie pomocy doraźnej", "isCritical": true },
+        { "id": "s8", "text": "Powiadom asystenta rodziny i — jeśli dotyczy dzieci — sąd rodzinny", "isCritical": false }
+      ],
+      "guidance": {
+        "notify": [
+          "Kierownik MOPS/GOPS — niezwłocznie",
+          "Wydział mieszkaniowy gminy",
+          "Asystent rodziny (jeśli rodzina jest objęta wsparciem)",
+          "Sąd rodzinny (jeśli zagrożone dobro dziecka)",
+          "Komornik prowadzący sprawę (potwierdzenie terminu i ustaleń)"
+        ],
+        "documents": [
+          "Notatka służbowa z opisem sytuacji i podjętych działań",
+          "Wniosek o zasiłek celowy (schronienie, żywność, leki)",
+          "Wniosek o pomoc w formie tymczasowego schronienia",
+          "Kopia wyroku eksmisyjnego lub postanowienia (jeśli dostępna)"
+        ],
+        "doNotMiss": [
+          "Eksmisja w okresie od 1 listopada do 31 marca jest co do zasady zawieszona dla osób z prawem do lokalu socjalnego — sprawdź wyrok",
+          "Nie wolno eksmitować na bruk osoby ciężarnej, małoletniej, niepełnosprawnej, obłożnie chorej ani emeryta bez wskazania lokalu — Wymaga walidacji",
+          "Ustal, czy gmina wskazała lokal — to jej obowiązek wynikający z wyroku",
+          "Zachowaj kontakt z rodziną przez następne 7 dni — ryzyko bezdomności"
+        ],
+        "escalationRequired": true,
+        "escalationNote": "Obowiązkowa konsultacja z kierownikiem i wydziałem mieszkaniowym tego samego dnia. Przy obecności dzieci — zawiadomienie sądu rodzinnego, jeśli sytuacja zagraża ich dobru. Podstawa: ustawa o ochronie praw lokatorów (art. 14, 16) — Wymaga walidacji."
+      }
+    },
+    {
+      "id": "urgent_death_in_family",
+      "title": "Zgon w rodzinie – obecność dzieci lub osób zależnych",
+      "description": "Zgłoszenie zgonu opiekuna lub członka rodziny. W gospodarstwie pozostają dzieci lub osoby wymagające opieki.",
+      "steps": [
+        { "id": "s1", "text": "Oceń, kto fizycznie sprawuje teraz opiekę nad dziećmi/osobami zależnymi", "isCritical": true },
+        { "id": "s2", "text": "Jeśli brak opiekuna — natychmiast zawiadom Policję i sąd rodzinny", "isCritical": true },
+        { "id": "s3", "text": "Ustal najbliższą rodzinę zdolną przejąć opiekę i dane kontaktowe", "isCritical": true },
+        { "id": "s4", "text": "Sprawdź dostępność środków do życia (jedzenie, leki, ogrzewanie) na najbliższe 48h", "isCritical": true },
+        { "id": "s5", "text": "Poinformuj o zasiłku celowym na pokrycie kosztów pogrzebu i sytuacji losowej", "isCritical": false },
+        { "id": "s6", "text": "Zaproponuj wsparcie psychologiczne / interwencję kryzysową", "isCritical": false },
+        { "id": "s7", "text": "Sporządź notatkę służbową i ustal plan kontaktów na najbliższy tydzień", "isCritical": true }
+      ],
+      "guidance": {
+        "notify": [
+          "Kierownik MOPS/GOPS — niezwłocznie",
+          "Sąd rodzinny — jeśli dzieci pozostały bez opieki",
+          "Policja — przy braku opiekuna lub potrzebie zabezpieczenia",
+          "Asystent rodziny lub psycholog (interwencja kryzysowa)",
+          "Powiatowe Centrum Pomocy Rodzinie (PCPR) — w sprawach pieczy zastępczej"
+        ],
+        "documents": [
+          "Notatka służbowa z opisem sytuacji i podjętych działań",
+          "Wniosek o zasiłek celowy (sytuacja losowa)",
+          "Wniosek o zasiłek celowy na pokrycie kosztów pogrzebu (jeśli rodzina nie jest w stanie)",
+          "Zawiadomienie do sądu rodzinnego (dotyczy dzieci pozostawionych bez opieki)"
+        ],
+        "doNotMiss": [
+          "Nie zostawiaj dzieci ani osób zależnych bez ustalonego opiekuna — nawet czasowego",
+          "Sprawdź dostęp do leków i jedzenia — kryzys żywieniowy w 24h jest realny",
+          "Zaproponuj kontakt z duchownym / psychologiem zgodnie z preferencjami rodziny",
+          "Ustal kontakt monitorujący w ciągu 3 dni i kolejny w ciągu 7 dni"
+        ],
+        "escalationRequired": true,
+        "escalationNote": "Obowiązkowa konsultacja z kierownikiem tego samego dnia. Jeśli dzieci pozostają bez opiekuna prawnego — natychmiastowe zawiadomienie sądu rodzinnego (art. 572 k.p.c.) — Wymaga walidacji."
+      }
+    },
+    {
+      "id": "urgent_housing_loss",
+      "title": "Utrata mieszkania – pożar, zalanie, katastrofa",
+      "description": "Klient utracił mieszkanie w wyniku zdarzenia losowego (pożar, zalanie, katastrofa budowlana). Wymaga doraźnej pomocy materialnej i schronienia.",
+      "steps": [
+        { "id": "s1", "text": "Oceń stan zdrowia poszkodowanych — w razie potrzeby wezwij służby (112)", "isCritical": true },
+        { "id": "s2", "text": "Ustal liczbę osób poszkodowanych, w tym dzieci i osób zależnych", "isCritical": true },
+        { "id": "s3", "text": "Zorganizuj tymczasowe schronienie (rodzina, schronisko, hotel pracowniczy gminy)", "isCritical": true },
+        { "id": "s4", "text": "Zapewnij dostęp do podstawowych potrzeb: ubranie, jedzenie, leki, środki higieny", "isCritical": true },
+        { "id": "s5", "text": "Przyjmij wniosek o zasiłek celowy z tytułu zdarzenia losowego (do 6 000 zł, bez kryterium dochodowego — Wymaga walidacji)", "isCritical": true },
+        { "id": "s6", "text": "Skontaktuj się z wydziałem zarządzania kryzysowego gminy", "isCritical": false },
+        { "id": "s7", "text": "Ustal status formalny lokalu (własność, najem, ubezpieczenie) i pomóż w kontakcie z ubezpieczycielem", "isCritical": false },
+        { "id": "s8", "text": "Sporządź notatkę służbową i plan dalszego wsparcia", "isCritical": true }
+      ],
+      "guidance": {
+        "notify": [
+          "Kierownik MOPS/GOPS — niezwłocznie",
+          "Wydział zarządzania kryzysowego / wydział mieszkaniowy gminy",
+          "Straż pożarna (potwierdzenie zdarzenia, protokół)",
+          "Powiatowe Centrum Pomocy Rodzinie (PCPR) — przy dłuższym wsparciu"
+        ],
+        "documents": [
+          "Notatka służbowa z opisem zdarzenia i podjętych działań",
+          "Wniosek o zasiłek celowy z tytułu zdarzenia losowego",
+          "Protokół zdarzenia (straż pożarna / Policja)",
+          "Dokument tożsamości poszkodowanych (jeśli ocalał)",
+          "Oświadczenie o utracie dokumentów (jeśli dotyczy)"
+        ],
+        "doNotMiss": [
+          "Zasiłek celowy z tytułu zdarzenia losowego nie wymaga kryterium dochodowego — Wymaga walidacji",
+          "Sprawdź, czy poszkodowani mają jakiekolwiek dokumenty (dowód, PESEL) — w razie utraty pomóż w wyrobieniu",
+          "Nie ograniczaj się do jednego świadczenia — łącz pomoc materialną, schronienie i pomoc rzeczową",
+          "Kontakt monitorujący w ciągu 48h, kolejny w ciągu 7 dni"
+        ],
+        "escalationRequired": true,
+        "escalationNote": "Obowiązkowa konsultacja z kierownikiem tego samego dnia. Przy zdarzeniu z ofiarami w ludziach lub dużej liczbie poszkodowanych — uruchomienie procedury kryzysowej gminy."
+      }
+    },
+    {
+      "id": "urgent_suicidal_thoughts",
+      "title": "Klient sygnalizuje myśli samobójcze",
+      "description": "Podczas rozmowy lub wizyty klient deklaruje zamiar odebrania sobie życia, ujawnia plan lub wcześniejsze próby. Sytuacja wymaga interwencji medycznej i psychologicznej.",
+      "steps": [
+        { "id": "s1", "text": "Oceń bezpośredniość zagrożenia — czy klient ma plan, środki, termin", "isCritical": true },
+        { "id": "s2", "text": "Przy bezpośrednim zagrożeniu — zadzwoń na 112 i nie pozostawiaj klienta samego", "isCritical": true },
+        { "id": "s3", "text": "Zachowaj spokój, słuchaj bez oceniania, nie obiecuj poufności absolutnej", "isCritical": false },
+        { "id": "s4", "text": "Skontaktuj się z Centrum Wsparcia dla osób w kryzysie psychicznym (800 70 2222)", "isCritical": false },
+        { "id": "s5", "text": "Ustal kontakt z psychologiem / Poradnią Zdrowia Psychicznego (PZP)", "isCritical": true },
+        { "id": "s6", "text": "Sprawdź obecność dzieci i osób zależnych w domu klienta", "isCritical": true },
+        { "id": "s7", "text": "Sporządź notatkę służbową — fakty, zachowania, podjęte działania, brak ocen", "isCritical": true },
+        { "id": "s8", "text": "Powiadom przełożonego niezwłocznie i ustal plan dalszych kontaktów", "isCritical": true }
+      ],
+      "guidance": {
+        "notify": [
+          "Kierownik MOPS/GOPS — niezwłocznie, jeszcze tego samego dnia",
+          "Pogotowie ratunkowe / 112 — przy bezpośrednim zagrożeniu życia",
+          "Centrum Wsparcia dla osób w kryzysie psychicznym (800 70 2222, całodobowo)",
+          "Telefon Zaufania dla Dorosłych w Kryzysie Emocjonalnym (116 123)",
+          "Poradnia Zdrowia Psychicznego (PZP) właściwa dla miejsca zamieszkania",
+          "Sąd rodzinny — jeśli w domu są dzieci i istnieje zagrożenie dla ich dobra"
+        ],
+        "documents": [
+          "Notatka służbowa — opis zachowań, wypowiedzi (cytaty), podjęte działania, godziny",
+          "Wniosek o objęcie wsparciem specjalistycznym (psycholog, asystent rodziny)",
+          "Zawiadomienie do sądu rodzinnego (gdy zagrożenie dobra dziecka)"
+        ],
+        "doNotMiss": [
+          "Nie obiecuj klientowi poufności absolutnej — masz obowiązek reagować na zagrożenie życia",
+          "Nie pozostawiaj klienta samego, jeśli zagrożenie jest bezpośrednie — czekaj na służby",
+          "Zapytaj wprost: 'Czy myśli pan/pani o odebraniu sobie życia?' — to nie zwiększa ryzyka",
+          "Zabezpiecz fakt obecności dzieci — ich dobro ma priorytet",
+          "Po interwencji zorganizuj sobie wsparcie zespołu — to obciążająca sytuacja"
+        ],
+        "escalationRequired": true,
+        "escalationNote": "Obowiązkowa konsultacja z kierownikiem tego samego dnia. Przy bezpośrednim zagrożeniu życia — natychmiastowe wezwanie pogotowia (112). Podstawa: art. 21 ustawy o ochronie zdrowia psychicznego (przyjęcie bez zgody w trybie nagłym) — Wymaga walidacji."
+      }
+    },
+    {
+      "id": "urgent_dependent_left_alone",
+      "title": "Osoba zależna pozostawiona bez opieki",
+      "description": "Pracownik zastaje osobę starszą, niepełnosprawną lub przewlekle chorą bez stałej opieki — opiekun zniknął, jest niezdolny lub odmawia opieki.",
+      "steps": [
+        { "id": "s1", "text": "Oceń stan zdrowia osoby zależnej — w razie potrzeby wezwij pogotowie (112)", "isCritical": true },
+        { "id": "s2", "text": "Sprawdź dostęp do jedzenia, wody, leków, ogrzewania na najbliższe 24h", "isCritical": true },
+        { "id": "s3", "text": "Ustal, kto jest opiekunem prawnym/faktycznym i dlaczego nie sprawuje opieki", "isCritical": true },
+        { "id": "s4", "text": "Skontaktuj się z najbliższą rodziną zdolną przejąć opiekę", "isCritical": true },
+        { "id": "s5", "text": "Jeśli rodziny brak — uruchom usługi opiekuńcze w trybie pilnym lub skierowanie do DPS", "isCritical": false },
+        { "id": "s6", "text": "Przy podejrzeniu zaniedbania lub przemocy — uruchom procedurę Niebieskiej Karty", "isCritical": true },
+        { "id": "s7", "text": "Sporządź notatkę służbową z opisem zastanej sytuacji", "isCritical": true },
+        { "id": "s8", "text": "Powiadom kierownika i ustal plan kontaktów na najbliższe 72h", "isCritical": true }
+      ],
+      "guidance": {
+        "notify": [
+          "Kierownik MOPS/GOPS — niezwłocznie",
+          "Pogotowie ratunkowe — przy zagrożeniu zdrowia",
+          "Policja — przy podejrzeniu porzucenia lub przestępstwa",
+          "Sąd opiekuńczy — przy potrzebie ustanowienia opiekuna prawnego",
+          "Powiatowe Centrum Pomocy Rodzinie (PCPR) — w sprawie skierowania do DPS"
+        ],
+        "documents": [
+          "Notatka służbowa z opisem zastanej sytuacji i podjętych działań",
+          "Wniosek o przyznanie usług opiekuńczych w trybie pilnym",
+          "Wniosek o skierowanie do Domu Pomocy Społecznej (jeśli zasadne)",
+          "Formularz Niebieskiej Karty – A (przy podejrzeniu zaniedbania)",
+          "Zawiadomienie do sądu opiekuńczego (przy braku opiekuna prawnego)"
+        ],
+        "doNotMiss": [
+          "Porzucenie osoby zależnej może wypełniać znamiona przestępstwa z art. 210 k.k. — Wymaga walidacji",
+          "Nie zostawiaj osoby bez ustalonego opiekuna — nawet sąsiada na kilka godzin",
+          "Sprawdź ważność dokumentów: orzeczenie o niepełnosprawności, dowód, ubezpieczenie zdrowotne",
+          "Zaplanuj wizytę kontrolną w ciągu 24h i kolejną w ciągu 72h"
+        ],
+        "escalationRequired": true,
+        "escalationNote": "Obowiązkowa konsultacja z kierownikiem tego samego dnia. Przy podejrzeniu porzucenia osoby zależnej — zawiadomienie Policji. Przy braku opiekuna prawnego — zawiadomienie sądu opiekuńczego."
+      }
     }
   ]
 }

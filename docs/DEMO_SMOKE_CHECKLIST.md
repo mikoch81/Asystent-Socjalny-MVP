@@ -8,7 +8,7 @@ Quick checklist to verify the app before a demo session.
 - [ ] Ekran główny jest przewijalny
 
 ## 2. Sytuacje pilne
-- [ ] Lista scenariuszy ładuje się poprawnie (3 pozycje)
+- [ ] Lista scenariuszy ładuje się poprawnie (8 pozycji)
 - [ ] Otwarcie szczegółów scenariusza — wyświetla tytuł, opis, checklistę
 - [ ] Zaznaczenie kroków aktualizuje pasek postępu
 - [ ] Kroki krytyczne wyróżnione kolorem i etykietą „⚠ Krok krytyczny"

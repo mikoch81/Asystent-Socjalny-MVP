@@ -9,6 +9,18 @@ internal data class ChangelogEntry(
 
 internal val CHANGELOG: List<ChangelogEntry> = listOf(
     ChangelogEntry(
+        version = "0.7.0",
+        date = "2026-04",
+        title = "Treść: 5 nowych scenariuszy pilnych",
+        highlights = listOf(
+            "Eksmisja w toku — rodzina z dziećmi (8 kroków, 5 krytycznych)",
+            "Zgon w rodzinie — obecność dzieci lub osób zależnych",
+            "Utrata mieszkania — pożar, zalanie, katastrofa",
+            "Klient sygnalizuje myśli samobójcze (numery wsparcia + tryb nagły)",
+            "Osoba zależna pozostawiona bez opieki (NK + sąd opiekuńczy)"
+        )
+    ),
+    ChangelogEntry(
         version = "0.6.1",
         date = "2026-04",
         title = "Hilt domknięte: ViewModele, test DI, dokumentacja",
