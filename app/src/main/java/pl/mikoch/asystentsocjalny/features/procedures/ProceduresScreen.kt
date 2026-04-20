@@ -1,5 +1,6 @@
 package pl.mikoch.asystentsocjalny.features.procedures
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +19,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,7 +30,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import pl.mikoch.asystentsocjalny.core.model.Procedure
+import pl.mikoch.asystentsocjalny.features.common.ALL_CATEGORIES
 import pl.mikoch.asystentsocjalny.features.common.EmptyStateMessage
+import pl.mikoch.asystentsocjalny.features.common.SearchableFilterHeader
 
 private val CATEGORY_ORDER = listOf(
     "Interwencyjne",
@@ -39,13 +45,37 @@ private val CATEGORY_ORDER = listOf(
     "Inne formy pomocy"
 )
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ProceduresScreen(
     procedures: List<Procedure>,
     onOpenDetail: (String) -> Unit
 ) {
-    val grouped = remember(procedures) {
-        val byCategory = procedures.groupBy { it.category.ifBlank { "Inne" } }
+    var query by remember { mutableStateOf("") }
+    var selectedCategory by remember { mutableStateOf(ALL_CATEGORIES) }
+
+    val availableCategories = remember(procedures) {
+        val present = procedures.map { it.category.ifBlank { "Inne" } }.toSet()
+        CATEGORY_ORDER.filter { it in present } + present.filter { it !in CATEGORY_ORDER }.sorted()
+    }
+
+    val filtered = remember(procedures, query, selectedCategory) {
+        val q = query.trim().lowercase()
+        procedures.filter { p ->
+            val matchesCategory = selectedCategory == ALL_CATEGORIES ||
+                p.category.equals(selectedCategory, ignoreCase = true)
+            val matchesQuery = q.isEmpty() ||
+                p.title.lowercase().contains(q) ||
+                p.situation.lowercase().contains(q) ||
+                p.category.lowercase().contains(q) ||
+                p.nowSteps.any { it.lowercase().contains(q) } ||
+                p.legalBasis.any { it.lowercase().contains(q) }
+            matchesCategory && matchesQuery
+        }
+    }
+
+    val grouped = remember(filtered) {
+        val byCategory = filtered.groupBy { it.category.ifBlank { "Inne" } }
         CATEGORY_ORDER.mapNotNull { cat ->
             byCategory[cat]?.let { cat to it }
         } + byCategory.filterKeys { it !in CATEGORY_ORDER }.map { (cat, items) -> cat to items }
@@ -54,29 +84,44 @@ fun ProceduresScreen(
     Scaffold(
         topBar = { TopAppBar(title = { Text("Procedury") }) }
     ) { innerPadding ->
-        if (procedures.isEmpty()) {
-            EmptyStateMessage(
-                title = "Brak danych o procedurach",
-                subtitle = "Nie udało się wczytać danych.",
-                modifier = Modifier.padding(innerPadding)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        ) {
+            SearchableFilterHeader(
+                query = query,
+                onQueryChange = { query = it },
+                categories = availableCategories,
+                selectedCategory = selectedCategory,
+                onCategorySelected = { selectedCategory = it },
+                resultCount = filtered.size,
+                placeholder = "Szukaj procedury…"
             )
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-                contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp)
-            ) {
-                grouped.forEach { (category, items) ->
-                    stickyHeader(key = category) {
-                        CategoryHeader(category)
-                    }
-                    items(items, key = { it.id }) { procedure ->
-                        ProcedureCard(
-                            procedure = procedure,
-                            onClick = { onOpenDetail(procedure.id) },
-                            modifier = Modifier.padding(bottom = 10.dp)
-                        )
+            when {
+                procedures.isEmpty() -> EmptyStateMessage(
+                    title = "Brak danych o procedurach",
+                    subtitle = "Nie udało się wczytać danych."
+                )
+                filtered.isEmpty() -> EmptyStateMessage(
+                    title = "Brak wyników",
+                    subtitle = "Zmień frazę lub wybraną kategorię."
+                )
+                else -> LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp)
+                ) {
+                    grouped.forEach { (category, items) ->
+                        stickyHeader(key = category) {
+                            CategoryHeader(category)
+                        }
+                        items(items, key = { it.id }) { procedure ->
+                            ProcedureCard(
+                                procedure = procedure,
+                                onClick = { onOpenDetail(procedure.id) },
+                                modifier = Modifier.padding(bottom = 10.dp)
+                            )
+                        }
                     }
                 }
             }

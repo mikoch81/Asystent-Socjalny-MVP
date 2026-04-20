@@ -32,8 +32,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import pl.mikoch.asystentsocjalny.core.data.CaseDocumentStore
+import pl.mikoch.asystentsocjalny.core.data.CaseExporter
+import pl.mikoch.asystentsocjalny.core.data.CaseStore
 import pl.mikoch.asystentsocjalny.core.data.PdfFileHelper
 import pl.mikoch.asystentsocjalny.core.model.CaseDocument
+import pl.mikoch.asystentsocjalny.core.model.CaseRecord
 import pl.mikoch.asystentsocjalny.core.model.DocumentType
 import pl.mikoch.asystentsocjalny.features.common.BaseScrollableScreen
 import pl.mikoch.asystentsocjalny.features.common.EmptyStateMessage
@@ -49,12 +52,15 @@ fun CaseDocumentsScreen(
 ) {
     val context = LocalContext.current
     val store = remember { CaseDocumentStore(context) }
+    val caseStore = remember { CaseStore(context) }
     val scope = rememberCoroutineScope()
     var documents by remember { mutableStateOf<List<CaseDocument>>(emptyList()) }
+    var caseRecord by remember { mutableStateOf<CaseRecord?>(null) }
     var previewDocument by remember { mutableStateOf<CaseDocument?>(null) }
 
     LaunchedEffect(caseId) {
         documents = store.loadForCase(caseId)
+        caseRecord = caseStore.loadCase(caseId)
     }
 
     BaseScrollableScreen(title = "Dokumenty sprawy") {
@@ -131,6 +137,31 @@ fun CaseDocumentsScreen(
                         }
                     }
                 )
+            }
+        }
+
+        item(key = "btn_export") {
+            OutlinedButton(
+                onClick = {
+                    val current = caseRecord
+                    if (current == null) {
+                        Toast.makeText(context, "Sprawa nie została wczytana", Toast.LENGTH_SHORT).show()
+                    } else if (documents.isEmpty()) {
+                        Toast.makeText(context, "Brak dokumentów do eksportu", Toast.LENGTH_SHORT).show()
+                    } else {
+                        val zip = CaseExporter.export(context, current, documents)
+                        val intent = CaseExporter.shareIntent(context, zip)
+                        context.startActivity(
+                            Intent.createChooser(intent, "Udostępnij eksport sprawy")
+                        )
+                    }
+                },
+                enabled = documents.isNotEmpty() && caseRecord != null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp)
+            ) {
+                Text("📦 Eksportuj sprawę (ZIP)")
             }
         }
 

@@ -28,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import pl.mikoch.asystentsocjalny.core.data.LastLocationStore
 import pl.mikoch.asystentsocjalny.core.data.PdfDraftContent
 import pl.mikoch.asystentsocjalny.core.data.PdfDraftGenerator
 import pl.mikoch.asystentsocjalny.core.data.PdfFileHelper
@@ -37,6 +38,9 @@ import pl.mikoch.asystentsocjalny.core.model.Procedure
 import pl.mikoch.asystentsocjalny.core.model.WorkerProfile
 import pl.mikoch.asystentsocjalny.features.common.BaseScrollableScreen
 import pl.mikoch.asystentsocjalny.features.common.EmptyStateMessage
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -49,6 +53,13 @@ fun NotesScreen(
     val context = LocalContext.current
     val workerProfileStore = remember { WorkerProfileStore(context) }
     val workerProfile by workerProfileStore.profileFlow.collectAsState(initial = WorkerProfile.EMPTY)
+    val lastLocationStore = remember { LastLocationStore(context) }
+    val lastLocation by lastLocationStore.flow.collectAsState(initial = "")
+    val scope = rememberCoroutineScope()
+    var location by remember { mutableStateOf("") }
+    LaunchedEffect(lastLocation) {
+        if (location.isBlank() && lastLocation.isNotBlank()) location = lastLocation
+    }
     var expanded by remember { mutableStateOf(false) }
     var selectedProcedure by remember { mutableStateOf<Procedure?>(procedures.firstOrNull()) }
     var draftText by remember { mutableStateOf("") }
@@ -117,12 +128,26 @@ fun NotesScreen(
                 }
             }
 
+            item(key = "location") {
+                OutlinedTextField(
+                    value = location,
+                    onValueChange = { location = it },
+                    label = { Text("Miejsce zdarzenia") },
+                    placeholder = { Text("np. ul. Piłsudskiego 12, Zgierz") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
             item(key = "btn_generate") {
                 Button(
                     onClick = {
                         selectedProcedure?.let { procedure ->
-                            draftText = buildNoteDraft(procedure, workerProfile)
+                            draftText = buildNoteDraft(procedure, workerProfile, location)
                             isEditing = false
+                            if (location.isNotBlank()) {
+                                scope.launch { lastLocationStore.save(location) }
+                            }
                         }
                     },
                     modifier = Modifier.fillMaxWidth()
@@ -144,7 +169,14 @@ fun NotesScreen(
                             modifier = Modifier.fillMaxWidth(),
                             label = { Text("Treść notatki") },
                             minLines = 10,
-                            maxLines = 30
+                            maxLines = 30,
+                            supportingText = {
+                                Text(
+                                    text = "Znaki: ${draftText.length}" +
+                                        if (draftText.length < 50) " • minimum 50, by wygenerować PDF" else "",
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            }
                         )
                     } else {
                         SelectionContainer {
@@ -219,6 +251,7 @@ fun NotesScreen(
                                 generateAndOpenPdf(context, procedure, draftText, workerProfile)
                             }
                         },
+                        enabled = draftText.length >= 50,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(48.dp)
@@ -277,15 +310,17 @@ private fun generateAndOpenPdf(
 
 internal fun buildNoteDraft(
     procedure: Procedure,
-    worker: WorkerProfile = WorkerProfile.EMPTY
+    worker: WorkerProfile = WorkerProfile.EMPTY,
+    location: String = ""
 ): String {
     val date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
     val workerLine = if (worker.isComplete) worker.signatureLine else "[uzupełnij]"
+    val locationLine = if (location.isNotBlank()) location else "[uzupełnij]"
     return buildString {
         appendLine("NOTATKA SŁUŻBOWA – SZKIC")
         appendLine()
         appendLine("Data: $date")
-        appendLine("Miejsce: [uzupełnij]")
+        appendLine("Miejsce: $locationLine")
         appendLine("Pracownik: $workerLine")
         if (worker.phone.isNotBlank()) appendLine("Telefon służbowy: ${worker.phone}")
         appendLine()
