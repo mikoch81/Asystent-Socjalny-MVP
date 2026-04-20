@@ -24,6 +24,7 @@ import pl.mikoch.asystentsocjalny.features.home.HomeScreen
 import pl.mikoch.asystentsocjalny.features.notes.NotesScreen
 import pl.mikoch.asystentsocjalny.features.procedures.ProcedureDetailScreen
 import pl.mikoch.asystentsocjalny.features.procedures.ProceduresScreen
+import pl.mikoch.asystentsocjalny.features.changelog.ChangelogScreen
 import pl.mikoch.asystentsocjalny.features.contacts.QuickContactsScreen
 import pl.mikoch.asystentsocjalny.features.settings.SettingsScreen
 import pl.mikoch.asystentsocjalny.features.urgent.CaseSummaryScreen
@@ -234,10 +235,16 @@ fun AsystentNavHost() {
             )
         }
         composable(Screen.Settings.route) {
-            SettingsScreen(onSaved = {})
+            SettingsScreen(
+                onSaved = {},
+                onOpenChangelog = { navController.navigate(Screen.Changelog.route) }
+            )
         }
         composable(Screen.QuickContacts.route) {
             QuickContactsScreen()
+        }
+        composable(Screen.Changelog.route) {
+            ChangelogScreen()
         }
     }
 }

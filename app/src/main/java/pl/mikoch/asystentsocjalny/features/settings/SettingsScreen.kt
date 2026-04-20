@@ -3,6 +3,7 @@ package pl.mikoch.asystentsocjalny.features.settings
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +21,10 @@ import pl.mikoch.asystentsocjalny.core.model.WorkerProfile
 import pl.mikoch.asystentsocjalny.features.common.BaseScrollableScreen
 
 @Composable
-fun SettingsScreen(onSaved: () -> Unit = {}) {
+fun SettingsScreen(
+    onSaved: () -> Unit = {},
+    onOpenChangelog: () -> Unit = {}
+) {
     val context = LocalContext.current
     val store = remember { WorkerProfileStore(context) }
     val saved by store.profileFlow.collectAsState(initial = WorkerProfile.EMPTY)
@@ -136,6 +140,14 @@ fun SettingsScreen(onSaved: () -> Unit = {}) {
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
+            }
+        }
+        item("changelog") {
+            OutlinedButton(
+                onClick = onOpenChangelog,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("📜  Co nowego (changelog)")
             }
         }
     }
