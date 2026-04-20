@@ -33,7 +33,7 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Asystent Socjalny MVP") }
+                title = { Text("Mobile Social Shield") }
             )
         }
     ) { innerPadding ->
