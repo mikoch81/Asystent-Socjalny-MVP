@@ -1,5 +1,9 @@
 # Asystent-Socjalny-MVP
 
+## Product name
+
+Mobile Social Shield
+
 Demo aplikacji Android dla pracownikow MOPS/GOPS.
 Aplikacja jest asystentem proceduralnym offline-first i nie podejmuje decyzji prawnych za uzytkownika.
 
