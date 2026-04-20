@@ -1,6 +1,7 @@
 package pl.mikoch.asystentsocjalny.core.data
 
 import pl.mikoch.asystentsocjalny.core.model.NoteDraft
+import pl.mikoch.asystentsocjalny.core.model.WorkerProfile
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -36,13 +37,19 @@ object NoteDraftBuilder {
         )
     }
 
-    fun formatToText(draft: NoteDraft): String = buildString {
+    fun formatToText(
+        draft: NoteDraft,
+        worker: WorkerProfile = WorkerProfile.EMPTY
+    ): String = buildString {
         appendLine("NOTATKA SŁUŻBOWA – SZKIC")
         appendLine("(wymaga weryfikacji i uzupełnienia przed złożeniem)")
         appendLine()
         appendLine("Data: ${draft.date}")
         appendLine("Miejsce: ${draft.location}")
-        appendLine("Pracownik: [imię i nazwisko]")
+        val workerLine = if (worker.isComplete) worker.signatureLine else "[imię i nazwisko]"
+        appendLine("Pracownik: $workerLine")
+        if (worker.phone.isNotBlank()) appendLine("Telefon służbowy: ${worker.phone}")
+        if (worker.email.isNotBlank()) appendLine("E-mail służbowy: ${worker.email}")
         if (draft.personsPresent.isNotBlank()) {
             appendLine("Osoby obecne: ${draft.personsPresent}")
         }

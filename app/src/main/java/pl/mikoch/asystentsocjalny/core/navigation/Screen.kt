@@ -24,4 +24,6 @@ sealed class Screen(val route: String) {
     data object CaseDocuments : Screen("caseDocuments/{caseId}") {
         fun createRoute(caseId: String): String = "caseDocuments/$caseId"
     }
+    data object Settings : Screen("settings")
+    data object QuickContacts : Screen("quickContacts")
 }

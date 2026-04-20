@@ -5,6 +5,7 @@ import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
 import android.os.Environment
+import pl.mikoch.asystentsocjalny.core.model.WorkerProfile
 import java.io.File
 import java.io.FileOutputStream
 import java.time.LocalDateTime
@@ -16,7 +17,8 @@ data class PdfDraftContent(
     val caseStatus: String,
     val riskLevel: String,
     val recommendation: String,
-    val noteText: String
+    val noteText: String,
+    val worker: WorkerProfile = WorkerProfile.EMPTY
 )
 
 object PdfDraftGenerator {
@@ -146,6 +148,13 @@ object PdfDraftGenerator {
         // --- Signature placeholders ---
         yPos += LINE_HEIGHT * 2
         drawSeparator()
+        val worker = content.worker
+        if (worker.isComplete) {
+            drawText("Sporządził(a): ${worker.signatureLine}", bodyPaint)
+            if (worker.phone.isNotBlank()) drawText("Telefon służbowy: ${worker.phone}", bodyPaint)
+            if (worker.email.isNotBlank()) drawText("E-mail służbowy: ${worker.email}", bodyPaint)
+            yPos += LINE_HEIGHT
+        }
         drawText("Podpis pracownika: _______________________________", bodyPaint)
         yPos += LINE_HEIGHT
         drawText("Data podpisu: ____________________________________", bodyPaint)

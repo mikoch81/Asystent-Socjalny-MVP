@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -19,10 +20,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import pl.mikoch.asystentsocjalny.core.model.ContactInfo
 import pl.mikoch.asystentsocjalny.core.model.Procedure
+import pl.mikoch.asystentsocjalny.core.util.IntentLauncher
 
 @Composable
 fun ProcedureDetailScreen(procedure: Procedure) {
@@ -129,11 +132,27 @@ private fun Section(
 
 @Composable
 private fun ContactSection(contact: ContactInfo) {
+    val context = LocalContext.current
     Section("Kontakt MOPS") {
         Text(text = contact.unitName, style = MaterialTheme.typography.bodyMedium)
-        Text(text = "Telefon: ${contact.phone}", style = MaterialTheme.typography.bodyMedium)
         Text(text = "Godziny: ${contact.hours}", style = MaterialTheme.typography.bodyMedium)
-        Text(text = "Adres: ${contact.address}", style = MaterialTheme.typography.bodyMedium)
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            if (contact.phone.isNotBlank()) {
+                AssistChip(
+                    onClick = { IntentLauncher.dialPhone(context, contact.phone) },
+                    label = { Text("☎ ${contact.phone}") }
+                )
+            }
+            if (contact.address.isNotBlank()) {
+                AssistChip(
+                    onClick = { IntentLauncher.openMap(context, contact.address) },
+                    label = { Text("🗺 Mapa") }
+                )
+            }
+        }
+        if (contact.address.isNotBlank()) {
+            Text(text = contact.address, style = MaterialTheme.typography.bodySmall)
+        }
     }
 }
 

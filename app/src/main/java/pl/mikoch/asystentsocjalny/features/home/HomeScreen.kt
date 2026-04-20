@@ -13,27 +13,47 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import pl.mikoch.asystentsocjalny.core.data.WorkerProfileStore
+import pl.mikoch.asystentsocjalny.core.model.WorkerProfile
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     onOpenProcedures: () -> Unit,
     onOpenBenefits: () -> Unit,
     onOpenNotes: () -> Unit,
     onOpenUrgent: () -> Unit,
-    onOpenCases: () -> Unit = {}
+    onOpenCases: () -> Unit = {},
+    onOpenSettings: () -> Unit = {},
+    onOpenContacts: () -> Unit = {}
 ) {
+    val context = LocalContext.current
+    val store = remember { WorkerProfileStore(context) }
+    val profile by store.profileFlow.collectAsState(initial = WorkerProfile.EMPTY)
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Mobile Social Shield") }
+                title = { Text("Mobile Social Shield") },
+                actions = {
+                    IconButton(onClick = onOpenSettings) {
+                        Text(text = "⚙", style = MaterialTheme.typography.titleLarge)
+                    }
+                }
             )
         }
     ) { innerPadding ->
@@ -52,6 +72,24 @@ fun HomeScreen(
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
+            if (!profile.isComplete) {
+                HomeCard(
+                    title = "⚠️  Uzupełnij profil pracownika",
+                    description = "Bez profilu notatki i PDF są podpisywane jako [imię i nazwisko].",
+                    buttonText = "Otwórz ustawienia",
+                    onClick = onOpenSettings,
+                    containerColor = MaterialTheme.colorScheme.tertiaryContainer
+                )
+            } else {
+                HomeCard(
+                    title = "👤  ${profile.fullName}",
+                    description = listOf(profile.position, profile.unit)
+                        .filter { it.isNotBlank() }.joinToString(" • ")
+                        .ifBlank { "Profil pracownika" },
+                    buttonText = "Edytuj",
+                    onClick = onOpenSettings
+                )
+            }
             HomeCard(
                 title = "🔴  Sytuacje pilne",
                 description = "Interwencja krok po kroku",
@@ -76,6 +114,12 @@ fun HomeScreen(
                 description = "Szkic notatki po interwencji",
                 buttonText = "Utwórz",
                 onClick = onOpenNotes
+            )
+            HomeCard(
+                title = "☎  Szybkie kontakty",
+                description = "Numery alarmowe i wsparcia (offline)",
+                buttonText = "Otwórz",
+                onClick = onOpenContacts
             )
             HomeCard(
                 title = "📋  Sprawy",

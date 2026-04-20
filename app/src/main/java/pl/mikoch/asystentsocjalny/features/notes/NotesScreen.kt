@@ -20,6 +20,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,7 +32,9 @@ import pl.mikoch.asystentsocjalny.core.data.PdfDraftContent
 import pl.mikoch.asystentsocjalny.core.data.PdfDraftGenerator
 import pl.mikoch.asystentsocjalny.core.data.PdfFileHelper
 import pl.mikoch.asystentsocjalny.core.data.SimpleNoteDraftStore
+import pl.mikoch.asystentsocjalny.core.data.WorkerProfileStore
 import pl.mikoch.asystentsocjalny.core.model.Procedure
+import pl.mikoch.asystentsocjalny.core.model.WorkerProfile
 import pl.mikoch.asystentsocjalny.features.common.BaseScrollableScreen
 import pl.mikoch.asystentsocjalny.features.common.EmptyStateMessage
 import java.time.LocalDate
@@ -44,6 +47,8 @@ fun NotesScreen(
     onCreateCase: (procedureId: String, procedureTitle: String, noteText: String) -> Unit = { _, _, _ -> }
 ) {
     val context = LocalContext.current
+    val workerProfileStore = remember { WorkerProfileStore(context) }
+    val workerProfile by workerProfileStore.profileFlow.collectAsState(initial = WorkerProfile.EMPTY)
     var expanded by remember { mutableStateOf(false) }
     var selectedProcedure by remember { mutableStateOf<Procedure?>(procedures.firstOrNull()) }
     var draftText by remember { mutableStateOf("") }
@@ -116,7 +121,7 @@ fun NotesScreen(
                 Button(
                     onClick = {
                         selectedProcedure?.let { procedure ->
-                            draftText = buildNoteDraft(procedure)
+                            draftText = buildNoteDraft(procedure, workerProfile)
                             isEditing = false
                         }
                     },
@@ -211,7 +216,7 @@ fun NotesScreen(
                     OutlinedButton(
                         onClick = {
                             selectedProcedure?.let { procedure ->
-                                generateAndOpenPdf(context, procedure, draftText)
+                                generateAndOpenPdf(context, procedure, draftText, workerProfile)
                             }
                         },
                         modifier = Modifier
@@ -244,7 +249,12 @@ private fun shareNoteText(context: Context, text: String) {
     context.startActivity(Intent.createChooser(sendIntent, "Udostępnij notatkę"))
 }
 
-private fun generateAndOpenPdf(context: Context, procedure: Procedure, noteText: String) {
+private fun generateAndOpenPdf(
+    context: Context,
+    procedure: Procedure,
+    noteText: String,
+    worker: WorkerProfile
+) {
     val date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
     val content = PdfDraftContent(
         scenarioTitle = procedure.title,
@@ -252,7 +262,8 @@ private fun generateAndOpenPdf(context: Context, procedure: Procedure, noteText:
         caseStatus = "Szkic",
         riskLevel = procedure.severity,
         recommendation = "",
-        noteText = noteText
+        noteText = noteText,
+        worker = worker
     )
     val file = PdfDraftGenerator.generate(context, content)
     val path = PdfFileHelper.displayPath(file)
@@ -264,13 +275,19 @@ private fun generateAndOpenPdf(context: Context, procedure: Procedure, noteText:
     }
 }
 
-internal fun buildNoteDraft(procedure: Procedure): String {
+internal fun buildNoteDraft(
+    procedure: Procedure,
+    worker: WorkerProfile = WorkerProfile.EMPTY
+): String {
+    val date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+    val workerLine = if (worker.isComplete) worker.signatureLine else "[uzupełnij]"
     return buildString {
         appendLine("NOTATKA SŁUŻBOWA – SZKIC")
         appendLine()
-        appendLine("Data: [uzupełnij]")
+        appendLine("Data: $date")
         appendLine("Miejsce: [uzupełnij]")
-        appendLine("Pracownik: [uzupełnij]")
+        appendLine("Pracownik: $workerLine")
+        if (worker.phone.isNotBlank()) appendLine("Telefon służbowy: ${worker.phone}")
         appendLine()
         appendLine("Rodzaj sytuacji:")
         appendLine(procedure.title)

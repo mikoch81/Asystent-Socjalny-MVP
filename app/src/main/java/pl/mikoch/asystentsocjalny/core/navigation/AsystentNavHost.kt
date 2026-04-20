@@ -24,6 +24,8 @@ import pl.mikoch.asystentsocjalny.features.home.HomeScreen
 import pl.mikoch.asystentsocjalny.features.notes.NotesScreen
 import pl.mikoch.asystentsocjalny.features.procedures.ProcedureDetailScreen
 import pl.mikoch.asystentsocjalny.features.procedures.ProceduresScreen
+import pl.mikoch.asystentsocjalny.features.contacts.QuickContactsScreen
+import pl.mikoch.asystentsocjalny.features.settings.SettingsScreen
 import pl.mikoch.asystentsocjalny.features.urgent.CaseSummaryScreen
 import pl.mikoch.asystentsocjalny.features.urgent.NotePreviewScreen
 import pl.mikoch.asystentsocjalny.features.urgent.UrgentDetailScreen
@@ -53,7 +55,9 @@ fun AsystentNavHost() {
                 onOpenBenefits = { navController.navigate(Screen.Benefits.route) },
                 onOpenNotes = { navController.navigate(Screen.Notes.route) },
                 onOpenUrgent = { navController.navigate(Screen.UrgentList.route) },
-                onOpenCases = { navController.navigate(Screen.CaseList.route) }
+                onOpenCases = { navController.navigate(Screen.CaseList.route) },
+                onOpenSettings = { navController.navigate(Screen.Settings.route) },
+                onOpenContacts = { navController.navigate(Screen.QuickContacts.route) }
             )
         }
         composable(Screen.Procedures.route) {
@@ -228,6 +232,12 @@ fun AsystentNavHost() {
                 caseId = caseId,
                 onBack = { navController.popBackStack() }
             )
+        }
+        composable(Screen.Settings.route) {
+            SettingsScreen(onSaved = {})
+        }
+        composable(Screen.QuickContacts.route) {
+            QuickContactsScreen()
         }
     }
 }
