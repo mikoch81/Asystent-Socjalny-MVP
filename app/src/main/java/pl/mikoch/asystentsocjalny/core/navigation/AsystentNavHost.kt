@@ -7,7 +7,6 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -19,8 +18,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import pl.mikoch.asystentsocjalny.core.data.CaseDocumentStore
-import pl.mikoch.asystentsocjalny.core.data.KnowledgeRepository
-import pl.mikoch.asystentsocjalny.core.data.RecentItemsStore
 import pl.mikoch.asystentsocjalny.core.model.CaseDocument
 import pl.mikoch.asystentsocjalny.core.model.DocumentType
 import pl.mikoch.asystentsocjalny.core.model.RecentItem
@@ -50,14 +47,13 @@ import java.util.UUID
 @Composable
 fun AsystentNavHost() {
     val navController = rememberNavController()
-    val repository = KnowledgeRepository(LocalContext.current)
-    val procedures = repository.loadProcedures()
-    val benefits = repository.loadBenefits()
+    val navHostViewModel: AsystentNavHostViewModel = hiltViewModel()
+    val procedures = navHostViewModel.procedures
+    val benefits = navHostViewModel.benefits
     val urgentViewModel: UrgentViewModel = hiltViewModel()
     val caseListViewModel: CaseListViewModel = hiltViewModel()
     val coroutineScope = rememberCoroutineScope()
     val appContext = LocalContext.current.applicationContext
-    val recentItemsStore = remember(appContext) { RecentItemsStore(appContext) }
 
     // Skróty z launchera (App Shortcuts) — pojedyncze zdarzenie konsumowane raz.
     LaunchedEffect(Unit) {
@@ -148,7 +144,7 @@ fun AsystentNavHost() {
             val benefit = benefits.firstOrNull { it.id == id }
             if (benefit != null) {
                 LaunchedEffect(benefit.id) {
-                    recentItemsStore.recordOpen(
+                    navHostViewModel.recordOpen(
                         RecentItem(
                             kind = RecentItemKind.BENEFIT,
                             id = benefit.id,
@@ -194,7 +190,7 @@ fun AsystentNavHost() {
             val procedure = procedures.firstOrNull { it.id == id }
             if (procedure != null) {
                 LaunchedEffect(procedure.id) {
-                    recentItemsStore.recordOpen(
+                    navHostViewModel.recordOpen(
                         RecentItem(
                             kind = RecentItemKind.PROCEDURE,
                             id = procedure.id,
@@ -235,7 +231,7 @@ fun AsystentNavHost() {
             val scenario = urgentViewModel.scenarioById(id)
             if (scenario != null) {
                 LaunchedEffect(scenario.id) {
-                    recentItemsStore.recordOpen(
+                    navHostViewModel.recordOpen(
                         RecentItem(
                             kind = RecentItemKind.URGENT_SCENARIO,
                             id = scenario.id,

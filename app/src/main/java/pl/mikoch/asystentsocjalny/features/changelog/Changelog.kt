@@ -9,6 +9,18 @@ internal data class ChangelogEntry(
 
 internal val CHANGELOG: List<ChangelogEntry> = listOf(
     ChangelogEntry(
+        version = "0.9.1",
+        date = "2026-05",
+        title = "Stabilizacja: DI nawigacji + instrukcja OTA w Ustawieniach",
+        highlights = listOf(
+            "AsystentNavHost korzysta z Hiltowego AsystentNavHostViewModel zamiast ręcznego tworzenia repository/store",
+            "RecentItemsStore i KnowledgeRepository pobierane spójnie przez DI",
+            "Ustawienia pokazują wersję i źródło bazy wiedzy oraz katalog OTA na urządzeniu",
+            "Nowa instrukcja operacyjna: jak podmienić pliki knowledge przez OTA",
+            "Doprecyzowanie: pole 'Zweryfikowane przez' uzupełnia wyłącznie osoba walidująca prawnie"
+        )
+    ),
+    ChangelogEntry(
         version = "0.9.0",
         date = "2026-05",
         title = "Prawnik: OTA bazy wiedzy, widoczność wersji, walidacja prawna",

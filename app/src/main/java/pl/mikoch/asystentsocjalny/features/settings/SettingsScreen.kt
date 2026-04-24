@@ -1,9 +1,13 @@
 package pl.mikoch.asystentsocjalny.features.settings
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -22,6 +26,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import pl.mikoch.asystentsocjalny.core.model.KnowledgeSource
 import pl.mikoch.asystentsocjalny.core.model.TextScale
 import pl.mikoch.asystentsocjalny.core.model.WorkerProfile
 import pl.mikoch.asystentsocjalny.features.common.BaseScrollableScreen
@@ -33,6 +38,9 @@ fun SettingsScreen(
     viewModel: WorkerProfileViewModel = hiltViewModel()
 ) {
     val saved by viewModel.profileFlow.collectAsState(initial = WorkerProfile.EMPTY)
+    val knowledgeMeta = viewModel.knowledgeMeta
+    val otaDirectoryPath = viewModel.otaDirectoryPath
+    val otaSupportedFiles = viewModel.otaSupportedFiles
 
     var firstName by remember(saved) { mutableStateOf(saved.firstName) }
     var lastName by remember(saved) { mutableStateOf(saved.lastName) }
@@ -214,6 +222,77 @@ fun SettingsScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("📜  Co nowego (changelog)")
+            }
+        }
+        item("ota_header") {
+            Text(
+                text = "Aktualizacja bazy wiedzy (OTA)",
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+        item("ota_card") {
+            val sourceLabel = when (knowledgeMeta.source) {
+                KnowledgeSource.BUNDLED -> "Lokalna baza z aplikacji"
+                KnowledgeSource.EXTERNAL ->
+                    "Nadpisana z urządzenia (${knowledgeMeta.externalOverrideCount} plików)"
+            }
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = if (knowledgeMeta.source == KnowledgeSource.EXTERNAL) {
+                        MaterialTheme.colorScheme.tertiaryContainer
+                    } else {
+                        MaterialTheme.colorScheme.surfaceVariant
+                    }
+                )
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Text(
+                        text = "Wersja: ${knowledgeMeta.version}",
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                    Text(
+                        text = "Aktualizacja treści: ${knowledgeMeta.updatedAt}",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Text(
+                        text = "Źródło: $sourceLabel",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Text(
+                        text = "Katalog OTA: $otaDirectoryPath",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        }
+        item("ota_steps") {
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text(
+                    text = "Jak podmienić pliki:",
+                    style = MaterialTheme.typography.labelLarge
+                )
+                Text(
+                    text = "1. Podłącz urządzenie i otwórz katalog OTA aplikacji.",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    text = "2. Skopiuj tylko pliki treści demo: ${otaSupportedFiles.joinToString()}",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    text = "3. Zamknij i uruchom aplikację ponownie. Baner na Home pokaże, że baza została nadpisana.",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    text = "4. Nadpisanie plików nie oznacza recenzji prawnej. Pole 'Zweryfikowane przez' uzupełnia osoba odpowiedzialna za walidację.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
     }
