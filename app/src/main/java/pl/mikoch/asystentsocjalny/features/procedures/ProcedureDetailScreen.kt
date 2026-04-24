@@ -58,7 +58,8 @@ fun ProcedureDetailScreen(procedure: Procedure) {
             LegalStatusBanner(
                 status = procedure.legalValidationStatus,
                 updatedAt = procedure.legalUpdatedAt,
-                reviewDueAt = procedure.legalReviewDueAt
+                reviewDueAt = procedure.legalReviewDueAt,
+                validatedBy = procedure.validatedBy
             )
 
             ProcedureSection("Co zrobić teraz", procedure.nowSteps)
@@ -163,7 +164,8 @@ private fun ContactSection(contact: ContactInfo) {
 private fun LegalStatusBanner(
     status: String,
     updatedAt: String,
-    reviewDueAt: String
+    reviewDueAt: String,
+    validatedBy: String? = null
 ) {
     val isValidated = status.equals("Zweryfikowane", ignoreCase = true)
     val background = if (isValidated) {
@@ -201,6 +203,13 @@ private fun LegalStatusBanner(
             if (reviewDueAt.isNotBlank()) {
                 Text(
                     text = "Przegląd wymagany do: $reviewDueAt",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = contentColor
+                )
+            }
+            if (!validatedBy.isNullOrBlank()) {
+                Text(
+                    text = "Zweryfikowane przez: $validatedBy",
                     style = MaterialTheme.typography.bodySmall,
                     color = contentColor
                 )

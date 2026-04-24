@@ -35,7 +35,8 @@ fun BenefitDetailScreen(benefit: Benefit) {
             LegalStatusBanner(
                 status = benefit.legalValidationStatus,
                 updatedAt = benefit.legalUpdatedAt,
-                reviewDueAt = benefit.legalReviewDueAt
+                reviewDueAt = benefit.legalReviewDueAt,
+                validatedBy = benefit.validatedBy
             )
 
             Text(
@@ -103,7 +104,8 @@ private fun Section(
 private fun LegalStatusBanner(
     status: String,
     updatedAt: String,
-    reviewDueAt: String
+    reviewDueAt: String,
+    validatedBy: String? = null
 ) {
     val isValidated = status.equals("Zweryfikowane", ignoreCase = true)
     val background = if (isValidated) {
@@ -140,6 +142,13 @@ private fun LegalStatusBanner(
             if (reviewDueAt.isNotBlank()) {
                 Text(
                     text = "Przegląd wymagany do: $reviewDueAt",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = contentColor
+                )
+            }
+            if (!validatedBy.isNullOrBlank()) {
+                Text(
+                    text = "Zweryfikowane przez: $validatedBy",
                     style = MaterialTheme.typography.bodySmall,
                     color = contentColor
                 )

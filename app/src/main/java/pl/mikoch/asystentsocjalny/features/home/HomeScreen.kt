@@ -31,6 +31,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import pl.mikoch.asystentsocjalny.core.model.KnowledgeMeta
+import pl.mikoch.asystentsocjalny.core.model.KnowledgeSource
 import pl.mikoch.asystentsocjalny.core.model.RecentItem
 import pl.mikoch.asystentsocjalny.core.model.RecentItemKind
 import pl.mikoch.asystentsocjalny.core.model.WorkerProfile
@@ -84,6 +86,8 @@ fun HomeScreen(
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
+
+            KnowledgeMetaBadge(meta = homeViewModel.knowledgeMeta)
 
             if (pinned.isNotEmpty()) {
                 SectionHeader("⭐  Przypięte")
@@ -177,6 +181,26 @@ private fun SectionHeader(text: String) {
         fontWeight = FontWeight.SemiBold,
         color = MaterialTheme.colorScheme.onSurface
     )
+}
+
+@Composable
+private fun KnowledgeMetaBadge(meta: KnowledgeMeta) {
+    val (label, container) = when (meta.source) {
+        KnowledgeSource.BUNDLED -> "\uD83D\uDCD8  Baza wiedzy: lokalna v${meta.version} \u00B7 ${meta.updatedAt}" to
+            MaterialTheme.colorScheme.surfaceVariant
+        KnowledgeSource.EXTERNAL -> "\uD83D\uDCE5  Baza wiedzy: nadpisana (${meta.externalOverrideCount} plik\u00F3w) v${meta.version} \u00B7 ${meta.updatedAt}" to
+            MaterialTheme.colorScheme.tertiaryContainer
+    }
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = container)
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+        )
+    }
 }
 
 @Composable

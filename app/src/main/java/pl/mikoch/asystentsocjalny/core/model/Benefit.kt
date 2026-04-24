@@ -11,5 +11,6 @@ data class Benefit(
     val procedure: String? = null,
     val legalUpdatedAt: String = "",
     val legalReviewDueAt: String = "",
-    val legalValidationStatus: String = "Wymaga walidacji"
+    val legalValidationStatus: String = "Wymaga walidacji",
+    val validatedBy: String? = null
 )

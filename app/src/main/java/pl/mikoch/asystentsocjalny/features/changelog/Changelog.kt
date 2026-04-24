@@ -9,6 +9,18 @@ internal data class ChangelogEntry(
 
 internal val CHANGELOG: List<ChangelogEntry> = listOf(
     ChangelogEntry(
+        version = "0.9.0",
+        date = "2026-05",
+        title = "Prawnik: OTA bazy wiedzy, widoczność wersji, walidacja prawna",
+        highlights = listOf(
+            "meta.json + KnowledgeMeta — wersja i data bazy wiedzy widoczne na Home",
+            "OTA: pliki z /Android/data/.../files/knowledge/ nadpisują lokalne assety (bez uprawnień)",
+            "Banner na Home pokazuje, czy baza wiedzy jest lokalna czy nadpisana z urządzenia",
+            "Nowe pole validatedBy w procedurach i świadczeniach — widoczne w bannerze prawnym",
+            "Status prawny w detalach: „Zweryfikowane przez: ...” gdy treść przeszła recenzję prawnika"
+        )
+    ),
+    ChangelogEntry(
         version = "0.8.0",
         date = "2026-05",
         title = "UX w terenie: dostępność, skróty, tryb przy kliencie",

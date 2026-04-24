@@ -16,5 +16,6 @@ data class Procedure(
     val contact: ContactInfo? = null,
     val legalUpdatedAt: String = "",
     val legalReviewDueAt: String = "",
-    val legalValidationStatus: String = "Wymaga walidacji"
+    val legalValidationStatus: String = "Wymaga walidacji",
+    val validatedBy: String? = null
 )
