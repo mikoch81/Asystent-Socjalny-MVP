@@ -4,8 +4,9 @@ Sciezka w Play Console: App content.
 
 ## 1. Privacy policy
 
-- URL polityki prywatnosci: ustaw publiczny link do `docs/PRIVACY_POLICY_PL.md`
-- Status: DO UZUPELNIENIA w Play Console (wymagane przed publikacja)
+- URL polityki prywatnosci (gotowy, publiczny):
+	- https://raw.githubusercontent.com/mikoch81/Asystent-Socjalny-MVP/main/docs/PRIVACY_POLICY_PL.md
+- Status: GOTOWE DO WKLEJENIA w Play Console (przed publikacja sprawdz, czy URL zwraca tresc bez 404)
 
 ## 2. App access
 

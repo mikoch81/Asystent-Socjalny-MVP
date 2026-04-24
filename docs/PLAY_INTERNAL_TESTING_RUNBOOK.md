@@ -39,6 +39,12 @@ Artefakt:
 
 ## 5. Szablon notatek wydania (Internal)
 
+Gotowy tekst dla aktualnego wydania znajdziesz w:
+- `docs/PLAY_RELEASE_NOTES_v0.9.2_PL.md`
+
+Szablon na kolejne wydanie:
+- `docs/PLAY_RELEASE_NOTES_v0.9.3_TEMPLATE_PL.md`
+
 ```text
 [DEMO] vX.Y.Z
 - najwazniejsza zmiana 1
