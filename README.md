@@ -87,6 +87,7 @@ Jesli testy lokalnie nie startuja z powodow srodowiskowych Gradle worker, traktu
 - `docs/ARCHITECTURE.md`
 - `docs/DOMAIN_RULES.md`
 - `docs/DEMO_SMOKE_CHECKLIST.md`
+- `docs/DEMO_READY_PLAY_CHECKLIST.md`
 
 ## Bezpieczenstwo i granice odpowiedzialnosci
 

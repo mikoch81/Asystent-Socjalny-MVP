@@ -29,6 +29,7 @@ class ProcedureParsingTest {
                             "legalUpdatedAt": "2026-04-20",
                             "legalReviewDueAt": "2026-06-30",
                             "legalValidationStatus": "Wymaga walidacji",
+                                                        "validatedBy": "radca prawny",
               "contact": {
                 "unitName": "MOPS Zgierz",
                 "phone": "42 716 42 13",
@@ -47,6 +48,7 @@ class ProcedureParsingTest {
         assertEquals("2026-04-20", procedure.legalUpdatedAt)
         assertEquals("2026-06-30", procedure.legalReviewDueAt)
         assertEquals("Wymaga walidacji", procedure.legalValidationStatus)
+        assertEquals("radca prawny", procedure.validatedBy)
     }
 
     @Test
@@ -76,6 +78,7 @@ class ProcedureParsingTest {
         assertEquals("", procedure.legalUpdatedAt)
         assertEquals("", procedure.legalReviewDueAt)
         assertEquals("Wymaga walidacji", procedure.legalValidationStatus)
+        assertNull(procedure.validatedBy)
     }
 
     private fun parseProcedureItem(item: JSONObject): Procedure {
@@ -111,7 +114,8 @@ class ProcedureParsingTest {
             contact = contact,
             legalUpdatedAt = item.optString("legalUpdatedAt", ""),
             legalReviewDueAt = item.optString("legalReviewDueAt", ""),
-            legalValidationStatus = item.optString("legalValidationStatus", "Wymaga walidacji")
+            legalValidationStatus = item.optString("legalValidationStatus", "Wymaga walidacji"),
+            validatedBy = item.optString("validatedBy", "").ifBlank { null }
         )
     }
 }

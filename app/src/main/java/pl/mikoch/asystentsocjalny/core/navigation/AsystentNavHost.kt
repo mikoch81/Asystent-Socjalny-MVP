@@ -7,17 +7,13 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import pl.mikoch.asystentsocjalny.core.data.CaseDocumentStore
 import pl.mikoch.asystentsocjalny.core.model.CaseDocument
 import pl.mikoch.asystentsocjalny.core.model.DocumentType
 import pl.mikoch.asystentsocjalny.core.model.RecentItem
@@ -52,8 +48,6 @@ fun AsystentNavHost() {
     val benefits = navHostViewModel.benefits
     val urgentViewModel: UrgentViewModel = hiltViewModel()
     val caseListViewModel: CaseListViewModel = hiltViewModel()
-    val coroutineScope = rememberCoroutineScope()
-    val appContext = LocalContext.current.applicationContext
 
     // Skróty z launchera (App Shortcuts) — pojedyncze zdarzenie konsumowane raz.
     LaunchedEffect(Unit) {
@@ -166,7 +160,6 @@ fun AsystentNavHost() {
                 procedures = procedures,
                 onCreateCase = { procedureId, procedureTitle, noteText ->
                     val caseId = caseListViewModel.createCase(procedureId, procedureTitle)
-                    val documentStore = CaseDocumentStore(appContext)
                     val doc = CaseDocument(
                         documentId = UUID.randomUUID().toString(),
                         caseId = caseId,
@@ -177,7 +170,7 @@ fun AsystentNavHost() {
                         filePath = "",
                         createdAt = System.currentTimeMillis()
                     )
-                    coroutineScope.launch { documentStore.save(doc) }
+                    navHostViewModel.saveCaseDocument(doc)
                     navController.navigate(Screen.CaseList.route)
                 }
             )

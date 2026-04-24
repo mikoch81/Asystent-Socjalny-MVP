@@ -22,7 +22,8 @@ class BenefitsParsingTest {
             "procedure": "Procedura testowa",
             "legalUpdatedAt": "2026-04-20",
             "legalReviewDueAt": "2026-06-30",
-            "legalValidationStatus": "Wymaga walidacji"
+            "legalValidationStatus": "Wymaga walidacji",
+            "validatedBy": "radca prawny"
         }
         """.trimIndent())
 
@@ -39,6 +40,7 @@ class BenefitsParsingTest {
         assertEquals("2026-04-20", benefit.legalUpdatedAt)
         assertEquals("2026-06-30", benefit.legalReviewDueAt)
         assertEquals("Wymaga walidacji", benefit.legalValidationStatus)
+        assertEquals("radca prawny", benefit.validatedBy)
     }
 
     @Test
@@ -97,6 +99,7 @@ class BenefitsParsingTest {
         assertEquals("", benefit.legalUpdatedAt)
         assertEquals("", benefit.legalReviewDueAt)
         assertEquals("Wymaga walidacji", benefit.legalValidationStatus)
+        assertEquals(null, benefit.validatedBy)
     }
 
     private fun parseBenefitItem(item: JSONObject): Benefit {
@@ -119,7 +122,8 @@ class BenefitsParsingTest {
             procedure = item.optString("procedure", "").ifBlank { null },
             legalUpdatedAt = item.optString("legalUpdatedAt", ""),
             legalReviewDueAt = item.optString("legalReviewDueAt", ""),
-            legalValidationStatus = item.optString("legalValidationStatus", "Wymaga walidacji")
+            legalValidationStatus = item.optString("legalValidationStatus", "Wymaga walidacji"),
+            validatedBy = item.optString("validatedBy", "").ifBlank { null }
         )
     }
 }
