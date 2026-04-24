@@ -92,6 +92,7 @@ Jesli testy lokalnie nie startuja z powodow srodowiskowych Gradle worker, traktu
 - `docs/PLAY_DATA_SAFETY_TEMPLATE.md`
 - `docs/PLAY_APP_CONTENT_TEMPLATE.md`
 - `docs/PLAY_STORE_LISTING_PL.md`
+- `docs/PRIVACY_POLICY_PL.md`
 
 ## Bezpieczenstwo i granice odpowiedzialnosci
 

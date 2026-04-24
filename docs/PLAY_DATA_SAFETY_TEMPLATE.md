@@ -1,57 +1,39 @@
-# Play Data Safety Template
+# Play Data Safety (Wypelnione - stan obecny)
 
-Szablon do wypelnienia w Google Play Console -> App content -> Data safety.
+Sciezka w Play Console: App content -> Data safety.
 
-## 1. Data collection and sharing (wstepna kwalifikacja)
+## 1. Zalecione odpowiedzi dla aktualnego builda
 
-- [ ] App collects data
-- [ ] App shares data with third parties
+- App collects data: NO
+- App shares data with third parties: NO
 
-Uwaga dla tego projektu:
-- aplikacja jest offline-first,
-- brak analytics,
-- brak public-cloud AI calls,
-- dane demo nie zawieraja danych osobowych.
+Uzasadnienie techniczne (aktualny stan):
+- brak uprawnienia `INTERNET` w `AndroidManifest.xml`,
+- brak SDK analytics/crash reporting i brak backend sync,
+- dane dzialaja lokalnie (offline-first, DataStore/pliki lokalne),
+- brak public-cloud AI calls.
 
-## 2. Kategorie danych (uzupelnij dla faktycznego stanu)
+## 2. Kategorie danych
 
-### Personal info
-- [ ] Name
-- [ ] Email address
-- [ ] Phone number
-- [ ] User IDs
+W obecnym buildzie: nie zaznaczaj zadnej kategorii jako collected/shared,
+bo dane nie sa wysylane poza urzadzenie przez aplikacje.
 
-### Messages
-- [ ] In-app messages
+## 3. Security practices
 
-### Files and docs
-- [ ] Files and docs
+- Data is encrypted in transit: Not applicable (brak transmisji danych)
+- You provide a way to request data deletion: Not applicable (brak danych po stronie serwera)
+- Independently verified security review: opcjonalne
 
-### App activity
-- [ ] App interactions
-- [ ] In-app search history
+## 4. Kiedy zaktualizowac deklaracje
 
-### Device or other IDs
-- [ ] Device or other IDs
+Zmien odpowiedzi natychmiast, jesli dodacie:
+- jakikolwiek backend/API,
+- analytics/crash telemetry,
+- zdalna synchronizacje profilu/notatek,
+- logowanie kontem.
 
-## 3. Dla kazdej zaznaczonej kategorii odpowiedz
-
-- [ ] Is this data collected?
-- [ ] Is this data shared?
-- [ ] Is data processed ephemerally?
-- [ ] Is collection required, or optional?
-- [ ] Purpose(s): app functionality / analytics / fraud prevention / developer communications / personalization / account management
-- [ ] Is data encrypted in transit?
-- [ ] Can users request deletion?
-
-## 4. Security practices
-
-- [ ] Data is encrypted in transit
-- [ ] You provide a way for users to request data deletion (jesli dotyczy)
-- [ ] Independently verified security review (opcjonalne)
-
-## 5. Final check before submit
+## 5. Final check
 
 - [ ] Odpowiedzi sa zgodne z realnym zachowaniem aplikacji
-- [ ] Odpowiedzi sa zgodne z Privacy Policy
+- [ ] Odpowiedzi sa zgodne z `docs/PRIVACY_POLICY_PL.md`
 - [ ] Odpowiedzi sa zgodne z opisem aplikacji i listingiem

@@ -1,6 +1,6 @@
-# Play Store Listing PL
+# Play Store Listing PL (Propozycja)
 
-Roboczy szablon listingu po polsku do uzupelnienia przed publikacja.
+Gotowy draft listingu po polsku do wklejenia i dopracowania przed publikacja.
 
 ## Nazwa aplikacji
 
@@ -19,12 +19,18 @@ Najwazniejsze funkcje:
 - katalog procedur i swiadczen,
 - generator szkicu notatki,
 - widocznosc statusu prawnego tresci,
-- dzialanie offline-first.
+- dzialanie offline-first,
+- instrukcja aktualizacji bazy wiedzy (OTA) z poziomu ustawien.
 
 Co jest wazne:
 - aplikacja nie podejmuje autonomicznych decyzji prawnych,
 - aplikacja nie zastepuje doradcy prawnego ani przelozonego,
 - dane w wersji demo maja charakter pogladowy.
+
+Bezpieczenstwo i prywatnosc:
+- aplikacja nie wysyla danych do zewnetrznych serwerow (stan obecny),
+- brak reklam i brak analytics,
+- tresci i ustawienia dzialaja lokalnie na urzadzeniu.
 
 ## Release notes template (PL)
 
@@ -42,3 +48,10 @@ Known issues:
 - [ ] Feature graphic
 - [ ] Min. 2-4 screenshoty telefonu
 - [ ] (Opcjonalnie) krótki material wideo
+
+## Pola Play Console do pilnowania
+
+- [ ] Kategoria: Narzedzia / Produktywnosc (wybrac finalnie)
+- [ ] E-mail kontaktowy developera
+- [ ] URL polityki prywatnosci
+- [ ] Spojnosc opisu z Data Safety i App Content
