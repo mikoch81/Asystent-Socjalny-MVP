@@ -9,6 +9,18 @@ internal data class ChangelogEntry(
 
 internal val CHANGELOG: List<ChangelogEntry> = listOf(
     ChangelogEntry(
+        version = "0.8.0",
+        date = "2026-05",
+        title = "UX w terenie: dostępność, skróty, tryb przy kliencie",
+        highlights = listOf(
+            "Dostępność: skala tekstu (S/M/L/XL) i tryb wysokiego kontrastu",
+            "App Shortcuts: pilne, niebieska karta — dziecko, niebieska karta — przemoc, nowa notatka",
+            "Tryb „przy kliencie\" — pełen ekran, jeden krok na raz, duże przyciski",
+            "Home: sekcje „Przypięte\" i „Ostatnio użyte\" (offline, deterministycznie)",
+            "Większe pola dotyku i opisy a11y na kluczowych przyciskach"
+        )
+    ),
+    ChangelogEntry(
         version = "0.7.0",
         date = "2026-04",
         title = "Treść: 5 nowych scenariuszy pilnych",

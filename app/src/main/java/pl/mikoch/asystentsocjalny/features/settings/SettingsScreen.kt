@@ -1,10 +1,14 @@
 package pl.mikoch.asystentsocjalny.features.settings
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -12,8 +16,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import pl.mikoch.asystentsocjalny.core.model.TextScale
 import pl.mikoch.asystentsocjalny.core.model.WorkerProfile
 import pl.mikoch.asystentsocjalny.features.common.BaseScrollableScreen
 
@@ -114,7 +123,9 @@ fun SettingsScreen(
                         position = position,
                         unit = unit,
                         phone = phone,
-                        email = email
+                        email = email,
+                        textScale = saved.textScale,
+                        highContrast = saved.highContrast
                     )
                     viewModel.save(profile) {
                         savedToast = true
@@ -133,6 +144,67 @@ fun SettingsScreen(
                     text = "✓ Zapisano. Profil będzie podpisywać kolejne notatki.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
+                )
+            }
+        }
+        item("a11y_header") {
+            Text(
+                text = "Dostępność",
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+        item("a11y_desc") {
+            Text(
+                text = "Dostosuj wielkość tekstu i kontrast — pomoże w słabym świetle\n" +
+                    "i przy długich rozmowach z klientem.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        item("a11y_scale") {
+            Text(
+                text = "Wielkość tekstu",
+                style = MaterialTheme.typography.labelLarge
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .semantics { contentDescription = "Wielkość tekstu" },
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                TextScale.entries.forEach { scale ->
+                    FilterChip(
+                        selected = scale == saved.textScale,
+                        onClick = { viewModel.setTextScale(scale) },
+                        label = { Text(scale.label) },
+                        modifier = Modifier.semantics {
+                            contentDescription = when (scale) {
+                                TextScale.SMALL -> "Mała"
+                                TextScale.MEDIUM -> "Średnia"
+                                TextScale.LARGE -> "Duża"
+                                TextScale.EXTRA_LARGE -> "Bardzo duża"
+                            }
+                        }
+                    )
+                }
+            }
+        }
+        item("a11y_contrast") {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "Wysoki kontrast",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Switch(
+                    checked = saved.highContrast,
+                    onCheckedChange = { viewModel.setHighContrast(it) },
+                    modifier = Modifier.semantics {
+                        contentDescription = "Wysoki kontrast — przełącznik"
+                    }
                 )
             }
         }

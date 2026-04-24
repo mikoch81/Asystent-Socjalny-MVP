@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Pilne — lista scenariuszy interwencji -->
+    <shortcut
+        android:shortcutId="urgent_list"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/shortcut_urgent_short"
+        android:shortcutLongLabel="@string/shortcut_urgent_long">
+        <intent
+            android:action="pl.mikoch.asystentsocjalny.SHORTCUT_URGENT_LIST"
+            android:targetPackage="pl.mikoch.asystentsocjalny"
+            android:targetClass="pl.mikoch.asystentsocjalny.MainActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+    <!-- Niebieska Karta — przemoc wobec dziecka (top-of-mind kryzys) -->
+    <shortcut
+        android:shortcutId="urgent_child_abuse"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/shortcut_blue_card_child_short"
+        android:shortcutLongLabel="@string/shortcut_blue_card_child_long">
+        <intent
+            android:action="pl.mikoch.asystentsocjalny.SHORTCUT_URGENT_SCENARIO"
+            android:targetPackage="pl.mikoch.asystentsocjalny"
+            android:targetClass="pl.mikoch.asystentsocjalny.MainActivity">
+            <extra
+                android:name="scenario_id"
+                android:value="urgent_child_abuse" />
+        </intent>
+    </shortcut>
+
+    <!-- Niebieska Karta — przemoc domowa -->
+    <shortcut
+        android:shortcutId="urgent_domestic_violence"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/shortcut_blue_card_dv_short"
+        android:shortcutLongLabel="@string/shortcut_blue_card_dv_long">
+        <intent
+            android:action="pl.mikoch.asystentsocjalny.SHORTCUT_URGENT_SCENARIO"
+            android:targetPackage="pl.mikoch.asystentsocjalny"
+            android:targetClass="pl.mikoch.asystentsocjalny.MainActivity">
+            <extra
+                android:name="scenario_id"
+                android:value="urgent_domestic_violence" />
+        </intent>
+    </shortcut>
+
+    <!-- Nowa notatka — szybki szkic po interwencji -->
+    <shortcut
+        android:shortcutId="new_note"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/shortcut_new_note_short"
+        android:shortcutLongLabel="@string/shortcut_new_note_long">
+        <intent
+            android:action="pl.mikoch.asystentsocjalny.SHORTCUT_NEW_NOTE"
+            android:targetPackage="pl.mikoch.asystentsocjalny"
+            android:targetClass="pl.mikoch.asystentsocjalny.MainActivity" />
+    </shortcut>
+
+</shortcuts>

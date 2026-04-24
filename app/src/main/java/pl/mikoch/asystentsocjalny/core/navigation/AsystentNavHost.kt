@@ -6,10 +6,13 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,8 +20,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import pl.mikoch.asystentsocjalny.core.data.CaseDocumentStore
 import pl.mikoch.asystentsocjalny.core.data.KnowledgeRepository
+import pl.mikoch.asystentsocjalny.core.data.RecentItemsStore
 import pl.mikoch.asystentsocjalny.core.model.CaseDocument
 import pl.mikoch.asystentsocjalny.core.model.DocumentType
+import pl.mikoch.asystentsocjalny.core.model.RecentItem
+import pl.mikoch.asystentsocjalny.core.model.RecentItemKind
 import pl.mikoch.asystentsocjalny.features.benefits.BenefitDetailScreen
 import pl.mikoch.asystentsocjalny.features.benefits.BenefitsScreen
 import pl.mikoch.asystentsocjalny.features.cases.CaseDocumentsScreen
@@ -35,6 +41,7 @@ import pl.mikoch.asystentsocjalny.features.settings.SettingsScreen
 import pl.mikoch.asystentsocjalny.features.urgent.CaseSummaryScreen
 import pl.mikoch.asystentsocjalny.features.urgent.NotePreviewScreen
 import pl.mikoch.asystentsocjalny.features.urgent.UrgentDetailScreen
+import pl.mikoch.asystentsocjalny.features.urgent.UrgentFocusScreen
 import pl.mikoch.asystentsocjalny.features.urgent.UrgentListScreen
 import pl.mikoch.asystentsocjalny.features.urgent.UrgentViewModel
 import pl.mikoch.asystentsocjalny.features.urgent.model.toUi
@@ -50,6 +57,32 @@ fun AsystentNavHost() {
     val caseListViewModel: CaseListViewModel = hiltViewModel()
     val coroutineScope = rememberCoroutineScope()
     val appContext = LocalContext.current.applicationContext
+    val recentItemsStore = remember(appContext) { RecentItemsStore(appContext) }
+
+    // Skróty z launchera (App Shortcuts) — pojedyncze zdarzenie konsumowane raz.
+    LaunchedEffect(Unit) {
+        ShortcutRouter.events.collect { destination ->
+            when (destination) {
+                ShortcutDestination.UrgentList ->
+                    navController.navigate(Screen.UrgentList.route) {
+                        launchSingleTop = true
+                    }
+                is ShortcutDestination.UrgentScenario ->
+                    navController.navigate(Screen.UrgentDetail.createRoute(destination.scenarioId)) {
+                        launchSingleTop = true
+                    }
+                ShortcutDestination.NewNote ->
+                    navController.navigate(Screen.Notes.route) {
+                        launchSingleTop = true
+                    }
+                ShortcutDestination.Contacts ->
+                    navController.navigate(Screen.QuickContacts.route) {
+                        launchSingleTop = true
+                    }
+            }
+            ShortcutRouter.reset()
+        }
+    }
 
     NavHost(
         navController = navController,
@@ -77,7 +110,18 @@ fun AsystentNavHost() {
                 onOpenUrgent = { navController.navigate(Screen.UrgentList.route) },
                 onOpenCases = { navController.navigate(Screen.CaseList.route) },
                 onOpenSettings = { navController.navigate(Screen.Settings.route) },
-                onOpenContacts = { navController.navigate(Screen.QuickContacts.route) }
+                onOpenContacts = { navController.navigate(Screen.QuickContacts.route) },
+                onOpenRecent = { item ->
+                    val route = when (item.kind) {
+                        pl.mikoch.asystentsocjalny.core.model.RecentItemKind.PROCEDURE ->
+                            Screen.ProcedureDetail.createRoute(item.id)
+                        pl.mikoch.asystentsocjalny.core.model.RecentItemKind.BENEFIT ->
+                            Screen.BenefitDetail.createRoute(item.id)
+                        pl.mikoch.asystentsocjalny.core.model.RecentItemKind.URGENT_SCENARIO ->
+                            Screen.UrgentDetail.createRoute(item.id)
+                    }
+                    navController.navigate(route)
+                }
             )
         }
         composable(Screen.Procedures.route) {
@@ -103,6 +147,16 @@ fun AsystentNavHost() {
             val id = backStackEntry.arguments?.getString("benefitId").orEmpty()
             val benefit = benefits.firstOrNull { it.id == id }
             if (benefit != null) {
+                LaunchedEffect(benefit.id) {
+                    recentItemsStore.recordOpen(
+                        RecentItem(
+                            kind = RecentItemKind.BENEFIT,
+                            id = benefit.id,
+                            title = benefit.name,
+                            timestamp = System.currentTimeMillis()
+                        )
+                    )
+                }
                 BenefitDetailScreen(benefit = benefit)
             } else {
                 EmptyStateMessage(
@@ -139,6 +193,16 @@ fun AsystentNavHost() {
             val id = backStackEntry.arguments?.getString("procedureId").orEmpty()
             val procedure = procedures.firstOrNull { it.id == id }
             if (procedure != null) {
+                LaunchedEffect(procedure.id) {
+                    recentItemsStore.recordOpen(
+                        RecentItem(
+                            kind = RecentItemKind.PROCEDURE,
+                            id = procedure.id,
+                            title = procedure.title,
+                            timestamp = System.currentTimeMillis()
+                        )
+                    )
+                }
                 ProcedureDetailScreen(procedure = procedure)
             } else {
                 EmptyStateMessage(
@@ -170,6 +234,16 @@ fun AsystentNavHost() {
             val caseId = backStackEntry.arguments?.getString("caseId")
             val scenario = urgentViewModel.scenarioById(id)
             if (scenario != null) {
+                LaunchedEffect(scenario.id) {
+                    recentItemsStore.recordOpen(
+                        RecentItem(
+                            kind = RecentItemKind.URGENT_SCENARIO,
+                            id = scenario.id,
+                            title = scenario.title,
+                            timestamp = System.currentTimeMillis()
+                        )
+                    )
+                }
                 UrgentDetailScreen(
                     scenario = scenario,
                     viewModel = urgentViewModel,
@@ -178,6 +252,9 @@ fun AsystentNavHost() {
                     },
                     onNavigateToSummary = {
                         navController.navigate(Screen.CaseSummary.route)
+                    },
+                    onNavigateToFocus = {
+                        navController.navigate(Screen.UrgentFocus.createRoute(id))
                     },
                     caseId = caseId
                 )
@@ -264,6 +341,25 @@ fun AsystentNavHost() {
         }
         composable(Screen.Changelog.route) {
             ChangelogScreen()
+        }
+        composable(
+            route = Screen.UrgentFocus.route,
+            arguments = listOf(navArgument("scenarioId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("scenarioId").orEmpty()
+            val scenario = urgentViewModel.scenarioById(id)
+            if (scenario != null) {
+                UrgentFocusScreen(
+                    scenario = scenario,
+                    viewModel = urgentViewModel,
+                    onExit = { navController.popBackStack() }
+                )
+            } else {
+                EmptyStateMessage(
+                    title = "Nie znaleziono scenariusza",
+                    subtitle = "Dane lokalne mogą być niekompletne."
+                )
+            }
         }
     }
 }

@@ -59,6 +59,7 @@ fun UrgentDetailScreen(
     viewModel: UrgentViewModel,
     onNavigateToPreview: () -> Unit,
     onNavigateToSummary: () -> Unit,
+    onNavigateToFocus: (() -> Unit)? = null,
     caseId: String? = null
 ) {
     LaunchedEffect(scenario.id, caseId) {
@@ -112,6 +113,19 @@ fun UrgentDetailScreen(
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
+        }
+
+        if (onNavigateToFocus != null) {
+            item(key = "focus_mode") {
+                OutlinedButton(
+                    onClick = onNavigateToFocus,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp)
+                ) {
+                    Text("👁  Tryb przy kliencie (duża czcionka, krok po kroku)")
+                }
+            }
         }
 
         stickyHeader(key = "progress") {

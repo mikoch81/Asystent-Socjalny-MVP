@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Mobile Social Shield</string>
+
+    <!-- App Shortcuts (long-press na ikonę z launchera) -->
+    <string name="shortcut_urgent_short">Pilne</string>
+    <string name="shortcut_urgent_long">Sytuacje pilne — interwencja</string>
+
+    <string name="shortcut_blue_card_child_short">NK – dziecko</string>
+    <string name="shortcut_blue_card_child_long">Niebieska Karta — przemoc wobec dziecka</string>
+
+    <string name="shortcut_blue_card_dv_short">NK – przemoc</string>
+    <string name="shortcut_blue_card_dv_long">Niebieska Karta — przemoc domowa</string>
+
+    <string name="shortcut_new_note_short">Nowa notatka</string>
+    <string name="shortcut_new_note_long">Szkic notatki służbowej</string>
 </resources>

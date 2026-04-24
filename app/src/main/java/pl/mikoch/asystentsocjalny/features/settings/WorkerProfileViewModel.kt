@@ -7,6 +7,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import pl.mikoch.asystentsocjalny.core.data.WorkerProfileStore
+import pl.mikoch.asystentsocjalny.core.model.TextScale
 import pl.mikoch.asystentsocjalny.core.model.WorkerProfile
 
 @HiltViewModel
@@ -21,5 +22,13 @@ class WorkerProfileViewModel @Inject constructor(
             store.save(profile)
             onDone()
         }
+    }
+
+    fun setTextScale(scale: TextScale) {
+        viewModelScope.launch { store.setTextScale(scale) }
+    }
+
+    fun setHighContrast(enabled: Boolean) {
+        viewModelScope.launch { store.setHighContrast(enabled) }
     }
 }

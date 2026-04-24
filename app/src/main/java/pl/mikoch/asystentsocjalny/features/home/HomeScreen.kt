@@ -3,8 +3,10 @@ package pl.mikoch.asystentsocjalny.features.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -22,10 +24,15 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import pl.mikoch.asystentsocjalny.core.model.RecentItem
+import pl.mikoch.asystentsocjalny.core.model.RecentItemKind
 import pl.mikoch.asystentsocjalny.core.model.WorkerProfile
 import pl.mikoch.asystentsocjalny.features.settings.WorkerProfileViewModel
 
@@ -39,16 +46,23 @@ fun HomeScreen(
     onOpenCases: () -> Unit = {},
     onOpenSettings: () -> Unit = {},
     onOpenContacts: () -> Unit = {},
-    viewModel: WorkerProfileViewModel = hiltViewModel()
+    onOpenRecent: (RecentItem) -> Unit = {},
+    viewModel: WorkerProfileViewModel = hiltViewModel(),
+    homeViewModel: HomeViewModel = hiltViewModel()
 ) {
     val profile by viewModel.profileFlow.collectAsState(initial = WorkerProfile.EMPTY)
+    val pinned by homeViewModel.pinned.collectAsState()
+    val recent by homeViewModel.recent.collectAsState()
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Mobile Social Shield") },
                 actions = {
-                    IconButton(onClick = onOpenSettings) {
+                    IconButton(
+                        onClick = onOpenSettings,
+                        modifier = Modifier.semantics { contentDescription = "Ustawienia" }
+                    ) {
                         Text(text = "⚙", style = MaterialTheme.typography.titleLarge)
                     }
                 }
@@ -70,6 +84,32 @@ fun HomeScreen(
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
+
+            if (pinned.isNotEmpty()) {
+                SectionHeader("⭐  Przypięte")
+                pinned.forEach { item ->
+                    RecentRow(
+                        item = item,
+                        isPinned = true,
+                        onClick = { onOpenRecent(item) },
+                        onTogglePin = { homeViewModel.togglePin(item) }
+                    )
+                }
+            }
+
+            if (recent.isNotEmpty()) {
+                SectionHeader("🕘  Ostatnio użyte")
+                recent.forEach { item ->
+                    val isPinned = pinned.any { it.kind == item.kind && it.id == item.id }
+                    RecentRow(
+                        item = item,
+                        isPinned = isPinned,
+                        onClick = { onOpenRecent(item) },
+                        onTogglePin = { homeViewModel.togglePin(item) }
+                    )
+                }
+            }
+
             if (!profile.isComplete) {
                 HomeCard(
                     title = "⚠️  Uzupełnij profil pracownika",
@@ -130,6 +170,77 @@ fun HomeScreen(
 }
 
 @Composable
+private fun SectionHeader(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.titleSmall,
+        fontWeight = FontWeight.SemiBold,
+        color = MaterialTheme.colorScheme.onSurface
+    )
+}
+
+@Composable
+private fun RecentRow(
+    item: RecentItem,
+    isPinned: Boolean,
+    onClick: () -> Unit,
+    onTogglePin: () -> Unit
+) {
+    val kindLabel = when (item.kind) {
+        RecentItemKind.PROCEDURE -> "Procedura"
+        RecentItemKind.BENEFIT -> "Świadczenie"
+        RecentItemKind.URGENT_SCENARIO -> "Pilne"
+    }
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = item.title,
+                    style = MaterialTheme.typography.bodyLarge,
+                    maxLines = 2
+                )
+                Text(
+                    text = kindLabel,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            IconButton(
+                onClick = onTogglePin,
+                modifier = Modifier
+                    .heightIn(min = 48.dp)
+                    .semantics {
+                        contentDescription = if (isPinned) "Odepnij" else "Przypnij"
+                    }
+            ) {
+                Text(
+                    text = if (isPinned) "★" else "☆",
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+            Button(
+                onClick = onClick,
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                modifier = Modifier.heightIn(min = 48.dp)
+            ) {
+                Text("Otwórz")
+            }
+        }
+    }
+}
+
+@Composable
 private fun HomeCard(
     title: String,
     description: String,
@@ -157,7 +268,8 @@ private fun HomeCard(
             )
             Button(
                 onClick = onClick,
-                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp)
+                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 10.dp),
+                modifier = Modifier.heightIn(min = 48.dp)
             ) {
                 Text(buttonText)
             }

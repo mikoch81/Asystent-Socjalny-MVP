@@ -27,4 +27,7 @@ sealed class Screen(val route: String) {
     data object Settings : Screen("settings")
     data object QuickContacts : Screen("quickContacts")
     data object Changelog : Screen("changelog")
+    data object UrgentFocus : Screen("urgentFocus/{scenarioId}") {
+        fun createRoute(scenarioId: String): String = "urgentFocus/$scenarioId"
+    }
 }

@@ -12,6 +12,7 @@ import pl.mikoch.asystentsocjalny.core.data.CaseStore
 import pl.mikoch.asystentsocjalny.core.data.DraftStore
 import pl.mikoch.asystentsocjalny.core.data.KnowledgeRepository
 import pl.mikoch.asystentsocjalny.core.data.LastLocationStore
+import pl.mikoch.asystentsocjalny.core.data.RecentItemsStore
 import pl.mikoch.asystentsocjalny.core.data.SimpleNoteDraftStore
 import pl.mikoch.asystentsocjalny.core.data.WorkerProfileStore
 
@@ -53,4 +54,9 @@ object AppModule {
     @Singleton
     fun provideSimpleNoteDraftStore(@ApplicationContext context: Context): SimpleNoteDraftStore =
         SimpleNoteDraftStore(context)
+
+    @Provides
+    @Singleton
+    fun provideRecentItemsStore(@ApplicationContext context: Context): RecentItemsStore =
+        RecentItemsStore(context)
 }

@@ -6,7 +6,9 @@ data class WorkerProfile(
     val position: String = "",
     val unit: String = "",
     val phone: String = "",
-    val email: String = ""
+    val email: String = "",
+    val textScale: TextScale = TextScale.MEDIUM,
+    val highContrast: Boolean = false
 ) {
     val isComplete: Boolean
         get() = firstName.isNotBlank() && lastName.isNotBlank()
