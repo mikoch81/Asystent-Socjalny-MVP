@@ -89,6 +89,9 @@ Jesli testy lokalnie nie startuja z powodow srodowiskowych Gradle worker, traktu
 - `docs/DEMO_SMOKE_CHECKLIST.md`
 - `docs/DEMO_READY_PLAY_CHECKLIST.md`
 - `docs/PLAY_INTERNAL_TESTING_RUNBOOK.md`
+- `docs/PLAY_DATA_SAFETY_TEMPLATE.md`
+- `docs/PLAY_APP_CONTENT_TEMPLATE.md`
+- `docs/PLAY_STORE_LISTING_PL.md`
 
 ## Bezpieczenstwo i granice odpowiedzialnosci
 
