@@ -9,6 +9,18 @@ internal data class ChangelogEntry(
 
 internal val CHANGELOG: List<ChangelogEntry> = listOf(
     ChangelogEntry(
+        version = "0.9.2",
+        date = "2026-05",
+        title = "Demo-ready: Play compliance i proces internal testing",
+        highlights = listOf(
+            "Domknięcie DI w nawigacji: zapis dokumentu notatki przez Hiltowy AsystentNavHostViewModel",
+            "Nowa checklista gotowości demo pod Google Play",
+            "Runbook internal testing: build AAB, upload i weryfikacja rollout",
+            "Wypełniony pakiet Play Console: Data Safety, App Content i listing PL",
+            "Nowy dokument polityki prywatności PL gotowy do podpięcia w Play Console"
+        )
+    ),
+    ChangelogEntry(
         version = "0.9.1",
         date = "2026-05",
         title = "Stabilizacja: DI nawigacji + instrukcja OTA w Ustawieniach",
